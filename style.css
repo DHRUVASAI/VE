@@ -258,16 +258,16 @@ nav.scrolled {
 }
 
 .logo-img {
-    width: 56px;
-    height: 56px;
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
-    background: transparent;
-    padding: 0;
+    background: rgba(255, 255, 255, 0.92);
+    padding: 3px;
     object-fit: contain;
     object-position: center;
     flex-shrink: 0;
     transition: var(--transition);
-    filter: drop-shadow(0 2px 8px rgba(184, 150, 62, 0.5));
+    box-shadow: 0 2px 12px rgba(184, 150, 62, 0.3);
 }
 
 .logo-text {
@@ -1022,12 +1022,12 @@ footer {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.92);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
-    filter: drop-shadow(0 4px 12px rgba(184, 150, 62, 0.4));
+    padding: 4px;
+    box-shadow: 0 4px 20px rgba(184, 150, 62, 0.25);
 }
 
 .footer-logo {
