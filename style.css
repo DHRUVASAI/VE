@@ -222,8 +222,7 @@ img {
    ============================================================ */
 nav {
     position: fixed;
-    top: 40px;
-    /* offset for trust bar */
+    top: 0;
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -259,17 +258,16 @@ nav.scrolled {
 }
 
 .logo-img {
-    width: 52px;
-    height: 52px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.97);
-    padding: 2px;
+    background: transparent;
+    padding: 0;
     object-fit: contain;
     object-position: center;
     flex-shrink: 0;
     transition: var(--transition);
-    box-shadow: 0 2px 16px rgba(184, 150, 62, 0.3),
-        0 0 0 2px rgba(184, 150, 62, 0.35);
+    filter: drop-shadow(0 2px 8px rgba(184, 150, 62, 0.5));
 }
 
 .logo-text {
@@ -1021,17 +1019,15 @@ footer {
 
 .footer-logo-wrap {
     flex-shrink: 0;
-    width: 84px;
-    height: 84px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.97);
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4px;
-    box-shadow: 0 4px 24px rgba(184, 150, 62, 0.3),
-        0 0 0 3px rgba(184, 150, 62, 0.35);
-    border: none;
+    padding: 0;
+    filter: drop-shadow(0 4px 12px rgba(184, 150, 62, 0.4));
 }
 
 .footer-logo {
