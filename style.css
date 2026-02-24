@@ -120,50 +120,496 @@
 /* ============================================================
    TRUST BAR RESPONSIVE
    ============================================================ */
-@media (max-width: 768px) {
-    .top-trust-bar {
-        height: 36px;
+/* ============================================================
+   RESPONSIVE — All Devices (Mobile First)
+   ============================================================ */
+
+/* ---- Tablet landscape 1024px ---- */
+@media (max-width: 1024px) {
+    .portfolio-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 
-    nav {
-        top: 36px;
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
     }
 
-    .trust-bar-item:nth-child(6),
-    .trust-bar-item:nth-child(7),
-    .trust-bar-divider:last-child {
-        display: none;
-        /* hide GSTIN on mobile to save space */
+    .hero-stats {
+        gap: 30px;
+        margin: 0 -20px;
+        padding: 30px 20px 0;
     }
 
-    .trust-bar-item {
-        padding: 0 10px;
-        gap: 5px;
+    .services-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 
-    .trust-bar-item span {
-        font-size: 0.62rem;
-    }
-
-    .hero {
-        padding-top: calc(90px + 36px);
+    .footer-top {
+        grid-template-columns: 1fr 1fr;
+        gap: 36px;
     }
 }
 
-@media (max-width: 480px) {
-    .trust-bar-inner {
-        justify-content: flex-start;
-        animation: trustScroll 12s linear infinite;
+/* ---- Tablet portrait / large phone 768px ---- */
+@media (max-width: 768px) {
+
+    /* Container */
+    .container {
+        padding: 0 16px;
     }
 
-    @keyframes trustScroll {
-        0% {
-            transform: translateX(0);
-        }
+    /* Nav mobile */
+    nav {
+        top: 0;
+        padding: 14px 5%;
+    }
 
-        100% {
-            transform: translateX(-33%);
+    .nav-links {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: var(--navy-deep);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 28px;
+        z-index: 1000;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        font-size: 1.2rem;
+        color: var(--white);
+        opacity: 1;
+        padding: 10px 0;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    /* Hero */
+    .hero {
+        padding: 100px 16px 60px;
+        min-height: 100svh;
+    }
+
+    .hero-badge {
+        font-size: 0.6rem;
+        padding: 8px 16px;
+        letter-spacing: 1.5px;
+    }
+
+    .hero h1 {
+        font-size: clamp(1.9rem, 7vw, 2.6rem);
+        margin-bottom: 16px;
+    }
+
+    .hero p {
+        font-size: 0.95rem;
+        margin-bottom: 28px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        margin-bottom: 36px;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 24px;
+    }
+
+    /* Stats row — stays horizontal but compact */
+    .hero-stats {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        gap: 0;
+        margin: 0;
+        padding: 20px 12px 0;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        border-top: 1px solid rgba(184, 150, 62, 0.2);
+    }
+
+    .stat {
+        padding: 0 6px;
+        flex: 1;
+    }
+
+    .stat-number {
+        font-size: 1.6rem;
+    }
+
+    .stat-label {
+        font-size: 0.58rem;
+        letter-spacing: 0.3px;
+    }
+
+    .stat-divider {
+        display: none;
+    }
+
+    .hero-scroll-hint {
+        display: none;
+    }
+
+    /* Sections */
+    .section {
+        padding: 64px 0;
+    }
+
+    .section-header {
+        margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+        font-size: 1.8rem;
+    }
+
+    /* Services — 2 columns on tablet */
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+
+    .service-card {
+        padding: 24px 18px;
+    }
+
+    /* Portfolio — 2 columns */
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    /* Portfolio caption always visible on touch devices */
+    @media (hover: none) {
+        .portfolio-caption {
+            transform: translateY(0);
         }
+    }
+
+    /* Why section */
+    .why-section {
+        padding: 56px 0;
+    }
+
+    .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .why-item {
+        border-right: none;
+        border-bottom: 1px solid rgba(184, 150, 62, 0.1);
+        padding: 28px 20px;
+    }
+
+    .why-item:last-child,
+    .why-item:nth-child(3) {
+        border-bottom: none;
+    }
+
+    /* Clients */
+    .clients-section {
+        padding: 56px 0;
+    }
+
+    .client-name {
+        font-size: 1.1rem;
+    }
+
+    /* Contact */
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .contact-card {
+        padding: 20px 16px;
+    }
+
+    .contact-form-wrap {
+        padding: 24px 20px;
+    }
+
+    /* Make tap targets big enough */
+    a[href^="tel"],
+    .leader-phone {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    /* Leadership */
+    .leadership-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        max-width: 540px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .leader-img-wrap {
+        height: 300px;
+    }
+
+    .leader-info {
+        padding: 24px 20px 28px;
+    }
+
+    .leader-info h3 {
+        font-size: 1.4rem;
+    }
+
+    /* Footer */
+    .footer-top {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 6px;
+    }
+
+    .footer-certs-row {
+        gap: 10px;
+        justify-content: flex-start;
+    }
+
+    /* Dev credits */
+    .dev-credits-inner {
+        flex-direction: column;
+        gap: 14px;
+        text-align: center;
+    }
+
+    .dev-credits-label {
+        font-size: 0.65rem;
+    }
+}
+
+/* ---- Small phones 480px ---- */
+@media (max-width: 480px) {
+
+    .hero {
+        padding: 90px 14px 50px;
+    }
+
+    .hero h1 {
+        font-size: clamp(1.65rem, 8vw, 2rem);
+    }
+
+    .hero p {
+        font-size: 0.88rem;
+    }
+
+    .hero-badge {
+        font-size: 0.56rem;
+        padding: 7px 14px;
+    }
+
+    .stat-number {
+        font-size: 1.4rem;
+    }
+
+    .stat-label {
+        font-size: 0.55rem;
+    }
+
+    /* Services — 1 column on small phones */
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .service-card {
+        padding: 20px 16px;
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .service-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+        flex-shrink: 0;
+        margin-bottom: 0;
+    }
+
+    .service-card h3 {
+        font-size: 1rem;
+        margin-bottom: 6px;
+    }
+
+    /* Portfolio — 2 columns still OK on small phones */
+    .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+
+    .portfolio-item {
+        aspect-ratio: 3/4;
+    }
+
+    /* Portfolio caption always show on touch */
+    .portfolio-caption {
+        transform: translateY(0);
+        background: linear-gradient(transparent, rgba(15, 21, 39, 0.95));
+    }
+
+    .portfolio-caption h4 {
+        font-size: 0.82rem;
+    }
+
+    .portfolio-caption span {
+        font-size: 0.68rem;
+    }
+
+    /* Why */
+    .why-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .why-item {
+        border-bottom: 1px solid rgba(184, 150, 62, 0.1) !important;
+        padding: 24px 16px;
+    }
+
+    .section {
+        padding: 52px 0;
+    }
+
+    .section-header h2 {
+        font-size: 1.55rem;
+    }
+
+    .contact-form-wrap {
+        padding: 20px 14px;
+    }
+
+    .leader-img-wrap {
+        height: 260px;
+    }
+
+    .leader-info {
+        padding: 20px 16px 24px;
+    }
+
+    .cert-badge-inner {
+        padding: 8px 12px 8px 8px;
+        gap: 8px;
+    }
+
+    .cert-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+    .cert-title {
+        font-size: 0.75rem;
+    }
+
+    .cert-sub {
+        font-size: 0.6rem;
+    }
+
+    .footer-certs-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .dev-card {
+        padding: 10px 20px 10px 10px;
+    }
+}
+
+/* ---- Very small phones 360px ---- */
+@media (max-width: 360px) {
+
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .stat-number {
+        font-size: 1.2rem;
+    }
+
+    .portfolio-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dev-photo {
+        width: 64px;
+        height: 64px;
+    }
+
+    .logo-img {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* ---- Landscape on phones ---- */
+@media (max-height: 500px) and (orientation: landscape) {
+    .hero {
+        min-height: auto;
+        padding: 80px 24px 40px;
+    }
+
+    .hero-scroll-hint {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 1.6rem;
+    }
+
+    .hero-stats {
+        padding: 14px 0 0;
+    }
+}
+
+/* ---- Safe area (notched phones) ---- */
+@supports (padding: max(0px)) {
+    .hero {
+        padding-left: max(16px, env(safe-area-inset-left));
+        padding-right: max(16px, env(safe-area-inset-right));
+        padding-bottom: max(60px, env(safe-area-inset-bottom));
+    }
+
+    footer,
+    .dev-credits-section {
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+    }
+
+    nav {
+        padding-left: max(5%, env(safe-area-inset-left));
+        padding-right: max(5%, env(safe-area-inset-right));
+    }
+}
+
+/* ---- Retina / High DPI ---- */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 192dpi) {
+
+    .leader-img,
+    .dev-photo {
+        image-rendering: -webkit-optimize-contrast;
     }
 }
 
@@ -2043,9 +2489,6 @@ footer {
     font-size: 0.65rem;
 }
 
-/* ============================================================
-   ENHANCED MOBILE RESPONSIVE — All Devices
-   ============================================================ */
 
 /* Safe area for notched phones (iPhone X+) */
 @supports (padding: max(0px)) {
