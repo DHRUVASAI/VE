@@ -258,8 +258,8 @@ nav.scrolled {
 }
 
 .logo-img {
-    width: 50px;
-    height: 50px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     background: transparent;
     padding: 0;
@@ -267,9 +267,7 @@ nav.scrolled {
     object-position: center;
     flex-shrink: 0;
     transition: var(--transition);
-    outline: 2px solid rgba(184, 150, 62, 0.55);
-    outline-offset: 2px;
-    filter: drop-shadow(0 0 6px rgba(184, 150, 62, 0.45));
+    filter: drop-shadow(0 2px 8px rgba(184, 150, 62, 0.5));
 }
 
 .logo-text {
@@ -1029,9 +1027,7 @@ footer {
     align-items: center;
     justify-content: center;
     padding: 0;
-    outline: 2px solid rgba(184, 150, 62, 0.55);
-    outline-offset: 3px;
-    filter: drop-shadow(0 0 10px rgba(184, 150, 62, 0.4));
+    filter: drop-shadow(0 4px 12px rgba(184, 150, 62, 0.4));
 }
 
 .footer-logo {
