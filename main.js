@@ -1,11 +1,19 @@
-// ==================== NAVBAR ====================
+// ==================== NAVBAR + TRUST BAR ====================
 const nav = document.getElementById('navbar');
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
+const trustBar = document.getElementById('topTrustBar');
+const TRUST_BAR_H = trustBar ? trustBar.offsetHeight : 40;
 
 window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 80);
+    const scrolled = window.scrollY > 80;
+    nav.classList.toggle('scrolled', scrolled);
+    if (trustBar) {
+        trustBar.classList.toggle('hidden', scrolled);
+        nav.style.top = scrolled ? '0px' : TRUST_BAR_H + 'px';
+    }
 });
+
 
 hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('active');
