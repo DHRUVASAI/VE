@@ -1,5 +1,3 @@
-
-
 // ==================== NAVBAR ====================
 const nav = document.getElementById('navbar');
 const hamburger = document.getElementById('hamburger');
