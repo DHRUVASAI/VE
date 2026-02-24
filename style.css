@@ -27,7 +27,7 @@
 
 
 /* ============================================================
-   TOP TRUST BAR — Certifications + Compliance Strip
+   TOP TRUST BAR — Redesigned with Logo + Pill Badges
    ============================================================ */
 .top-trust-bar {
     position: fixed;
@@ -35,135 +35,236 @@
     left: 0;
     width: 100%;
     z-index: 1001;
-    background: linear-gradient(90deg, var(--navy-deep) 0%, #0d1220 50%, var(--navy-deep) 100%);
-    border-bottom: 1px solid rgba(184, 150, 62, 0.35);
-    height: 40px;
+    background: linear-gradient(90deg, #08101e 0%, #0d1527 40%, #08101e 100%);
+    border-bottom: 1px solid rgba(184, 150, 62, 0.4);
+    height: 52px;
     display: flex;
     align-items: center;
     overflow: hidden;
     transition: transform 0.4s ease, opacity 0.4s ease;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* Subtle shimmer line at top */
 .top-trust-bar::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(184, 150, 62, 0.7), transparent);
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent 0%, rgba(184, 150, 62, 0.8) 30%, rgba(212, 185, 106, 1) 50%, rgba(184, 150, 62, 0.8) 70%, transparent 100%);
 }
 
-.trust-bar-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    width: 100%;
-    padding: 0 24px;
-    flex-wrap: nowrap;
-    overflow: hidden;
-}
-
-.trust-bar-item {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    padding: 0 18px;
-    white-space: nowrap;
-    cursor: default;
-    transition: background 0.3s ease;
-}
-
-.trust-bar-item:hover {
-    background: rgba(184, 150, 62, 0.07);
-    border-radius: 4px;
-}
-
-.trust-bar-item svg {
-    flex-shrink: 0;
-    filter: drop-shadow(0 0 3px rgba(184, 150, 62, 0.3));
-}
-
-.trust-bar-item span {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.7rem;
-    color: rgba(255, 255, 255, 0.65);
-    letter-spacing: 0.3px;
-}
-
-.trust-bar-item strong {
-    color: var(--gold-soft);
-    font-weight: 700;
-}
-
-.trust-bar-divider {
-    width: 1px;
-    height: 16px;
-    background: rgba(184, 150, 62, 0.25);
-    flex-shrink: 0;
-}
-
-/* Hide trust bar when scrolled down (clean nav experience) */
+/* Hide on scroll */
 .top-trust-bar.hidden {
     transform: translateY(-100%);
     opacity: 0;
     pointer-events: none;
 }
 
-/* Adjust hero top padding to account for trust bar + nav */
-.hero {
-    padding-top: calc(100px + 40px);
+/* Inner layout */
+.trust-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    gap: 16px;
 }
 
-/* ============================================================
-   TRUST BAR RESPONSIVE
-   ============================================================ */
+/* ── Left: Company Logo + Name ── */
+.trust-bar-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.trust-bar-logo {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: contain;
+    background: #fff;
+    padding: 2px;
+    border: 1.5px solid rgba(184, 150, 62, 0.5);
+    box-shadow: 0 0 10px rgba(184, 150, 62, 0.3);
+}
+
+.trust-bar-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+/* ── Separator ── */
+.trust-bar-sep {
+    width: 1px;
+    height: 28px;
+    background: linear-gradient(to bottom, transparent, rgba(184, 150, 62, 0.5), transparent);
+    flex-shrink: 0;
+}
+
+/* ── Right: Certification Pills ── */
+.trust-bar-certs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+
+/* Individual pill */
+.trust-pill {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border-radius: 6px;
+    padding: 4px 12px 4px 8px;
+    border: 1px solid rgba(184, 150, 62, 0.25);
+    background: rgba(255, 255, 255, 0.04);
+    transition: all 0.3s ease;
+    cursor: default;
+    white-space: nowrap;
+}
+
+.trust-pill:hover {
+    background: rgba(184, 150, 62, 0.1);
+    border-color: rgba(184, 150, 62, 0.6);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(184, 150, 62, 0.2);
+}
+
+.trust-pill-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+}
+
+.trust-pill-iso .trust-pill-icon {
+    background: rgba(184, 150, 62, 0.2);
+    color: #d4b96a;
+}
+
+.trust-pill-gmp .trust-pill-icon {
+    background: rgba(46, 139, 87, 0.2);
+    color: #5dba8a;
+}
+
+.trust-pill-msme .trust-pill-icon {
+    background: rgba(255, 153, 51, 0.2);
+    color: #FF9933;
+}
+
+.trust-pill-gst .trust-pill-icon {
+    background: rgba(70, 130, 180, 0.2);
+    color: #7ab8d9;
+}
+
+.trust-pill-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.trust-pill-text strong {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.92);
+    letter-spacing: 0.2px;
+}
+
+.trust-pill-text span {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.58rem;
+    color: rgba(255, 255, 255, 0.42);
+    letter-spacing: 0.2px;
+}
+
+/* Adjust nav + hero for new height */
+nav {
+    top: 52px;
+}
+
+.hero {
+    padding-top: calc(100px + 52px);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 900px) {
+    .trust-pill-gst {
+        display: none;
+    }
+
+    .trust-bar-name {
+        font-size: 0.75rem;
+    }
+}
+
 @media (max-width: 768px) {
     .top-trust-bar {
-        height: 36px;
+        height: 44px;
     }
 
     nav {
-        top: 36px;
+        top: 44px;
     }
 
-    .trust-bar-item:nth-child(6),
-    .trust-bar-item:nth-child(7),
-    .trust-bar-divider:last-child {
+    .trust-pill-msme {
         display: none;
-        /* hide GSTIN on mobile to save space */
     }
 
-    .trust-bar-item {
-        padding: 0 10px;
-        gap: 5px;
+    .trust-bar-certs {
+        gap: 6px;
     }
 
-    .trust-bar-item span {
+    .trust-pill {
+        padding: 3px 8px 3px 6px;
+    }
+
+    .trust-pill-text strong {
         font-size: 0.62rem;
     }
 
+    .trust-pill-text span {
+        display: none;
+    }
+
     .hero {
-        padding-top: calc(90px + 36px);
+        padding-top: calc(90px + 44px);
     }
 }
 
-@media (max-width: 480px) {
-    .trust-bar-inner {
-        justify-content: flex-start;
-        animation: trustScroll 12s linear infinite;
+@media (max-width: 500px) {
+    .trust-bar-name {
+        display: none;
     }
 
-    @keyframes trustScroll {
-        0% {
-            transform: translateX(0);
-        }
+    .trust-pill-gmp {
+        display: none;
+    }
 
-        100% {
-            transform: translateX(-33%);
-        }
+    .top-trust-bar {
+        height: 38px;
+    }
+
+    nav {
+        top: 38px;
+    }
+
+    .hero {
+        padding-top: calc(90px + 38px);
     }
 }
 
@@ -259,15 +360,15 @@ nav.scrolled {
 }
 
 .logo-img {
-    width: 44px;
-    height: 44px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.96);
-    padding: 5px;
+    background: #ffffff;
+    padding: 2px;
     object-fit: contain;
     flex-shrink: 0;
     transition: var(--transition);
-    box-shadow: 0 2px 12px rgba(184, 150, 62, 0.25);
+    box-shadow: 0 2px 16px rgba(184, 150, 62, 0.35), 0 0 0 2px rgba(184, 150, 62, 0.25);
 }
 
 .logo-text {
