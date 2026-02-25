@@ -278,20 +278,45 @@
         font-size: 1.8rem;
     }
 
-    /* Services — 2 columns on tablet */
-    .services-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
+    /* Services & Portfolio — Horizontal Swipe on Mobile/Tablet */
+    .services-grid,
+    .portfolio-grid {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scroll-snap-type: x mandatory;
+        gap: 16px;
+        padding-bottom: 24px;
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        /* Firefox */
+        /* Make sure container covers padding for shadows */
+        padding-top: 10px;
+        margin-top: -10px;
+        padding-left: 2px;
+        padding-right: 20px;
+        /* space for last item */
+    }
+
+    .services-grid::-webkit-scrollbar,
+    .portfolio-grid::-webkit-scrollbar {
+        display: none;
+        /* Safari/Chrome */
     }
 
     .service-card {
+        flex: 0 0 calc(80% - 16px);
+        max-width: 340px;
+        scroll-snap-align: center;
         padding: 24px 18px;
     }
 
-    /* Portfolio — 2 columns */
-    .portfolio-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+    .portfolio-item {
+        flex: 0 0 calc(70% - 16px);
+        max-width: 280px;
+        scroll-snap-align: center;
     }
 
     /* Portfolio caption always visible on touch devices */
@@ -430,36 +455,33 @@
         font-size: 0.55rem;
     }
 
-    /* Services — 1 column on small phones */
-    .services-grid {
-        grid-template-columns: 1fr;
+    /* Mobile carousel adjustments */
+    .services-grid,
+    .portfolio-grid {
         gap: 12px;
+        padding-right: 16px;
     }
 
     .service-card {
-        padding: 20px 16px;
-        display: flex;
-        align-items: flex-start;
-        gap: 14px;
+        padding: 24px 20px;
+        flex: 0 0 85%;
+        display: block;
     }
 
     .service-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-        flex-shrink: 0;
-        margin-bottom: 0;
+        width: 44px;
+        height: 44px;
+        font-size: 1.1rem;
+        margin-bottom: 16px;
     }
 
     .service-card h3 {
-        font-size: 1rem;
+        font-size: 1.05rem;
         margin-bottom: 6px;
     }
 
-    /* Portfolio — 2 columns still OK on small phones */
-    .portfolio-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+    .portfolio-item {
+        flex: 0 0 78%;
     }
 
     .portfolio-item {
@@ -549,8 +571,9 @@
         font-size: 1.2rem;
     }
 
-    .portfolio-grid {
-        grid-template-columns: 1fr;
+    /* Very small phone adjustments */
+    .portfolio-item {
+        flex: 0 0 88%;
     }
 
     .dev-photo {
