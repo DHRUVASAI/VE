@@ -155,34 +155,34 @@ const GALLERY_DATA = {
         title: 'Industrial Uniforms',
         icon: 'fa-industry',
         images: [
-            { src: 'assets/works/star-industrial-shirt.jpg', caption: 'Industrial Work Shirt — Star Industries' },
+            { src: 'assets/works/star-industrial-shirt-nobg.png', caption: 'Industrial Work Shirt — Star Industries' },
         ]
     },
     healthcare: {
         title: 'Healthcare Wear',
         icon: 'fa-stethoscope',
         images: [
-            { src: 'assets/works/konnect-scrub.jpg', caption: 'Medical Scrubs — Konnect Diagnostics' },
-            { src: 'assets/works/konnect-labcoat.jpg', caption: 'Lab Coat — Konnect Diagnostics' },
+            { src: 'assets/works/konnect-scrub-nobg.png', caption: 'Medical Scrubs — Konnect Diagnostics' },
+            { src: 'assets/works/konnect-labcoat-nobg.png', caption: 'Lab Coat — Konnect Diagnostics' },
         ]
     },
     school: {
         title: 'School Uniforms',
         icon: 'fa-graduation-cap',
         images: [
-            { src: 'assets/works/blazer.jpg', caption: 'Institutional Blazer — Aradhana Academy' },
-            { src: 'assets/works/high-school-vest.jpg', caption: 'School Vest with Logo — Sri Gouthami High School' },
+            { src: 'assets/works/blazer-nobg.png', caption: 'Institutional Blazer — Aradhana Academy' },
+            { src: 'assets/works/high-school-vest-nobg.png', caption: 'School Vest with Logo — Sri Gouthami High School' },
             { src: 'assets/works/laurus-pinafore.jpg', caption: 'Tartan Pinafore — Laurus School' },
-            { src: 'assets/works/laurus-shirt.jpg', caption: 'Shirt & Tie Set — Laurus School' },
-            { src: 'assets/works/uniform-set.jpg', caption: 'Complete Uniform Set — Primary School Collection' },
+            { src: 'assets/works/laurus-shirt-nobg.png', caption: 'Shirt & Tie Set — Laurus School' },
+            { src: 'assets/works/uniform-set-nobg.png', caption: 'Complete Uniform Set — Primary School Collection' },
         ]
     },
     bags: {
         title: 'Bags & Backpacks',
         icon: 'fa-shopping-bag',
         images: [
-            { src: 'assets/works/techolution-bag.jpg', caption: 'Branded Corporate Bag — Techolution' },
-            { src: 'assets/works/sih-bag.jpg', caption: 'Duffle Bag — Smart India Hackathon 2025' },
+            { src: 'assets/works/techolution-bag-nobg.png', caption: 'Branded Corporate Bag — Techolution' },
+            { src: 'assets/works/sih-bag-nobg.png', caption: 'Duffle Bag — Smart India Hackathon 2025' },
             { src: 'assets/works/vnrvjiet-bag.jpg', caption: 'Branded Bag — VNRVJIET' },
         ]
     },
@@ -190,33 +190,33 @@ const GALLERY_DATA = {
         title: 'Caps & Headwear',
         icon: 'fa-hat-cowboy',
         images: [
-            { src: 'assets/works/Deloitte cap.jpg', caption: 'Corporate Cap — Deloitte' },
-            { src: 'assets/works/Corporate Cap.jpg', caption: 'Promotional Cap' },
-            { src: 'assets/works/tsrtc-cap.jpg', caption: 'Official Cap — TSRTC' },
-            { src: 'assets/works/bdubs-cap.jpg', caption: 'Embroidered Cap — B-DUBS' },
+            { src: 'assets/works/Deloitte cap-nobg.png', caption: 'Corporate Cap — Deloitte' },
+            { src: 'assets/works/Corporate Cap-nobg.png', caption: 'Promotional Cap' },
+            { src: 'assets/works/tsrtc-cap-nobg.png', caption: 'Official Cap — TSRTC' },
+            { src: 'assets/works/bdubs-cap-nobg.png', caption: 'Embroidered Cap — B-DUBS' },
         ]
     },
     jackets: {
         title: 'Jackets & Rainwear',
         icon: 'fa-cloud-showers-heavy',
         images: [
-            { src: 'assets/works/rainjacket.jpg', caption: 'Rain Jacket — All Weather Protection' },
+            { src: 'assets/works/rainjacket-nobg.png', caption: 'Rain Jacket — All Weather Protection' },
         ]
     },
     customization: {
         title: 'Customization',
         icon: 'fa-magic',
         images: [
-            { src: 'assets/works/t-shirt.jpg', caption: 'Custom Printed T-Shirt' },
+            { src: 'assets/works/t-shirt-nobg.png', caption: 'Custom Printed T-Shirt' },
         ]
     },
     corporate: {
         title: 'Corporate Apparel',
         icon: 'fa-briefcase',
         images: [
-            { src: 'assets/works/corporate-polo.jpg', caption: 'Corporate Polo Shirt — liab expo' },
-            { src: 'assets/works/emmadi-vest.jpg', caption: 'Corporate Nehru Vest — emmadi Silver Jewellery' },
-            { src: 'assets/works/barbeque-pride-shirt.jpg', caption: 'Corporate Shirt — Barbeque Pride' },
+            { src: 'assets/works/corporate-polo-nobg.png', caption: 'Corporate Polo Shirt — liab expo' },
+            { src: 'assets/works/emmadi-vest-nobg.png', caption: 'Corporate Nehru Vest — emmadi Silver Jewellery' },
+            { src: 'assets/works/barbeque-pride-shirt-nobg.png', caption: 'Corporate Shirt — Barbeque Pride' },
         ]
     }
 };
