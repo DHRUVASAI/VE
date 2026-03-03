@@ -256,6 +256,7 @@ function openGallery(category) {
             <img src="${img.src}" alt="${img.caption}" loading="lazy">
             <div class="gallery-thumb-caption">${img.caption}</div>
         `;
+        // set pointer on the whole card
         thumb.addEventListener('click', () => openLightbox(idx));
         galleryGrid.appendChild(thumb);
     });
