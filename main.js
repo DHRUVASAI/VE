@@ -14,7 +14,6 @@ window.addEventListener('scroll', () => {
     }
 });
 
-
 hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('active');
     hamburger.classList.toggle('active');
@@ -94,7 +93,6 @@ backBtn.addEventListener('click', () => {
 // ==================== CONTACT FORM — REAL SUBMISSION via Formspree ====================
 const form = document.getElementById('contactForm');
 if (form) {
-    // Sync email field to hidden _replyto so owner can reply directly
     const emailInput = document.getElementById('email');
     const replyTo = document.getElementById('replyTo');
     if (emailInput) {
@@ -150,3 +148,185 @@ if (form) {
         }, 5000);
     });
 }
+
+// ==================== SERVICE GALLERY MODAL ====================
+const GALLERY_DATA = {
+    industrial: {
+        title: 'Industrial Uniforms',
+        icon: 'fa-industry',
+        images: [
+            { src: 'assets/works/star-industrial-shirt.jpg', caption: 'Industrial Work Shirt — Star Industries' },
+        ]
+    },
+    healthcare: {
+        title: 'Healthcare Wear',
+        icon: 'fa-stethoscope',
+        images: [
+            { src: 'assets/works/konnect-scrub.jpg', caption: 'Medical Scrubs — Konnect Diagnostics' },
+            { src: 'assets/works/konnect-labcoat.jpg', caption: 'Lab Coat — Konnect Diagnostics' },
+        ]
+    },
+    school: {
+        title: 'School Uniforms',
+        icon: 'fa-graduation-cap',
+        images: [
+            { src: 'assets/works/blazer.jpg', caption: 'Institutional Blazer — Aradhana Academy' },
+            { src: 'assets/works/high-school-vest.jpg', caption: 'School Vest with Logo — Sri Gouthami High School' },
+            { src: 'assets/works/laurus-pinafore.jpg', caption: 'Tartan Pinafore — Laurus School' },
+            { src: 'assets/works/laurus-shirt.jpg', caption: 'Shirt & Tie Set — Laurus School' },
+            { src: 'assets/works/uniform-set.jpg', caption: 'Complete Uniform Set — Primary School Collection' },
+        ]
+    },
+    bags: {
+        title: 'Bags & Backpacks',
+        icon: 'fa-shopping-bag',
+        images: [
+            { src: 'assets/works/techolution-bag.jpg', caption: 'Branded Corporate Bag — Techolution' },
+            { src: 'assets/works/sih-bag.jpg', caption: 'Duffle Bag — Smart India Hackathon 2025' },
+            { src: 'assets/works/vnrvjiet-bag.jpg', caption: 'Branded Bag — VNRVJIET' },
+        ]
+    },
+    caps: {
+        title: 'Caps & Headwear',
+        icon: 'fa-hat-cowboy',
+        images: [
+            { src: 'assets/works/Deloitte cap.jpg', caption: 'Corporate Cap — Deloitte' },
+            { src: 'assets/works/Corporate Cap.jpg', caption: 'Promotional Cap' },
+            { src: 'assets/works/tsrtc-cap.jpg', caption: 'Official Cap — TSRTC' },
+            { src: 'assets/works/bdubs-cap.jpg', caption: 'Embroidered Cap — B-DUBS' },
+        ]
+    },
+    jackets: {
+        title: 'Jackets & Rainwear',
+        icon: 'fa-cloud-showers-heavy',
+        images: [
+            { src: 'assets/works/rainjacket.jpg', caption: 'Rain Jacket — All Weather Protection' },
+        ]
+    },
+    customization: {
+        title: 'Customization',
+        icon: 'fa-magic',
+        images: [
+            { src: 'assets/works/t-shirt.jpg', caption: 'Custom Printed T-Shirt' },
+        ]
+    },
+    corporate: {
+        title: 'Corporate Apparel',
+        icon: 'fa-briefcase',
+        images: [
+            { src: 'assets/works/corporate-polo.jpg', caption: 'Corporate Polo Shirt — liab expo' },
+            { src: 'assets/works/emmadi-vest.jpg', caption: 'Corporate Nehru Vest — emmadi Silver Jewellery' },
+            { src: 'assets/works/barbeque-pride-shirt.jpg', caption: 'Corporate Shirt — Barbeque Pride' },
+        ]
+    }
+};
+
+// Modal elements
+const galleryModal = document.getElementById('galleryModal');
+const galleryGrid = document.getElementById('galleryModalGrid');
+const galleryTitle = document.getElementById('galleryModalTitle');
+const galleryIcon = document.getElementById('galleryModalIcon');
+const modalClose = document.getElementById('galleryModalClose');
+const backdrop = galleryModal.querySelector('.gallery-modal-backdrop');
+
+// Lightbox elements
+const lightbox = document.getElementById('galleryLightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxCap = document.getElementById('lightboxCaption');
+const lightboxClose = document.getElementById('lightboxClose');
+const lightboxPrev = document.getElementById('lightboxPrev');
+const lightboxNext = document.getElementById('lightboxNext');
+
+let currentImages = [];
+let currentIndex = 0;
+
+function openGallery(category) {
+    const data = GALLERY_DATA[category];
+    if (!data) return;
+
+    currentImages = data.images;
+    galleryTitle.textContent = data.title;
+    galleryIcon.innerHTML = `<i class="fas ${data.icon}"></i>`;
+
+    galleryGrid.innerHTML = '';
+    data.images.forEach((img, idx) => {
+        const thumb = document.createElement('div');
+        thumb.className = 'gallery-thumb';
+        thumb.innerHTML = `
+            <img src="${img.src}" alt="${img.caption}" loading="lazy">
+            <div class="gallery-thumb-caption">${img.caption}</div>
+        `;
+        thumb.addEventListener('click', () => openLightbox(idx));
+        galleryGrid.appendChild(thumb);
+    });
+
+    galleryModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeGallery() {
+    galleryModal.classList.remove('open');
+    document.body.style.overflow = '';
+    closeLightbox();
+}
+
+function openLightbox(idx) {
+    currentIndex = idx;
+    updateLightbox();
+    lightbox.classList.add('open');
+}
+
+function closeLightbox() {
+    lightbox.classList.remove('open');
+}
+
+function updateLightbox() {
+    const img = currentImages[currentIndex];
+    lightboxImg.style.opacity = '0';
+    setTimeout(() => {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.caption;
+        lightboxCap.textContent = img.caption;
+        lightboxImg.style.opacity = '1';
+    }, 150);
+    lightboxPrev.style.display = currentImages.length > 1 ? 'flex' : 'none';
+    lightboxNext.style.display = currentImages.length > 1 ? 'flex' : 'none';
+}
+
+// Service card click events
+document.querySelectorAll('.service-card[data-category]').forEach(card => {
+    card.addEventListener('click', () => openGallery(card.dataset.category));
+    card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openGallery(card.dataset.category);
+        }
+    });
+});
+
+// Close modal via button or backdrop
+modalClose.addEventListener('click', closeGallery);
+backdrop.addEventListener('click', closeGallery);
+
+// Lightbox controls
+lightboxClose.addEventListener('click', closeLightbox);
+lightboxPrev.addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    updateLightbox();
+});
+lightboxNext.addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    updateLightbox();
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        if (lightbox.classList.contains('open')) closeLightbox();
+        else if (galleryModal.classList.contains('open')) closeGallery();
+    }
+    if (lightbox.classList.contains('open')) {
+        if (e.key === 'ArrowLeft') lightboxPrev.click();
+        if (e.key === 'ArrowRight') lightboxNext.click();
+    }
+});

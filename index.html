@@ -120,63 +120,71 @@
             <div class="section-header">
                 <span class="section-tag">What We Do</span>
                 <h2>Our Specialized Services</h2>
-                <p class="section-desc">From factory floors to five-star lobbies — we design uniforms that represent
-                    your brand's values and identity.</p>
+                <p class="section-desc">Click any service to explore our real work — see what we've crafted for clients
+                    just like you.</p>
             </div>
             <div class="services-grid">
-                <div class="service-card">
+                <div class="service-card" data-category="industrial" role="button" tabindex="0">
                     <div class="service-icon"><i class="fas fa-industry"></i></div>
                     <h3>Industrial Uniforms</h3>
                     <p>Boiler suits, coveralls, protective jackets, factory wear, labcoats, safety boots and accessories
                         built for extreme environments.</p>
+                    <div class="service-gallery-btn"><i class="fas fa-images"></i> View Our Work</div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-category="healthcare" role="button" tabindex="0">
                     <div class="service-icon"><i class="fas fa-stethoscope"></i></div>
                     <h3>Healthcare Wear</h3>
                     <p>Anti-microbial lab coats, surgical scrubs, nurses wear, theatre wear, and patient apparel that
                         prioritize hygiene.</p>
+                    <div class="service-gallery-btn"><i class="fas fa-images"></i> View Our Work</div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-category="school" role="button" tabindex="0">
                     <div class="service-icon"><i class="fas fa-graduation-cap"></i></div>
                     <h3>School Uniforms</h3>
                     <p>Custom shirts, pinafores, blazers, cardigans, sports kits, ties, belts and socks — everything for
                         academic institutions.</p>
+                    <div class="service-gallery-btn"><i class="fas fa-images"></i> View Our Work</div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-category="bags" role="button" tabindex="0">
                     <div class="service-icon"><i class="fas fa-shopping-bag"></i></div>
-                    <h3>Bags & Backpacks</h3>
+                    <h3>Bags &amp; Backpacks</h3>
                     <p>Custom-branded school bags, corporate backpacks, duffle bags, and more — designed for durability
                         and style.</p>
+                    <div class="service-gallery-btn"><i class="fas fa-images"></i> View Our Work</div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-category="caps" role="button" tabindex="0">
                     <div class="service-icon"><i class="fas fa-hat-cowboy"></i></div>
-                    <h3>Caps & Headwear</h3>
+                    <h3>Caps &amp; Headwear</h3>
                     <p>Promotional caps, sports hats, and custom headwear for schools, corporates, and events.</p>
+                    <div class="service-gallery-btn"><i class="fas fa-images"></i> View Our Work</div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-category="jackets" role="button" tabindex="0">
                     <div class="service-icon"><i class="fas fa-cloud-showers-heavy"></i></div>
-                    <h3>Jackets & Rainwear</h3>
+                    <h3>Jackets &amp; Rainwear</h3>
                     <p>All-weather jackets, raincoats, and windcheaters — functional and fashionable protection for any
                         season.</p>
+                    <div class="service-gallery-btn"><i class="fas fa-images"></i> View Our Work</div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-category="customization" role="button" tabindex="0">
                     <div class="service-icon"><i class="fas fa-magic"></i></div>
                     <h3>Customization</h3>
                     <p>Personalized T-shirts, caps, bags, and more — with your logo, name, or design. Embroidery,
                         printing, and full custom solutions.</p>
+                    <div class="service-gallery-btn"><i class="fas fa-images"></i> View Our Work</div>
                 </div>
-                <div class="service-card">
+                <div class="service-card" data-category="corporate" role="button" tabindex="0">
                     <div class="service-icon"><i class="fas fa-briefcase"></i></div>
                     <h3>Corporate Apparel</h3>
                     <p>Custom-branded T-shirts, polo shirts, executive suits, and promotional caps for your corporate
                         identity.</p>
+                    <div class="service-gallery-btn"><i class="fas fa-images"></i> View Our Work</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Portfolio -->
-    <section class="section section-dark" id="portfolio">
+    <!-- Portfolio section removed; galleries now live inside service cards -->
+    <section class="section section-dark" id="portfolio" style="display:none">
         <div class="container">
             <div class="section-header section-header-light">
                 <span class="section-tag">Our Portfolio</span>
@@ -579,6 +587,33 @@
     <a href="https://wa.me/917013107335" class="whatsapp-btn" target="_blank" rel="noopener" title="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+
+    <!-- Gallery Modal -->
+    <div id="galleryModal" class="gallery-modal" role="dialog" aria-modal="true" aria-labelledby="galleryModalTitle">
+        <div class="gallery-modal-backdrop"></div>
+        <div class="gallery-modal-panel">
+            <div class="gallery-modal-header">
+                <div class="gallery-modal-title-wrap">
+                    <span class="gallery-modal-icon" id="galleryModalIcon"></span>
+                    <h3 id="galleryModalTitle">Gallery</h3>
+                </div>
+                <button class="gallery-modal-close" id="galleryModalClose" aria-label="Close gallery">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="gallery-modal-grid" id="galleryModalGrid"></div>
+        </div>
+        <!-- Lightbox -->
+        <div class="gallery-lightbox" id="galleryLightbox">
+            <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Previous"><i
+                    class="fas fa-chevron-left"></i></button>
+            <img src="" alt="" id="lightboxImg" class="lightbox-img">
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+            <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Next"><i
+                    class="fas fa-chevron-right"></i></button>
+            <button class="lightbox-close" id="lightboxClose" aria-label="Close"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
 
     <script src="main.js"></script>
 </body>
