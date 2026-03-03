@@ -171,10 +171,11 @@ const GALLERY_DATA = {
         icon: 'fa-graduation-cap',
         images: [
             { src: 'assets/works/blazer-nobg.png', caption: 'Institutional Blazer — Aradhana Academy' },
-            { src: 'assets/works/high-school-vest-nobg.png', caption: 'School Vest with Logo — Sri Gouthami High School' },
+            { src: 'assets/works/high-school-vest-nobg.png', caption: 'School Vest — Sri Gouthami High School' },
             { src: 'assets/works/laurus-pinafore.jpg', caption: 'Tartan Pinafore — Laurus School' },
+            { src: 'assets/works/Corporate Cap-nobg.png', caption: 'School Pinafore Uniform — Laurus School' },
             { src: 'assets/works/laurus-shirt-nobg.png', caption: 'Shirt & Tie Set — Laurus School' },
-            { src: 'assets/works/uniform-set-nobg.png', caption: 'Complete Uniform Set — Primary School Collection' },
+            { src: 'assets/works/uniform-set-nobg.png', caption: 'Complete Uniform Set — Primary School' },
         ]
     },
     bags: {
@@ -191,7 +192,6 @@ const GALLERY_DATA = {
         icon: 'fa-hat-cowboy',
         images: [
             { src: 'assets/works/Deloitte cap-nobg.png', caption: 'Corporate Cap — Deloitte' },
-            { src: 'assets/works/Corporate Cap-nobg.png', caption: 'Promotional Cap' },
             { src: 'assets/works/tsrtc-cap-nobg.png', caption: 'Official Cap — TSRTC' },
             { src: 'assets/works/bdubs-cap-nobg.png', caption: 'Embroidered Cap — B-DUBS' },
         ]
@@ -207,7 +207,7 @@ const GALLERY_DATA = {
         title: 'Customization',
         icon: 'fa-magic',
         images: [
-            { src: 'assets/works/t-shirt-nobg.png', caption: 'Custom Printed T-Shirt' },
+            { src: 'assets/works/t-shirt-nobg.png', caption: 'Custom Striped Vest' },
         ]
     },
     corporate: {
