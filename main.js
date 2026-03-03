@@ -207,7 +207,10 @@ const GALLERY_DATA = {
         title: 'Customization',
         icon: 'fa-magic',
         images: [
-            { src: 'assets/works/t-shirt-nobg.png', caption: 'Custom Striped Vest' },
+            { src: 'assets/works/custom-toofaan-shirt-nobg.png', caption: 'Custom Printed Sports Jersey' },
+            { src: 'assets/works/custom-bsr-shirt-nobg.png', caption: 'Custom Gym T-Shirt — BSR' },
+            { src: 'assets/works/custom-lock-decor-shirt-nobg.png', caption: 'Custom Corporate T-Shirt — Lock & Decor' },
+            { src: 'assets/works/custom-political-shirts-nobg.png', caption: 'Custom Printed Event T-Shirts' },
         ]
     },
     corporate: {
