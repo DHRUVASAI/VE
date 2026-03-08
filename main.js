@@ -1,3 +1,15 @@
+// ==================== SPLASH INTRO ====================
+const splash = document.getElementById('introSplash');
+if (splash) {
+    document.body.classList.add('splash-active');
+    setTimeout(() => {
+        document.body.classList.remove('splash-active');
+    }, 2800);
+    setTimeout(() => {
+        splash.remove();
+    }, 3800);
+}
+
 // ==================== NAVBAR + TRUST BAR ====================
 const nav = document.getElementById('navbar');
 const hamburger = document.getElementById('hamburger');
@@ -29,36 +41,81 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     });
 });
 
-// ==================== SCROLL REVEAL ====================
-const revealObserver = new IntersectionObserver((entries) => {
+// ==================== SCROLL PROGRESS BAR ====================
+const scrollProgressBar = document.getElementById('scrollProgress');
+if (scrollProgressBar) {
+    window.addEventListener('scroll', () => {
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = (window.scrollY / docHeight) * 100;
+        scrollProgressBar.style.width = scrollPercent + '%';
+    }, { passive: true });
+}
+
+// ==================== ACTIVE NAV LINK HIGHLIGHT ====================
+const sections = document.querySelectorAll('section[id]');
+const navLinksAll = document.querySelectorAll('.nav-links a[href^="#"]');
+
+const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinksAll.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + id) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    });
+}, { threshold: 0.3, rootMargin: '-80px 0px -40% 0px' });
+
+sections.forEach(section => navObserver.observe(section));
+
+// ==================== ENHANCED SCROLL REVEAL ====================
+const revealTypes = ['reveal-up', 'reveal-left', 'reveal-right', 'reveal-scale'];
+
+const enhancedRevealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const siblings = Array.from(entry.target.parentElement.children);
             const idx = siblings.indexOf(entry.target);
-            entry.target.style.transitionDelay = `${idx * 0.07}s`;
+            entry.target.style.transitionDelay = `${idx * 0.1}s`;
             entry.target.classList.add('revealed');
-            revealObserver.unobserve(entry.target);
+            enhancedRevealObserver.unobserve(entry.target);
         }
     });
-}, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-document.querySelectorAll(
-    '.service-card, .portfolio-item, .contact-card, .why-item, .section-header'
-).forEach(el => {
-    el.classList.add('reveal-item');
-    revealObserver.observe(el);
+// Apply varied reveal types to different elements
+document.querySelectorAll('.service-card').forEach((el, i) => {
+    el.classList.add('reveal-up');
+    enhancedRevealObserver.observe(el);
 });
 
-const revealStyle = document.createElement('style');
-revealStyle.textContent = `
-    .reveal-item {
-        opacity: 0;
-        transform: translateY(24px);
-        transition: opacity 0.65s ease, transform 0.65s ease;
-    }
-    .revealed { opacity: 1 !important; transform: translateY(0) !important; }
-`;
-document.head.appendChild(revealStyle);
+document.querySelectorAll('.why-item').forEach((el, i) => {
+    el.classList.add('reveal-up');
+    enhancedRevealObserver.observe(el);
+});
+
+document.querySelectorAll('.contact-card').forEach((el) => {
+    el.classList.add('reveal-up');
+    enhancedRevealObserver.observe(el);
+});
+
+document.querySelectorAll('.leader-card').forEach((el, i) => {
+    el.classList.add('reveal-up');
+    enhancedRevealObserver.observe(el);
+});
+
+document.querySelectorAll('.section-header').forEach((el) => {
+    el.classList.add('reveal-up');
+    enhancedRevealObserver.observe(el);
+});
+
+document.querySelectorAll('.portfolio-item').forEach((el) => {
+    el.classList.add('reveal-scale');
+    enhancedRevealObserver.observe(el);
+});
 
 // ==================== STAT COUNTER ====================
 const counters = document.querySelectorAll('.stat-number[data-count]');
@@ -89,6 +146,160 @@ window.addEventListener('scroll', () => {
 backBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+
+// ==================== 3D TILT SERVICE CARDS ====================
+if (window.matchMedia('(hover: hover)').matches) {
+    document.querySelectorAll('.service-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            const rotateX = ((y - centerY) / centerY) * -6;
+            const rotateY = ((x - centerX) / centerX) * 6;
+            card.style.setProperty('--rx', rotateX + 'deg');
+            card.style.setProperty('--ry', rotateY + 'deg');
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.setProperty('--rx', '0deg');
+            card.style.setProperty('--ry', '0deg');
+        });
+    });
+}
+
+// ==================== HERO MOUSE PARALLAX ====================
+const hero = document.querySelector('.hero');
+const heroOverlay = hero ? hero.querySelector('.hero-overlay') : null;
+const heroParticles = hero ? hero.querySelector('.hero-particles') : null;
+
+if (hero && window.matchMedia('(hover: hover)').matches) {
+    hero.addEventListener('mousemove', (e) => {
+        const rect = hero.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+        if (heroOverlay) {
+            heroOverlay.style.transform = `translate(${x * -15}px, ${y * -15}px)`;
+        }
+        if (heroParticles) {
+            heroParticles.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+        }
+    });
+}
+
+// ==================== CANVAS THREAD PARTICLES (Fabric vibe) ====================
+const heroCanvas = document.getElementById('heroCanvas');
+if (heroCanvas && hero) {
+    const ctx = heroCanvas.getContext('2d');
+    let threads = [];
+    let animId;
+
+    function resizeCanvas() {
+        heroCanvas.width = hero.offsetWidth;
+        heroCanvas.height = hero.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Thread {
+        constructor() {
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * heroCanvas.width;
+            this.y = Math.random() * heroCanvas.height;
+            this.length = 30 + Math.random() * 60;
+            this.angle = Math.random() * Math.PI * 2;
+            this.speed = 0.15 + Math.random() * 0.3;
+            this.drift = (Math.random() - 0.5) * 0.008;
+            this.opacity = 0.08 + Math.random() * 0.15;
+            this.thickness = 0.5 + Math.random() * 1;
+            this.goldAmount = Math.random();
+        }
+        update() {
+            this.x += Math.cos(this.angle) * this.speed;
+            this.y += Math.sin(this.angle) * this.speed;
+            this.angle += this.drift;
+
+            if (this.x < -this.length || this.x > heroCanvas.width + this.length ||
+                this.y < -this.length || this.y > heroCanvas.height + this.length) {
+                this.reset();
+                // Re-enter from a random edge
+                const edge = Math.floor(Math.random() * 4);
+                if (edge === 0) { this.x = -this.length; this.y = Math.random() * heroCanvas.height; }
+                else if (edge === 1) { this.x = heroCanvas.width + this.length; this.y = Math.random() * heroCanvas.height; }
+                else if (edge === 2) { this.y = -this.length; this.x = Math.random() * heroCanvas.width; }
+                else { this.y = heroCanvas.height + this.length; this.x = Math.random() * heroCanvas.width; }
+            }
+        }
+        draw(ctx) {
+            const endX = this.x + Math.cos(this.angle) * this.length;
+            const endY = this.y + Math.sin(this.angle) * this.length;
+
+            const r = Math.round(184 + (255 - 184) * this.goldAmount * 0.3);
+            const g = Math.round(150 + (200 - 150) * this.goldAmount * 0.3);
+            const b = Math.round(62 + (100 - 62) * this.goldAmount * 0.2);
+
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(endX, endY);
+            ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${this.opacity})`;
+            ctx.lineWidth = this.thickness;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+        }
+    }
+
+    // Create threads
+    const threadCount = Math.min(35, Math.floor(heroCanvas.width / 40));
+    for (let i = 0; i < threadCount; i++) {
+        threads.push(new Thread());
+    }
+
+    function animateThreads() {
+        ctx.clearRect(0, 0, heroCanvas.width, heroCanvas.height);
+        threads.forEach(t => {
+            t.update();
+            t.draw(ctx);
+        });
+        animId = requestAnimationFrame(animateThreads);
+    }
+    animateThreads();
+
+    // Pause when hero is not visible
+    const canvasObserver = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+            if (!animId) animateThreads();
+        } else {
+            cancelAnimationFrame(animId);
+            animId = null;
+        }
+    }, { threshold: 0.1 });
+    canvasObserver.observe(hero);
+}
+
+// ==================== TYPEWRITER EFFECT ON HERO SUBTITLE ====================
+const heroSubtitle = hero ? hero.querySelector('.hero-content > p') : null;
+if (heroSubtitle) {
+    const fullText = heroSubtitle.textContent.trim();
+    heroSubtitle.textContent = '';
+    heroSubtitle.style.minHeight = '3em';
+    let charIndex = 0;
+    const typeDelay = 3500; // Wait for splash to finish
+
+    setTimeout(() => {
+        function typeChar() {
+            if (charIndex < fullText.length) {
+                heroSubtitle.textContent += fullText[charIndex];
+                charIndex++;
+                setTimeout(typeChar, 18 + Math.random() * 12);
+            }
+        }
+        typeChar();
+    }, typeDelay);
+}
 
 // ==================== CONTACT FORM — REAL SUBMISSION via Formspree ====================
 const form = document.getElementById('contactForm');
@@ -173,7 +384,6 @@ const GALLERY_DATA = {
             { src: 'assets/works/blazer-nobg.png', caption: 'Institutional Blazer — Aradhana Academy' },
             { src: 'assets/works/high-school-vest-nobg.png', caption: 'School Vest — Sri Gouthami High School' },
             { src: 'assets/works/laurus-pinafore.jpg', caption: 'Tartan Pinafore — Laurus School' },
-            { src: 'assets/works/Corporate Cap-nobg.png', caption: 'School Pinafore Uniform — Laurus School' },
             { src: 'assets/works/laurus-shirt-nobg.png', caption: 'Shirt & Tie Set — Laurus School' },
             { src: 'assets/works/uniform-set-nobg.png', caption: 'Complete Uniform Set — Primary School' },
         ]

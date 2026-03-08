@@ -13,7 +13,7 @@
     <meta name="description"
         content="Venkateshwara Enterprises - Leading manufacturer of premium School, Industrial, Healthcare and Corporate uniforms in Hyderabad since years.">
     <link rel="icon" type="image/png" href="assets/logo.png">
-    <link rel="stylesheet" href="style.css?v=2.1">
+    <link rel="stylesheet" href="style.css?v=3.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
@@ -22,15 +22,26 @@
 
 <body>
 
+    <!-- Cinematic Splash Intro -->
+    <div id="introSplash" class="intro-splash">
+        <div class="splash-content">
+            <img src="assets/logo.png" alt="VE" class="splash-logo">
+            <div class="splash-bar">
+                <div class="splash-bar-fill"></div>
+            </div>
+            <span class="splash-tagline">Premium Uniform Manufacturers</span>
+        </div>
+    </div>
 
-
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
 
     <!-- Navigation -->
     <nav id="navbar">
         <a href="#hero" class="logo">
             <img src="assets/logo.png" alt="VE Monogram" class="logo-img">
             <div class="logo-text">
-                <span class="logo-name">Venkateswara</span>
+                <span class="logo-name">Venkateshwara</span>
                 <span class="logo-sub">Enterprises</span>
             </div>
         </a>
@@ -49,6 +60,7 @@
 
     <!-- Hero -->
     <section class="hero" id="hero">
+        <canvas id="heroCanvas" class="hero-canvas"></canvas>
         <div class="hero-overlay"></div>
         <div class="hero-particles">
             <span></span><span></span><span></span><span></span><span></span>
@@ -419,7 +431,8 @@
                     <div class="leader-info">
                         <div class="leader-badge">Managing Director</div>
                         <h3>Vudatha Nagaraju</h3>
-                        <p>With over 20 years of expertise in garment manufacturing, Mr. Nagaraju has built Venkateswara
+                        <p>With over 20 years of expertise in garment manufacturing, Mr. Nagaraju has built
+                            Venkateshwara
                             Enterprises into one of Hyderabad's most trusted uniform suppliers — serving airports,
                             schools, hospitals, and corporates.</p>
                         <div class="leader-contact">
