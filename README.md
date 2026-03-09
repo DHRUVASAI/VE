@@ -8,7 +8,7 @@
 
 ## 🎬 Website Walkthrough
 
-![Website Walkthrough](assets/walkthrough.webp)
+![Website Walkthrough](assets/walkthrough_1773025591476.webp)
 
 ---
 
