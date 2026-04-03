@@ -1,21 +1,4 @@
-const fs = require('fs').promises;
-const path = require('path');
-
 exports.handler = async (event, context) => {
-  // Only allow POST requests
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS'
-      },
-      body: JSON.stringify({ error: 'Method not allowed' })
-    };
-  }
-
   // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
     return {
@@ -29,8 +12,20 @@ exports.handler = async (event, context) => {
     };
   }
 
+  // Only allow POST requests
+  if (event.httpMethod !== 'POST') {
+    return {
+      statusCode: 405,
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+      },
+      body: JSON.stringify({ error: 'Method not allowed' })
+    };
+  }
+
   try {
-    const { password, galleryData } = JSON.parse(event.body);
+    const { password, galleryData } = JSON.parse(event.body || '{}');
     
     // Verify admin password
     const ADMIN_PASSWORD = process.env.VE_ADMIN_PASSWORD || 'VEAdmin2024!';
@@ -57,9 +52,11 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Save to file (this would need to be adapted for your deployment setup)
-    const filePath = path.join(process.cwd(), 'data', 'services-gallery.json');
-    await fs.writeFile(filePath, JSON.stringify(galleryData, null, 2));
+    // For now, we'll return the data as confirmation
+    // In a real implementation with a Git-based CMS, you'd commit changes here
+    // For this simple setup, the admin will need to manually update the JSON file
+    
+    console.log('Gallery data received:', JSON.stringify(galleryData, null, 2));
     
     return {
       statusCode: 200,
@@ -69,7 +66,8 @@ exports.handler = async (event, context) => {
       },
       body: JSON.stringify({ 
         success: true, 
-        message: 'Gallery data saved successfully',
+        message: 'Gallery data validated successfully. Please manually update data/services-gallery.json with the provided data.',
+        data: galleryData,
         timestamp: new Date().toISOString()
       })
     };
