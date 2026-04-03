@@ -1,114 +1,596 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VE Admin</title>
+  <title>VE Admin - Gallery Management</title>
   <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
     body {
-      margin: 0;
-      font-family: Inter, Arial, sans-serif;
-      background: #0f1527;
-      color: #ffffff;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: linear-gradient(135deg, #0f1527 0%, #1a2332 100%);
+      color: #fff;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* Login Form */
+    .login-container {
       min-height: 100vh;
       display: grid;
       place-items: center;
-      padding: 24px;
-      box-sizing: border-box;
+      padding: 20px;
     }
 
-    .admin-msg {
-      max-width: 760px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(184, 150, 62, 0.35);
-      border-radius: 14px;
-      padding: 22px;
-      line-height: 1.65;
+    .login-form {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(184, 150, 62, 0.3);
+      border-radius: 16px;
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
     }
 
-    .admin-msg h1 {
-      margin: 0 0 10px;
-      font-size: 1.35rem;
+    .login-form h1 {
       color: #d4b96a;
+      margin-bottom: 24px;
+      font-size: 1.5rem;
     }
 
-    .admin-msg p {
-      margin: 8px 0;
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
       color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
     }
 
-    .admin-msg ol {
-      margin: 10px 0 0 20px;
+    .form-group input {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #d4b96a;
+      box-shadow: 0 0 0 3px rgba(212, 185, 106, 0.2);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #d4b96a 0%, #b8963e 100%);
+      border: none;
+      border-radius: 8px;
+      color: #0f1527;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .login-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .error-msg {
+      color: #ff6b6b;
+      font-size: 14px;
+      margin-top: 12px;
+      padding: 8px 12px;
+      background: rgba(255, 107, 107, 0.1);
+      border-radius: 6px;
+      border: 1px solid rgba(255, 107, 107, 0.3);
+    }
+
+    /* Admin Interface */
+    .admin-interface {
+      display: none;
+    }
+
+    .admin-header {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .admin-header h1 {
+      color: #d4b96a;
+      font-size: 1.4rem;
+    }
+
+    .logout-btn {
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .logout-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .admin-content {
+      padding: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .category-section {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 12px;
+    }
+
+    .category-header i {
+      color: #d4b96a;
+      font-size: 1.2rem;
+    }
+
+    .category-header h2 {
+      color: #fff;
+      font-size: 1.2rem;
+    }
+
+    .images-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .image-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 12px;
+      position: relative;
+    }
+
+    .image-item img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .image-item input {
+      width: 100%;
+      padding: 6px 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .remove-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(255, 107, 107, 0.8);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .add-image-section {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 16px;
+      margin-top: 16px;
+    }
+
+    .file-input-group {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: end;
+    }
+
+    .file-input-group input[type="file"] {
+      flex: 1;
+      padding: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 13px;
+    }
+
+    .add-btn {
+      padding: 8px 16px;
+      background: linear-gradient(135deg, #d4b96a 0%, #b8963e 100%);
+      border: none;
+      border-radius: 6px;
+      color: #0f1527;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .save-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    .save-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .images-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+      
+      .admin-content {
+        padding: 20px;
+      }
+      
+      .save-btn {
+        bottom: 20px;
+        right: 20px;
+      }
     }
   </style>
-  
 </head>
-
 <body>
-  <div id="adminRoot"></div>
+  <!-- Login Form -->
+  <div id="loginContainer" class="login-container">
+    <form id="loginForm" class="login-form">
+      <h1><i class="fas fa-shield-alt"></i> VE Admin Access</h1>
+      <div class="form-group">
+        <label for="password">Admin Password</label>
+        <input type="password" id="password" placeholder="Enter admin password" required>
+      </div>
+      <button type="submit" class="login-btn">Access Admin Panel</button>
+      <div id="errorMsg" class="error-msg" style="display: none;"></div>
+    </form>
+  </div>
+
+  <!-- Admin Interface -->
+  <div id="adminInterface" class="admin-interface">
+    <div class="admin-header">
+      <h1><i class="fas fa-cog"></i> VE Gallery Management</h1>
+      <button id="logoutBtn" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+      </button>
+    </div>
+
+    <div class="admin-content">
+      <div style="background: rgba(212, 185, 106, 0.1); border: 1px solid rgba(212, 185, 106, 0.3); border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+        <h3 style="margin: 0 0 8px; color: #d4b96a;"><i class="fas fa-info-circle"></i> How to Use</h3>
+        <p style="margin: 0; color: rgba(255,255,255,0.9); font-size: 14px;">
+          • Edit captions directly in the text fields<br>
+          • Click the × button to remove images<br>
+          • Add new images using the file selectors<br>
+          • Click "Save All Changes" when you're done<br>
+          • New images need to be manually uploaded to <code>assets/uploads/</code> folder
+        </p>
+      </div>
+      
+      <div id="categoriesContainer"></div>
+      <button id="saveBtn" class="save-btn">
+        <i class="fas fa-save"></i> Save All Changes
+      </button>
+    </div>
+  </div>
 
   <script>
-    const root = document.getElementById('adminRoot');
-    const tokenBlob = (window.location.search || '') + '&' + (window.location.hash || '');
-    const hasIdentityToken = /invite_token=|confirmation_token=|recovery_token=|email_change_token=/i.test(tokenBlob);
+    // Configuration
+    const ADMIN_PASSWORD = 'VEAdmin2024!'; // Change this to your desired password
+    
+    // State
+    let galleryData = {};
+    let isLoggedIn = localStorage.getItem('veAdminAuth') === 'true';
 
-    if (window.location.protocol === 'file:') {
-      const deployHint = 'https://YOUR_NETLIFY_DOMAIN/admin';
-      root.innerHTML = `
-        <div class="admin-msg">
-          <h1>Use Netlify URL for Admin</h1>
-          <p>This admin panel cannot run from a local file path.</p>
-          <p>Open it from your deployed site URL using <strong>/admin</strong>.</p>
-          <ol>
-            <li>Deploy/publish to Netlify</li>
-            <li>Enable Netlify Identity and Git Gateway</li>
-            <li>Open ${deployHint}</li>
-            <li>Sign in with invited account only</li>
-          </ol>
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+      if (isLoggedIn) {
+        showAdminInterface();
+      } else {
+        showLoginForm();
+      }
+    });
+
+    // Login handling
+    document.getElementById('loginForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const password = document.getElementById('password').value;
+      
+      if (password === ADMIN_PASSWORD) {
+        localStorage.setItem('veAdminAuth', 'true');
+        showAdminInterface();
+      } else {
+        showError('Invalid password. Please try again.');
+      }
+    });
+
+    // Logout handling
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('veAdminAuth');
+      location.reload();
+    });
+
+    function showError(message) {
+      const errorMsg = document.getElementById('errorMsg');
+      errorMsg.textContent = message;
+      errorMsg.style.display = 'block';
+      setTimeout(() => {
+        errorMsg.style.display = 'none';
+      }, 5000);
+    }
+
+    function showLoginForm() {
+      document.getElementById('loginContainer').style.display = 'grid';
+      document.getElementById('adminInterface').style.display = 'none';
+    }
+
+    async function showAdminInterface() {
+      document.getElementById('loginContainer').style.display = 'none';
+      document.getElementById('adminInterface').style.display = 'block';
+      
+      await loadGalleryData();
+      renderCategories();
+    }
+
+    async function loadGalleryData() {
+      try {
+        const response = await fetch('../data/services-gallery.json');
+        galleryData = await response.json();
+      } catch (error) {
+        console.error('Failed to load gallery data:', error);
+        showError('Failed to load gallery data');
+      }
+    }
+
+    function renderCategories() {
+      const container = document.getElementById('categoriesContainer');
+      container.innerHTML = '';
+
+      Object.entries(galleryData).forEach(([categoryKey, categoryData]) => {
+        const categoryEl = createCategoryElement(categoryKey, categoryData);
+        container.appendChild(categoryEl);
+      });
+    }
+
+    function createCategoryElement(categoryKey, categoryData) {
+      const section = document.createElement('div');
+      section.className = 'category-section';
+      
+      section.innerHTML = `
+        <div class="category-header">
+          <i class="fas ${categoryData.icon}"></i>
+          <h2>${categoryData.title}</h2>
+        </div>
+        
+        <div class="images-grid" id="grid-${categoryKey}">
+          ${categoryData.images.map((img, index) => {
+            const imageSrc = img._preview || `../${img.src}`;
+            return `
+            <div class="image-item">
+              <button class="remove-btn" onclick="removeImage('${categoryKey}', ${index})">&times;</button>
+              <img src="${imageSrc}" alt="${img.caption}" onerror="this.style.display='none'">
+              <input type="text" value="${img.caption}" 
+                     onchange="updateCaption('${categoryKey}', ${index}, this.value)"
+                     placeholder="Image caption">
+              ${img._preview ? '<small style="color: #d4b96a; font-size: 11px;">📁 New file - needs upload</small>' : ''}
+            </div>
+          `;}).join('')}
+        </div>
+        
+        <div class="add-image-section">
+          <div class="file-input-group">
+            <input type="file" id="file-${categoryKey}" accept="image/*,video/*" multiple>
+            <input type="text" id="caption-${categoryKey}" placeholder="Caption for new images">
+            <button class="add-btn" onclick="addImages('${categoryKey}')">
+              <i class="fas fa-plus"></i> Add
+            </button>
+          </div>
         </div>
       `;
-    } else {
-      let cmsLoaded = false;
-      const loadCMS = () => {
-        if (cmsLoaded) return;
-        cmsLoaded = true;
-        const cms = document.createElement('script');
-        cms.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
-        cms.defer = true;
-        document.body.appendChild(cms);
-      };
-
-      const identity = document.createElement('script');
-      identity.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
-      identity.defer = true;
-      identity.onload = () => {
-        if (!window.netlifyIdentity) {
-          loadCMS();
-          return;
-        }
-
-        let cmsLoadTimer;
-        const safeLoadCMS = () => {
-          clearTimeout(cmsLoadTimer);
-          loadCMS();
-        };
-
-        window.netlifyIdentity.on('init', (user) => {
-          // During invite/confirmation flow, give Netlify Identity a moment to finish password setup.
-          if (hasIdentityToken && !user) {
-            cmsLoadTimer = setTimeout(safeLoadCMS, 1500);
-          } else {
-            safeLoadCMS();
-          }
-        });
-
-        window.netlifyIdentity.init();
-        setTimeout(safeLoadCMS, 2500);
-      };
-      document.body.appendChild(identity);
+      
+      return section;
     }
-  </script>
-</body>
 
+    function updateCaption(categoryKey, imageIndex, newCaption) {
+      galleryData[categoryKey].images[imageIndex].caption = newCaption;
+    }
+
+    function removeImage(categoryKey, imageIndex) {
+      if (confirm('Remove this image?')) {
+        galleryData[categoryKey].images.splice(imageIndex, 1);
+        renderCategories();
+      }
+    }
+
+    function addImages(categoryKey) {
+      const fileInput = document.getElementById(`file-${categoryKey}`);
+      const captionInput = document.getElementById(`caption-${categoryKey}`);
+      
+      if (!fileInput.files.length) {
+        alert('Please select at least one file');
+        return;
+      }
+      
+      const caption = captionInput.value || 'New Image';
+      
+      Array.from(fileInput.files).forEach((file, index) => {
+        // Create a preview URL for immediate display
+        const previewUrl = URL.createObjectURL(file);
+        
+        // Generate the final file path (user will need to upload manually to this location)
+        const timestamp = Date.now() + index;
+        const extension = file.name.split('.').pop();
+        const fileName = `assets/uploads/${timestamp}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+        
+        galleryData[categoryKey].images.push({
+          src: fileName,
+          caption: caption,
+          _preview: previewUrl, // Temporary preview URL
+          _originalFile: file // Keep reference to original file
+        });
+      });
+      
+      fileInput.value = '';
+      captionInput.value = '';
+      renderCategories();
+      
+      // Show upload instructions
+      showUploadInstructions();
+    }
+
+    function showUploadInstructions() {
+      const instructions = document.getElementById('uploadInstructions');
+      if (!instructions) {
+        const div = document.createElement('div');
+        div.id = 'uploadInstructions';
+        div.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: rgba(212, 185, 106, 0.9);
+          color: #0f1527;
+          padding: 16px;
+          border-radius: 8px;
+          max-width: 300px;
+          font-size: 14px;
+          z-index: 1000;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        `;
+        div.innerHTML = `
+          <h4 style="margin: 0 0 8px;">📁 Upload Files</h4>
+          <p style="margin: 0 0 8px;">After saving, manually upload your new images to the <code>assets/uploads/</code> folder with the generated filenames.</p>
+          <button onclick="this.parentElement.remove()" style="background: none; border: 1px solid; padding: 4px 8px; border-radius: 4px; cursor: pointer;">✓ Got it</button>
+        `;
+        document.body.appendChild(div);
+        
+        setTimeout(() => {
+          if (div.parentElement) div.remove();
+        }, 10000);
+      }
+    }
+
+    document.getElementById('saveBtn').addEventListener('click', async () => {
+      const button = document.getElementById('saveBtn');
+      const originalText = button.innerHTML;
+      
+      button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+      button.disabled = true;
+      
+      try {
+        // Clean up the data before saving (remove preview URLs and file references)
+        const cleanGalleryData = {};
+        Object.entries(galleryData).forEach(([key, category]) => {
+          cleanGalleryData[key] = {
+            ...category,
+            images: category.images.map(img => ({
+              src: img.src,
+              caption: img.caption
+            }))
+          };
+        });
+        
+        const response = await fetch('/.netlify/functions/save-gallery', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            password: ADMIN_PASSWORD,
+            galleryData: cleanGalleryData
+          })
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+          button.innerHTML = '<i class="fas fa-check"></i> Saved Successfully!';
+          // Clear any draft data
+          localStorage.removeItem('veGalleryDraft');
+        } else {
+          throw new Error(result.error || 'Save failed');
+        }
+        
+      } catch (error) {
+        console.error('Save failed:', error);
+        button.innerHTML = '<i class="fas fa-times"></i> Save Failed';
+        showError('Failed to save changes: ' + error.message);
+      }
+      
+      setTimeout(() => {
+        button.innerHTML = originalText;
+        button.disabled = false;
+      }, 3000);
+    });
+
+    // Auto-save functionality (optional)
+    let saveTimeout;
+    function autoSave() {
+      clearTimeout(saveTimeout);
+      saveTimeout = setTimeout(() => {
+        localStorage.setItem('veGalleryDraft', JSON.stringify(galleryData));
+      }, 1000);
+    }
+
+    // Add auto-save to input changes
+    document.addEventListener('input', autoSave);
+  </script>
+
+  <!-- FontAwesome for icons -->
+  <script src="https://kit.fontawesome.com/abc123def4.js" crossorigin="anonymous"></script>
+  <!-- If you don't have FontAwesome, you can use this CDN version -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</body>
 </html>
