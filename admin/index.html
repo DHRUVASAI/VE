@@ -21,267 +21,527 @@
       display: grid;
       place-items: center;
       padding: 20px;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(212, 185, 106, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(212, 185, 106, 0.05) 0%, transparent 50%),
+        linear-gradient(135deg, #0f1527 0%, #1a2332 100%);
     }
 
     .login-form {
       background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(15px);
       border: 1px solid rgba(184, 150, 62, 0.3);
-      border-radius: 16px;
-      padding: 40px;
+      border-radius: 20px;
+      padding: 50px 40px;
       width: 100%;
-      max-width: 400px;
+      max-width: 420px;
       text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-form::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #d4b96a, transparent);
     }
 
     .login-form h1 {
       color: #d4b96a;
-      margin-bottom: 24px;
-      font-size: 1.5rem;
+      margin-bottom: 32px;
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .login-form h1 i {
+      margin-right: 12px;
+      font-size: 1.4rem;
     }
 
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       text-align: left;
     }
 
     .form-group label {
       display: block;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       color: rgba(255, 255, 255, 0.9);
       font-weight: 500;
+      font-size: 14px;
     }
 
     .form-group input {
       width: 100%;
-      padding: 12px 16px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.1);
+      padding: 14px 18px;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.05);
       color: #fff;
-      font-size: 14px;
+      font-size: 15px;
       transition: all 0.3s ease;
+      outline: none;
     }
 
     .form-group input:focus {
-      outline: none;
       border-color: #d4b96a;
-      box-shadow: 0 0 0 3px rgba(212, 185, 106, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 4px rgba(212, 185, 106, 0.1);
     }
 
     .login-btn {
       width: 100%;
-      padding: 12px 24px;
+      padding: 14px 24px;
       background: linear-gradient(135deg, #d4b96a 0%, #b8963e 100%);
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       color: #0f1527;
-      font-weight: 600;
-      font-size: 14px;
+      font-weight: 700;
+      font-size: 15px;
       cursor: pointer;
-      transition: transform 0.2s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(212, 185, 106, 0.3);
     }
 
     .login-btn:hover {
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(212, 185, 106, 0.4);
+    }
+
+    .login-btn:active {
+      transform: translateY(0);
     }
 
     .login-btn:disabled {
       opacity: 0.6;
       cursor: not-allowed;
       transform: none;
+      box-shadow: 0 4px 15px rgba(212, 185, 106, 0.3);
     }
 
     .error-msg {
       color: #ff6b6b;
       font-size: 14px;
-      margin-top: 12px;
-      padding: 8px 12px;
+      margin-top: 16px;
+      padding: 12px 16px;
       background: rgba(255, 107, 107, 0.1);
-      border-radius: 6px;
+      border-radius: 8px;
       border: 1px solid rgba(255, 107, 107, 0.3);
+      backdrop-filter: blur(10px);
     }
 
     /* Admin Interface */
     .admin-interface {
       display: none;
+      background: linear-gradient(135deg, #0f1527 0%, #1a2332 100%);
     }
 
     .admin-header {
-      background: rgba(0, 0, 0, 0.2);
-      padding: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      padding: 24px 30px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .admin-header h1 {
       color: #d4b96a;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .admin-header h1 i {
+      margin-right: 12px;
+      color: #d4b96a;
     }
 
     .logout-btn {
-      padding: 8px 16px;
+      padding: 10px 20px;
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 6px;
+      border-radius: 8px;
       color: #fff;
       text-decoration: none;
-      font-size: 13px;
+      font-size: 14px;
       cursor: pointer;
-      transition: all 0.2s ease;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .logout-btn:hover {
       background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
     }
 
     .admin-content {
-      padding: 30px;
-      max-width: 1200px;
+      padding: 40px 30px;
+      max-width: 1400px;
       margin: 0 auto;
+    }
+
+    .info-banner {
+      background: linear-gradient(135deg, rgba(212, 185, 106, 0.15) 0%, rgba(212, 185, 106, 0.05) 100%);
+      border: 1px solid rgba(212, 185, 106, 0.3);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 32px;
+      backdrop-filter: blur(10px);
+    }
+
+    .info-banner h3 {
+      margin: 0 0 12px;
+      color: #d4b96a;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.1rem;
+    }
+
+    .info-banner p {
+      margin: 0;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .info-banner code {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #d4b96a;
     }
 
     .category-section {
       background: rgba(255, 255, 255, 0.06);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 12px;
-      padding: 24px;
-      margin-bottom: 24px;
+      border-radius: 16px;
+      padding: 28px;
+      margin-bottom: 28px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .category-section:hover {
+      border-color: rgba(212, 185, 106, 0.3);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .category-header {
       display: flex;
       align-items: center;
-      margin-bottom: 20px;
-      gap: 12px;
+      margin-bottom: 24px;
+      gap: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .category-header i {
       color: #d4b96a;
-      font-size: 1.2rem;
+      font-size: 1.4rem;
+      width: 24px;
+      text-align: center;
     }
 
     .category-header h2 {
       color: #fff;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
+      font-weight: 600;
     }
 
     .images-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
-      margin-bottom: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+      margin-bottom: 24px;
     }
 
     .image-item {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      padding: 12px;
+      border-radius: 12px;
+      padding: 16px;
       position: relative;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .image-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(212, 185, 106, 0.3);
+      transform: translateY(-2px);
     }
 
     .image-item img {
       width: 100%;
-      height: 120px;
+      height: 140px;
       object-fit: cover;
-      border-radius: 6px;
-      margin-bottom: 8px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .image-item img:hover {
+      transform: scale(1.02);
     }
 
     .image-item input {
       width: 100%;
-      padding: 6px 8px;
+      padding: 8px 12px;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 4px;
+      border-radius: 6px;
       background: rgba(255, 255, 255, 0.1);
       color: #fff;
-      font-size: 12px;
+      font-size: 13px;
+      transition: all 0.3s ease;
+    }
+
+    .image-item input:focus {
+      border-color: #d4b96a;
+      background: rgba(255, 255, 255, 0.15);
+      outline: none;
     }
 
     .remove-btn {
       position: absolute;
-      top: 8px;
-      right: 8px;
-      background: rgba(255, 107, 107, 0.8);
+      top: 12px;
+      right: 12px;
+      background: rgba(255, 107, 107, 0.9);
       color: white;
       border: none;
-      border-radius: 4px;
-      width: 24px;
-      height: 24px;
+      border-radius: 6px;
+      width: 28px;
+      height: 28px;
       cursor: pointer;
-      font-size: 12px;
+      font-size: 14px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .remove-btn:hover {
+      background: rgba(255, 107, 107, 1);
+      transform: scale(1.1);
     }
 
     .add-image-section {
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 16px;
-      margin-top: 16px;
+      padding-top: 20px;
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      padding: 20px;
     }
 
     .file-input-group {
       display: flex;
-      gap: 12px;
-      margin-bottom: 12px;
+      gap: 16px;
+      margin-bottom: 16px;
       align-items: end;
+      flex-wrap: wrap;
     }
 
     .file-input-group input[type="file"] {
       flex: 1;
-      padding: 8px;
+      min-width: 200px;
+      padding: 10px 12px;
+      border: 2px dashed rgba(212, 185, 106, 0.3);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .file-input-group input[type="file"]:hover {
+      border-color: rgba(212, 185, 106, 0.5);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .file-input-group input[type="text"] {
+      flex: 1;
+      min-width: 150px;
+      padding: 10px 12px;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 6px;
+      border-radius: 8px;
       background: rgba(255, 255, 255, 0.1);
       color: #fff;
       font-size: 13px;
     }
 
     .add-btn {
-      padding: 8px 16px;
+      padding: 10px 20px;
       background: linear-gradient(135deg, #d4b96a 0%, #b8963e 100%);
       border: none;
-      border-radius: 6px;
+      border-radius: 8px;
       color: #0f1527;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       font-size: 13px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .add-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(212, 185, 106, 0.3);
     }
 
     .save-btn {
       position: fixed;
-      bottom: 30px;
-      right: 30px;
-      padding: 12px 24px;
+      bottom: 40px;
+      right: 40px;
+      padding: 16px 28px;
       background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
       border: none;
-      border-radius: 8px;
+      border-radius: 12px;
       color: white;
-      font-weight: 600;
+      font-weight: 700;
       cursor: pointer;
-      font-size: 14px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      font-size: 15px;
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.3);
       z-index: 1000;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .save-btn:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(76, 175, 80, 0.4);
     }
 
+    .save-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .new-file-indicator {
+      color: #d4b96a;
+      font-size: 11px;
+      font-style: italic;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Upload instructions styling */
+    .upload-notice {
+      background: rgba(212, 185, 106, 0.9);
+      color: #0f1527;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 350px;
+      font-size: 14px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .upload-notice h4 {
+      margin: 0 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 16px;
+    }
+
+    .upload-notice p {
+      margin: 0 0 12px;
+      line-height: 1.5;
+    }
+
+    .upload-notice code {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+    .upload-notice button {
+      background: rgba(15, 21, 39, 0.8);
+      color: white;
+      border: 1px solid rgba(15, 21, 39, 1);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    /* Responsive Design */
     @media (max-width: 768px) {
-      .images-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      .admin-content {
+        padding: 24px 20px;
       }
       
-      .admin-content {
-        padding: 20px;
+      .images-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 16px;
       }
       
       .save-btn {
         bottom: 20px;
         right: 20px;
+        padding: 12px 20px;
       }
+
+      .file-input-group {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .login-form {
+        padding: 40px 30px;
+        margin: 20px;
+      }
+
+      .category-section {
+        padding: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .images-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .category-section {
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .image-item {
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .admin-header {
+      animation: fadeIn 0.4s ease-out;
     }
   </style>
 </head>
@@ -309,14 +569,15 @@
     </div>
 
     <div class="admin-content">
-      <div style="background: rgba(212, 185, 106, 0.1); border: 1px solid rgba(212, 185, 106, 0.3); border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-        <h3 style="margin: 0 0 8px; color: #d4b96a;"><i class="fas fa-info-circle"></i> How to Use</h3>
-        <p style="margin: 0; color: rgba(255,255,255,0.9); font-size: 14px;">
-          • Edit captions directly in the text fields<br>
+      <div class="info-banner">
+        <h3><i class="fas fa-info-circle"></i> Admin Panel Guide</h3>
+        <p>
+          • Edit image captions directly in the text fields<br>
           • Click the × button to remove images<br>
           • Add new images using the file selectors<br>
           • Click "Save All Changes" when you're done<br>
-          • New images need to be manually uploaded to <code>assets/uploads/</code> folder
+          • New images need to be manually uploaded to <code>assets/uploads/</code> folder<br>
+          • <strong>Background Removal:</strong> Upload transparent PNG/WebP files for no-background look, or edit images manually before upload
         </p>
       </div>
       
@@ -425,12 +686,18 @@
               <input type="text" value="${img.caption}" 
                      onchange="updateCaption('${categoryKey}', ${index}, this.value)"
                      placeholder="Image caption">
-              ${img._preview ? '<small style="color: #d4b96a; font-size: 11px;">📁 New file - needs upload</small>' : ''}
+              ${img._preview ? '<div class="new-file-indicator"><i class="fas fa-upload"></i> New file - needs upload</div>' : ''}
             </div>
           `;}).join('')}
         </div>
         
         <div class="add-image-section">
+          <h4 style="color: #d4b96a; margin: 0 0 12px; font-size: 1rem;">
+            <i class="fas fa-plus"></i> Add New Images
+          </h4>
+          <p style="font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 16px;">
+            💡 <strong>Tip:</strong> Use transparent PNG or WebP files for clean, no-background look in your gallery.
+          </p>
           <div class="file-input-group">
             <input type="file" id="file-${categoryKey}" accept="image/*,video/*" multiple>
             <input type="text" id="caption-${categoryKey}" placeholder="Caption for new images">
@@ -500,25 +767,23 @@
           position: fixed;
           top: 20px;
           right: 20px;
-          background: rgba(212, 185, 106, 0.9);
-          color: #0f1527;
-          padding: 16px;
-          border-radius: 8px;
-          max-width: 300px;
-          font-size: 14px;
           z-index: 1000;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         `;
         div.innerHTML = `
-          <h4 style="margin: 0 0 8px;">📁 Upload Files</h4>
-          <p style="margin: 0 0 8px;">After saving, manually upload your new images to the <code>assets/uploads/</code> folder with the generated filenames.</p>
-          <button onclick="this.parentElement.remove()" style="background: none; border: 1px solid; padding: 4px 8px; border-radius: 4px; cursor: pointer;">✓ Got it</button>
+          <div class="upload-notice">
+            <h4><i class="fas fa-cloud-upload-alt"></i> File Upload Required</h4>
+            <p>After saving, manually upload your new images to the <code>assets/uploads/</code> folder with the generated filenames.</p>
+            <p><strong>For transparent backgrounds:</strong> Use PNG or WebP format with transparency before uploading.</p>
+            <button onclick="this.closest('#uploadInstructions').remove()">
+              <i class="fas fa-check"></i> Understood
+            </button>
+          </div>
         `;
         document.body.appendChild(div);
         
         setTimeout(() => {
           if (div.parentElement) div.remove();
-        }, 10000);
+        }, 12000);
       }
     }
 
