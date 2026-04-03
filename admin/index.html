@@ -42,6 +42,7 @@
       margin: 10px 0 0 20px;
     }
   </style>
+  
 </head>
 
 <body>
@@ -49,6 +50,8 @@
 
   <script>
     const root = document.getElementById('adminRoot');
+    const tokenBlob = (window.location.search || '') + '&' + (window.location.hash || '');
+    const hasIdentityToken = /invite_token=|confirmation_token=|recovery_token=|email_change_token=/i.test(tokenBlob);
 
     if (window.location.protocol === 'file:') {
       const deployHint = 'https://YOUR_NETLIFY_DOMAIN/admin';
@@ -66,15 +69,44 @@
         </div>
       `;
     } else {
+      let cmsLoaded = false;
+      const loadCMS = () => {
+        if (cmsLoaded) return;
+        cmsLoaded = true;
+        const cms = document.createElement('script');
+        cms.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
+        cms.defer = true;
+        document.body.appendChild(cms);
+      };
+
       const identity = document.createElement('script');
       identity.src = 'https://identity.netlify.com/v1/netlify-identity-widget.js';
       identity.defer = true;
-      document.body.appendChild(identity);
+      identity.onload = () => {
+        if (!window.netlifyIdentity) {
+          loadCMS();
+          return;
+        }
 
-      const cms = document.createElement('script');
-      cms.src = 'https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js';
-      cms.defer = true;
-      document.body.appendChild(cms);
+        let cmsLoadTimer;
+        const safeLoadCMS = () => {
+          clearTimeout(cmsLoadTimer);
+          loadCMS();
+        };
+
+        window.netlifyIdentity.on('init', (user) => {
+          // During invite/confirmation flow, give Netlify Identity a moment to finish password setup.
+          if (hasIdentityToken && !user) {
+            cmsLoadTimer = setTimeout(safeLoadCMS, 1500);
+          } else {
+            safeLoadCMS();
+          }
+        });
+
+        window.netlifyIdentity.init();
+        setTimeout(safeLoadCMS, 2500);
+      };
+      document.body.appendChild(identity);
     }
   </script>
 </body>

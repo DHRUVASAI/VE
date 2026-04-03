@@ -20,11 +20,13 @@
         rel="stylesheet">
     <script>
         (function () {
+            var search = window.location.search || '';
             var hash = window.location.hash || '';
-            var hasIdentityToken = /invite_token=|confirmation_token=|recovery_token=|email_change_token=/i.test(hash);
+            var tokenBlob = search + '&' + hash;
+            var hasIdentityToken = /invite_token=|confirmation_token=|recovery_token=|email_change_token=/i.test(tokenBlob);
 
             if (hasIdentityToken && !window.location.pathname.startsWith('/admin')) {
-                window.location.replace('/admin/' + hash);
+                window.location.replace('/admin/' + search + hash);
             }
         })();
     </script>
