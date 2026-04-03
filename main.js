@@ -71,50 +71,24 @@ const navObserver = new IntersectionObserver((entries) => {
 
 sections.forEach(section => navObserver.observe(section));
 
-// ==================== ENHANCED SCROLL REVEAL ====================
-const revealTypes = ['reveal-up', 'reveal-left', 'reveal-right', 'reveal-scale'];
-
-const enhancedRevealObserver = new IntersectionObserver((entries) => {
+// ==================== ENERGETIC SCROLL REVEAL ====================
+const energeticObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            const siblings = Array.from(entry.target.parentElement.children);
-            const idx = siblings.indexOf(entry.target);
-            entry.target.style.transitionDelay = `${idx * 0.1}s`;
             entry.target.classList.add('revealed');
-            enhancedRevealObserver.unobserve(entry.target);
+            energeticObserver.unobserve(entry.target);
         }
     });
-}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-// Apply varied reveal types to different elements
-document.querySelectorAll('.service-card').forEach((el, i) => {
-    el.classList.add('reveal-up');
-    enhancedRevealObserver.observe(el);
-});
-
-document.querySelectorAll('.why-item').forEach((el, i) => {
-    el.classList.add('reveal-up');
-    enhancedRevealObserver.observe(el);
-});
-
-document.querySelectorAll('.contact-card').forEach((el) => {
-    el.classList.add('reveal-up');
-    enhancedRevealObserver.observe(el);
-});
-
-document.querySelectorAll('.leader-card').forEach((el, i) => {
-    el.classList.add('reveal-up');
-    enhancedRevealObserver.observe(el);
-});
-
-document.querySelectorAll('.section-header').forEach((el) => {
-    el.classList.add('reveal-up');
-    enhancedRevealObserver.observe(el);
-});
-
-document.querySelectorAll('.portfolio-item').forEach((el) => {
-    el.classList.add('reveal-scale');
-    enhancedRevealObserver.observe(el);
+document.querySelectorAll('.energetic-reveal, .service-card, .why-item, .contact-card, .leader-card, .section-header').forEach((el, i) => {
+    if (!el.classList.contains('energetic-reveal')) el.classList.add('energetic-reveal');
+    
+    // Add staggered delays
+    const rowIdx = i % 4;
+    el.style.transitionDelay = `${rowIdx * 0.08}s`;
+    
+    energeticObserver.observe(el);
 });
 
 // ==================== STAT COUNTER ====================
@@ -124,15 +98,20 @@ const countObserver = new IntersectionObserver((entries) => {
         if (!entry.isIntersecting) return;
         const el = entry.target;
         const target = parseInt(el.dataset.count, 10);
-        const duration = 1800;
-        const step = Math.ceil(target / (duration / 16));
-        let current = 0;
-        const tick = () => {
-            current = Math.min(current + step, target);
+        const duration = 1200; // Faster count
+        const startTime = performance.now();
+        
+        const update = (now) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+            const current = Math.floor(easeOutQuart * target);
+            
             el.textContent = current;
-            if (current < target) requestAnimationFrame(tick);
+            if (progress < 1) requestAnimationFrame(update);
+            else el.textContent = target;
         };
-        requestAnimationFrame(tick);
+        requestAnimationFrame(update);
         countObserver.unobserve(el);
     });
 }, { threshold: 0.5 });
@@ -172,7 +151,7 @@ if (window.matchMedia('(hover: hover)').matches) {
 // ==================== HERO MOUSE PARALLAX ====================
 const hero = document.querySelector('.hero');
 const heroOverlay = hero ? hero.querySelector('.hero-overlay') : null;
-const heroParticles = hero ? hero.querySelector('.hero-particles') : null;
+const heroTexture = hero ? hero.querySelector('.hero-texture-bg') : null;
 
 if (hero && window.matchMedia('(hover: hover)').matches) {
     hero.addEventListener('mousemove', (e) => {
@@ -183,8 +162,8 @@ if (hero && window.matchMedia('(hover: hover)').matches) {
         if (heroOverlay) {
             heroOverlay.style.transform = `translate(${x * -15}px, ${y * -15}px)`;
         }
-        if (heroParticles) {
-            heroParticles.style.transform = `translate(${x * 10}px, ${y * 10}px)`;
+        if (heroTexture) {
+            heroTexture.style.transform = `scale(1.1) translate(${x * 30}px, ${y * 30}px)`;
         }
     });
 }
@@ -294,11 +273,11 @@ if (heroSubtitle) {
             if (charIndex < fullText.length) {
                 heroSubtitle.textContent += fullText[charIndex];
                 charIndex++;
-                setTimeout(typeChar, 18 + Math.random() * 12);
+                setTimeout(typeChar, 10 + Math.random() * 10);
             }
         }
         typeChar();
-    }, typeDelay);
+    }, 1500); // Start sooner after splash
 }
 
 // ==================== CONTACT FORM — REAL SUBMISSION via Formspree ====================
@@ -361,7 +340,7 @@ if (form) {
 }
 
 // ==================== SERVICE GALLERY MODAL ====================
-const GALLERY_DATA = {
+let GALLERY_DATA = {
     industrial: {
         title: 'Industrial Uniforms',
         icon: 'fa-industry',
@@ -434,6 +413,43 @@ const GALLERY_DATA = {
     }
 };
 
+async function loadGalleryDataFromCMS() {
+    try {
+        const response = await fetch(`data/services-gallery.json?v=${Date.now()}`, { cache: 'no-store' });
+        if (!response.ok) return;
+
+        const data = await response.json();
+        if (!data || typeof data !== 'object') return;
+
+        const normalized = {};
+        Object.entries(data).forEach(([key, value]) => {
+            if (!value || typeof value !== 'object') return;
+
+            const title = typeof value.title === 'string' && value.title.trim()
+                ? value.title.trim()
+                : key;
+            const icon = typeof value.icon === 'string' && value.icon.trim()
+                ? value.icon.trim()
+                : 'fa-images';
+            const images = Array.isArray(value.images)
+                ? value.images
+                    .filter((img) => img && typeof img.src === 'string' && typeof img.caption === 'string')
+                    .map((img) => ({ src: img.src, caption: img.caption }))
+                : [];
+
+            normalized[key] = { title, icon, images };
+        });
+
+        if (Object.keys(normalized).length > 0) {
+            GALLERY_DATA = normalized;
+        }
+    } catch (err) {
+        // Keep bundled fallback data if CMS file is unavailable.
+    }
+}
+
+loadGalleryDataFromCMS();
+
 // Modal elements
 const galleryModal = document.getElementById('galleryModal');
 const galleryGrid = document.getElementById('galleryModalGrid');
@@ -445,6 +461,13 @@ const backdrop = galleryModal.querySelector('.gallery-modal-backdrop');
 // Lightbox elements
 const lightbox = document.getElementById('galleryLightbox');
 const lightboxImg = document.getElementById('lightboxImg');
+const lightboxVideo = document.createElement('video');
+lightboxVideo.className = 'lightbox-video';
+lightboxVideo.id = 'lightboxVideo';
+lightboxVideo.controls = true;
+lightboxVideo.playsInline = true;
+lightboxVideo.style.display = 'none';
+lightboxImg.insertAdjacentElement('afterend', lightboxVideo);
 const lightboxCap = document.getElementById('lightboxCaption');
 const lightboxClose = document.getElementById('lightboxClose');
 const lightboxPrev = document.getElementById('lightboxPrev');
@@ -452,6 +475,10 @@ const lightboxNext = document.getElementById('lightboxNext');
 
 let currentImages = [];
 let currentIndex = 0;
+
+function isVideoFile(src) {
+    return /\.(mp4|webm|ogg)(\?|#|$)/i.test(src || '');
+}
 
 function openGallery(category) {
     const data = GALLERY_DATA[category];
@@ -465,10 +492,11 @@ function openGallery(category) {
     data.images.forEach((img, idx) => {
         const thumb = document.createElement('div');
         thumb.className = 'gallery-thumb';
-        thumb.innerHTML = `
-            <img src="${img.src}" alt="${img.caption}" loading="lazy">
-            <div class="gallery-thumb-caption">${img.caption}</div>
-        `;
+        const mediaMarkup = isVideoFile(img.src)
+            ? `<video src="${img.src}" muted playsinline preload="metadata"></video>`
+            : `<img src="${img.src}" alt="${img.caption}" loading="lazy">`;
+
+        thumb.innerHTML = `${mediaMarkup}<div class="gallery-thumb-caption">${img.caption}</div>`;
         // set pointer on the whole card
         thumb.addEventListener('click', () => openLightbox(idx));
         galleryGrid.appendChild(thumb);
@@ -496,13 +524,29 @@ function closeLightbox() {
 
 function updateLightbox() {
     const img = currentImages[currentIndex];
-    lightboxImg.style.opacity = '0';
-    setTimeout(() => {
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.caption;
-        lightboxCap.textContent = img.caption;
-        lightboxImg.style.opacity = '1';
-    }, 150);
+    const isVideo = isVideoFile(img.src);
+
+    lightboxCap.textContent = img.caption;
+
+    if (isVideo) {
+        lightboxImg.style.display = 'none';
+        lightboxVideo.style.display = 'block';
+        lightboxVideo.src = img.src;
+        lightboxVideo.load();
+    } else {
+        lightboxVideo.pause();
+        lightboxVideo.removeAttribute('src');
+        lightboxVideo.style.display = 'none';
+
+        lightboxImg.style.display = 'block';
+        lightboxImg.style.opacity = '0';
+        setTimeout(() => {
+            lightboxImg.src = img.src;
+            lightboxImg.alt = img.caption;
+            lightboxImg.style.opacity = '1';
+        }, 150);
+    }
+
     lightboxPrev.style.display = currentImages.length > 1 ? 'flex' : 'none';
     lightboxNext.style.display = currentImages.length > 1 ? 'flex' : 'none';
 }

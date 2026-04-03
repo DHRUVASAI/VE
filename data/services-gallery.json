@@ -1,0 +1,138 @@
+{
+  "industrial": {
+    "title": "Industrial Uniforms",
+    "icon": "fa-industry",
+    "images": [
+      {
+        "src": "assets/works/star-industrial-shirt-nobg.png",
+        "caption": "Industrial Work Shirt - Star Industries"
+      }
+    ]
+  },
+  "healthcare": {
+    "title": "Healthcare Wear",
+    "icon": "fa-stethoscope",
+    "images": [
+      {
+        "src": "assets/works/konnect-scrub-nobg.png",
+        "caption": "Medical Scrubs - Konnect Diagnostics"
+      },
+      {
+        "src": "assets/works/konnect-labcoat-nobg.png",
+        "caption": "Lab Coat - Konnect Diagnostics"
+      }
+    ]
+  },
+  "school": {
+    "title": "School Uniforms",
+    "icon": "fa-graduation-cap",
+    "images": [
+      {
+        "src": "assets/works/blazer-nobg.png",
+        "caption": "Institutional Blazer - Aradhana Academy"
+      },
+      {
+        "src": "assets/works/high-school-vest-nobg.png",
+        "caption": "School Vest - Sri Gouthami High School"
+      },
+      {
+        "src": "assets/works/laurus-pinafore.jpg",
+        "caption": "Tartan Pinafore - Laurus School"
+      },
+      {
+        "src": "assets/works/laurus-shirt-nobg.png",
+        "caption": "Shirt & Tie Set - Laurus School"
+      },
+      {
+        "src": "assets/works/uniform-set-nobg.png",
+        "caption": "Complete Uniform Set - Primary School"
+      }
+    ]
+  },
+  "bags": {
+    "title": "Bags & Backpacks",
+    "icon": "fa-shopping-bag",
+    "images": [
+      {
+        "src": "assets/works/techolution-bag-nobg.png",
+        "caption": "Branded Corporate Bag - Techolution"
+      },
+      {
+        "src": "assets/works/sih-bag-nobg.png",
+        "caption": "Duffle Bag - Smart India Hackathon 2025"
+      },
+      {
+        "src": "assets/works/vnrvjiet-bag.jpg",
+        "caption": "Branded Bag - VNRVJIET"
+      }
+    ]
+  },
+  "caps": {
+    "title": "Caps & Headwear",
+    "icon": "fa-hat-cowboy",
+    "images": [
+      {
+        "src": "assets/works/Deloitte cap-nobg.png",
+        "caption": "Corporate Cap - Deloitte"
+      },
+      {
+        "src": "assets/works/tsrtc-cap-nobg.png",
+        "caption": "Official Cap - TSRTC"
+      },
+      {
+        "src": "assets/works/bdubs-cap-nobg.png",
+        "caption": "Embroidered Cap - B-DUBS"
+      }
+    ]
+  },
+  "jackets": {
+    "title": "Jackets & Rainwear",
+    "icon": "fa-cloud-showers-heavy",
+    "images": [
+      {
+        "src": "assets/works/rainjacket-nobg.png",
+        "caption": "Rain Jacket - All Weather Protection"
+      }
+    ]
+  },
+  "customization": {
+    "title": "Customization",
+    "icon": "fa-magic",
+    "images": [
+      {
+        "src": "assets/works/custom-toofaan-shirt-nobg.png",
+        "caption": "Custom Printed Sports Jersey"
+      },
+      {
+        "src": "assets/works/custom-bsr-shirt-nobg.png",
+        "caption": "Custom Gym T-Shirt - BSR"
+      },
+      {
+        "src": "assets/works/custom-lock-decor-shirt-nobg.png",
+        "caption": "Custom Corporate T-Shirt - Lock & Decor"
+      },
+      {
+        "src": "assets/works/custom-political-shirts-nobg.png",
+        "caption": "Custom Printed Event T-Shirts"
+      }
+    ]
+  },
+  "corporate": {
+    "title": "Corporate Apparel",
+    "icon": "fa-briefcase",
+    "images": [
+      {
+        "src": "assets/works/corporate-polo-nobg.png",
+        "caption": "Corporate Polo Shirt - liab expo"
+      },
+      {
+        "src": "assets/works/emmadi-vest-nobg.png",
+        "caption": "Corporate Nehru Vest - emmadi Silver Jewellery"
+      },
+      {
+        "src": "assets/works/barbeque-pride-shirt-nobg.png",
+        "caption": "Corporate Shirt - Barbeque Pride"
+      }
+    ]
+  }
+}
