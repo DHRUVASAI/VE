@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0">
   <title>VE Admin - Gallery Management</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -494,40 +494,332 @@
     }
 
     /* Responsive Design */
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
       .admin-content {
-        padding: 24px 20px;
+        padding: 30px 24px;
+        max-width: 100%;
       }
       
       .images-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 16px;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .admin-header {
+        padding: 20px;
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+      
+      .admin-header h1 {
+        font-size: 1.3rem;
+      }
+      
+      .admin-content {
+        padding: 20px 16px;
+      }
+      
+      .info-banner {
+        padding: 20px 16px;
+        margin-bottom: 24px;
+      }
+      
+      .info-banner h3 {
+        font-size: 1rem;
+      }
+      
+      .info-banner p {
+        font-size: 13px;
+      }
+      
+      .images-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 12px;
+      }
+      
+      .image-item {
+        padding: 12px;
+      }
+      
+      .image-item img {
+        height: 120px;
       }
       
       .save-btn {
-        bottom: 20px;
-        right: 20px;
-        padding: 12px 20px;
+        bottom: 16px;
+        right: 16px;
+        padding: 12px 18px;
+        font-size: 14px;
       }
 
       .file-input-group {
         flex-direction: column;
         align-items: stretch;
+        gap: 12px;
+      }
+
+      .file-input-group input[type="file"],
+      .file-input-group input[type="text"] {
+        min-width: 100%;
+        padding: 12px;
+        font-size: 14px;
+      }
+
+      .add-btn {
+        padding: 12px 16px;
+        justify-content: center;
+        font-size: 14px;
       }
 
       .login-form {
-        padding: 40px 30px;
-        margin: 20px;
+        padding: 32px 24px;
+        margin: 16px;
+        max-width: 90%;
+      }
+
+      .login-form h1 {
+        font-size: 1.4rem;
+        margin-bottom: 24px;
       }
 
       .category-section {
-        padding: 20px;
+        padding: 20px 16px;
+        margin-bottom: 20px;
+      }
+      
+      .category-header {
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+      }
+      
+      .category-header h2 {
+        font-size: 1.1rem;
+      }
+      
+      .add-image-section {
+        padding: 16px;
+      }
+      
+      .add-image-section h4 {
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+      }
+      
+      .add-image-section p {
+        font-size: 12px;
+        margin-bottom: 12px;
+      }
+
+      /* Modal adjustments for mobile */
+      .upload-notice {
+        max-width: 90%;
+        padding: 16px;
+        margin: 16px;
       }
     }
 
     @media (max-width: 480px) {
+      .admin-header {
+        padding: 16px;
+      }
+      
+      .admin-header h1 {
+        font-size: 1.2rem;
+      }
+      
+      .logout-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+      }
+      
+      .admin-content {
+        padding: 16px 12px;
+      }
+      
+      .info-banner {
+        padding: 16px 12px;
+      }
+      
+      .info-banner h3 {
+        font-size: 0.95rem;
+      }
+      
+      .info-banner p {
+        font-size: 12px;
+      }
+      
       .images-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+      }
+      
+      .image-item {
+        padding: 10px;
+      }
+      
+      .image-item img {
+        height: 100px;
+      }
+      
+      .image-item input {
+        padding: 8px;
+        font-size: 12px;
+      }
+      
+      .remove-btn {
+        width: 24px;
+        height: 24px;
+        font-size: 12px;
+        top: 8px;
+        right: 8px;
+      }
+      
+      .new-file-indicator {
+        font-size: 10px;
+        padding: 4px 6px;
+        margin-top: 6px;
+      }
+      
+      .save-btn {
+        bottom: 12px;
+        right: 12px;
+        padding: 10px 16px;
+        font-size: 13px;
+      }
+
+      .category-section {
+        padding: 16px 12px;
+        margin-bottom: 16px;
+      }
+      
+      .category-header {
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      
+      .category-header i {
+        font-size: 1.2rem;
+      }
+      
+      .category-header h2 {
+        font-size: 1rem;
+      }
+      
+      .add-image-section {
+        padding: 12px;
+        margin-top: 12px;
+        padding-top: 16px;
+      }
+      
+      .add-image-section h4 {
+        font-size: 0.9rem;
+      }
+      
+      .add-image-section p {
+        font-size: 11px;
+      }
+
+      .file-input-group input[type="file"],
+      .file-input-group input[type="text"] {
+        padding: 10px;
+        font-size: 13px;
+      }
+
+      .add-btn {
+        padding: 10px 14px;
+        font-size: 13px;
+      }
+
+      .login-form {
+        padding: 24px 20px;
+        margin: 12px;
+      }
+      
+      .login-form h1 {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+      }
+      
+      .form-group {
+        margin-bottom: 16px;
+      }
+      
+      .form-group input {
+        padding: 12px 14px;
+        font-size: 14px;
+      }
+      
+      .login-btn {
+        padding: 12px 20px;
+        font-size: 14px;
+      }
+
+      /* Save modal mobile adjustments */
+      .showSaveInstructions div[style*="max-width"] {
+        max-width: 95% !important;
+        margin: 8px !important;
+        padding: 16px !important;
+      }
+      
+      .upload-notice {
+        max-width: 95%;
+        padding: 12px;
+        margin: 8px;
+        font-size: 13px;
+      }
+      
+      .upload-notice h4 {
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+    }
+
+    /* Touch-friendly improvements */
+    @media (hover: none) and (pointer: coarse) {
+      .remove-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+      }
+      
+      .add-btn,
+      .login-btn,
+      .save-btn,
+      .logout-btn {
+        min-height: 44px;
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+      }
+      
+      .form-group input,
+      .image-item input,
+      .file-input-group input {
+        min-height: 44px;
+        -webkit-appearance: none;
+        border-radius: 8px;
+      }
+      
+      /* Larger touch targets */
+      .category-header {
+        padding: 8px 0;
+      }
+    }
+
+    /* Landscape mobile adjustments */
+    @media (max-width: 896px) and (orientation: landscape) {
+      .images-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      }
+      
+      .admin-content {
+        padding: 16px;
+      }
+      
+      .save-btn {
+        bottom: 16px;
+        right: 16px;
       }
     }
 
@@ -772,20 +1064,26 @@
     function showUploadInstructions() {
       const instructions = document.getElementById('uploadInstructions');
       if (!instructions) {
+        const isMobile = window.innerWidth <= 768;
         const div = document.createElement('div');
         div.id = 'uploadInstructions';
         div.style.cssText = `
           position: fixed;
-          top: 20px;
-          right: 20px;
+          top: ${isMobile ? '16px' : '20px'};
+          right: ${isMobile ? '16px' : '20px'};
           z-index: 1000;
+          max-width: ${isMobile ? '90%' : '350px'};
         `;
         div.innerHTML = `
-          <div class="upload-notice">
-            <h4><i class="fas fa-cloud-upload-alt"></i> File Upload Required</h4>
-            <p>After saving, manually upload your new images to the <code>assets/uploads/</code> folder with the generated filenames.</p>
-            <p><strong>For transparent backgrounds:</strong> Use PNG or WebP format with transparency before uploading.</p>
-            <button onclick="this.closest('#uploadInstructions').remove()">
+          <div class="upload-notice" style="${isMobile ? 'font-size: 12px;' : ''}">
+            <h4 style="font-size: ${isMobile ? '14px' : '16px'};"><i class="fas fa-cloud-upload-alt"></i> File Upload Required</h4>
+            <p style="font-size: ${isMobile ? '11px' : '14px'};">After saving, manually upload your new images to the <code>assets/uploads/</code> folder with the generated filenames.</p>
+            <p style="font-size: ${isMobile ? '11px' : '14px'};"><strong>For transparent backgrounds:</strong> Use PNG or WebP format with transparency before uploading.</p>
+            <button onclick="this.closest('#uploadInstructions').remove()" style="
+              min-height: ${isMobile ? '36px' : '32px'};
+              padding: ${isMobile ? '8px 12px' : '6px 10px'};
+              font-size: ${isMobile ? '12px' : '13px'};
+            ">
               <i class="fas fa-check"></i> Understood
             </button>
           </div>
@@ -867,26 +1165,34 @@
         z-index: 10000;
         padding: 20px;
         box-sizing: border-box;
+        overflow-y: auto;
       `;
+      
+      const isMobile = window.innerWidth <= 768;
+      const modalWidth = isMobile ? '95%' : '800px';
+      const modalHeight = isMobile ? '90vh' : '90vh';
+      const modalPadding = isMobile ? '16px' : '24px';
       
       modal.innerHTML = `
         <div style="
           background: #1a2332;
           border: 1px solid #d4b96a;
           border-radius: 12px;
-          padding: 24px;
-          max-width: 800px;
-          max-height: 90vh;
-          overflow: auto;
+          padding: ${modalPadding};
+          max-width: ${modalWidth};
+          width: 100%;
+          max-height: ${modalHeight};
+          overflow-y: auto;
           color: white;
+          margin: auto;
         ">
-          <h3 style="margin: 0 0 16px; color: #d4b96a;">
+          <h3 style="margin: 0 0 16px; color: #d4b96a; font-size: ${isMobile ? '1.1rem' : '1.3rem'};">
             <i class="fas fa-download"></i> Save Instructions
           </h3>
-          <p style="margin: 0 0 12px; color: rgba(255,255,255,0.9);">
+          <p style="margin: 0 0 12px; color: rgba(255,255,255,0.9); font-size: ${isMobile ? '13px' : '14px'};">
             <strong>To update your live website:</strong>
           </p>
-          <ol style="margin: 0 0 16px 20px; color: rgba(255,255,255,0.9); font-size: 14px; line-height: 1.6;">
+          <ol style="margin: 0 0 16px 20px; color: rgba(255,255,255,0.9); font-size: ${isMobile ? '12px' : '14px'}; line-height: 1.6;">
             <li>Copy the JSON below</li>
             <li>Go to your <a href="https://github.com/DHRUVASAI/VE/edit/main/data/services-gallery.json" target="_blank" style="color: #d4b96a;">GitHub repository</a></li>
             <li>Replace the content in <code>data/services-gallery.json</code></li>
@@ -895,30 +1201,34 @@
           </ol>
           <textarea readonly style="
             width: 100%;
-            height: 300px;
+            height: ${isMobile ? '200px' : '300px'};
             background: rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.2);
             border-radius: 6px;
             color: #fff;
             padding: 12px;
             font-family: monospace;
-            font-size: 12px;
+            font-size: ${isMobile ? '11px' : '12px'};
             resize: vertical;
             margin-bottom: 16px;
+            box-sizing: border-box;
           ">${JSON.stringify(data, null, 2)}</textarea>
-          <div style="display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap;">
+          <div style="display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap;">
             <a href="https://github.com/DHRUVASAI/VE/edit/main/data/services-gallery.json" target="_blank" style="
               background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
               border: none;
               border-radius: 6px;
               color: white;
-              padding: 8px 16px;
+              padding: ${isMobile ? '10px 12px' : '8px 16px'};
               cursor: pointer;
               font-weight: 500;
               text-decoration: none;
               display: flex;
               align-items: center;
-              gap: 8px;
+              gap: 6px;
+              font-size: ${isMobile ? '12px' : '13px'};
+              min-height: ${isMobile ? '40px' : 'auto'};
+              justify-content: center;
             ">
               <i class="fab fa-github"></i> Edit on GitHub
             </a>
@@ -931,9 +1241,15 @@
               border: none;
               border-radius: 6px;
               color: #0f1527;
-              padding: 8px 16px;
+              padding: ${isMobile ? '10px 12px' : '8px 16px'};
               cursor: pointer;
               font-weight: 500;
+              font-size: ${isMobile ? '12px' : '13px'};
+              min-height: ${isMobile ? '40px' : 'auto'};
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              justify-content: center;
             ">
               <i class="fas fa-copy"></i> Copy JSON
             </button>
@@ -942,8 +1258,10 @@
               border: 1px solid rgba(255,255,255,0.2);
               border-radius: 6px;
               color: white;
-              padding: 8px 16px;
+              padding: ${isMobile ? '10px 12px' : '8px 16px'};
               cursor: pointer;
+              font-size: ${isMobile ? '12px' : '13px'};
+              min-height: ${isMobile ? '40px' : 'auto'};
             ">
               Close
             </button>
@@ -952,6 +1270,27 @@
       `;
       
       document.body.appendChild(modal);
+      
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
+      
+      // Close modal when clicking backdrop
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.remove();
+          document.body.style.overflow = '';
+        }
+      });
+      
+      // Close modal on escape key
+      const handleEscape = (e) => {
+        if (e.key === 'Escape') {
+          modal.remove();
+          document.body.style.overflow = '';
+          document.removeEventListener('keydown', handleEscape);
+        }
+      };
+      document.addEventListener('keydown', handleEscape);
     }
 
     // Auto-save functionality (optional)
