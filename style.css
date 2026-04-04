@@ -3421,27 +3421,112 @@ footer {
 @media (max-width: 768px) {
     .gallery-modal-grid {
         grid-template-columns: repeat(2, 1fr);
-        padding: 14px;
-        gap: 12px;
+        padding: 18px;
+        gap: 16px;
     }
 
     .gallery-thumb img {
-        height: 160px;
+        height: 220px;
+    }
+
+    .gallery-thumb video {
+        height: 220px;
     }
 
     .gallery-modal-panel {
-        max-height: 92vh;
+        max-height: 94vh;
         border-radius: 20px 20px 0 0;
+        margin: 6vh 8px 0;
     }
 
     .gallery-modal-header {
-        padding: 14px 16px;
+        padding: 18px 20px;
+    }
+
+    .lightbox-img {
+        max-width: 95vw;
+        max-height: 80vh;
+    }
+
+    .lightbox-video {
+        max-width: 95vw;
+        max-height: 80vh;
     }
 
     .lightbox-nav {
-        width: 40px;
-        height: 40px;
-        font-size: 0.9rem;
+        width: 48px;
+        height: 48px;
+        font-size: 1rem;
+    }
+
+    .lightbox-prev {
+        left: 12px;
+    }
+
+    .lightbox-next {
+        right: 12px;
+    }
+
+    .lightbox-close {
+        width: 48px;
+        height: 48px;
+        top: 16px;
+        right: 16px;
+        font-size: 1.2rem;
+    }
+
+    .lightbox-caption {
+        font-size: 0.8rem;
+        white-space: normal;
+        text-align: center;
+        max-width: 85vw;
+        bottom: 20px;
+        padding: 8px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-modal-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .gallery-thumb img {
+        height: 180px;
+    }
+
+    .gallery-thumb video {
+        height: 180px;
+    }
+
+    .gallery-modal-panel {
+        margin: 4vh 6px 0;
+        max-height: 96vh;
+    }
+
+    .gallery-modal-header {
+        padding: 16px 18px;
+    }
+
+    .gallery-modal-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .lightbox-img {
+        max-width: 96vw;
+        max-height: 82vh;
+    }
+
+    .lightbox-video {
+        max-width: 96vw;
+        max-height: 82vh;
+    }
+
+    .lightbox-nav {
+        width: 44px;
+        height: 44px;
+        font-size: 0.95rem;
     }
 
     .lightbox-prev {
@@ -3452,21 +3537,21 @@ footer {
         right: 8px;
     }
 
+    .lightbox-close {
+        width: 44px;
+        height: 44px;
+        top: 12px;
+        right: 12px;
+        font-size: 1.1rem;
+    }
+
     .lightbox-caption {
         font-size: 0.75rem;
-        white-space: normal;
-        text-align: center;
-        max-width: 80vw;
+        max-width: 90vw;
         bottom: 16px;
+        padding: 6px 14px;
     }
 }
-
-@media (max-width: 480px) {
-    .gallery-modal-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-        padding: 12px;
-    }
 
     .gallery-thumb img {
         height: 130px;
