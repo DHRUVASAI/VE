@@ -3450,28 +3450,63 @@ footer {
    GALLERY MODAL RESPONSIVE
    ============================================================ */
 @media (max-width: 768px) {
+    .gallery-modal {
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    
+    .gallery-modal-panel {
+        max-height: 85vh;
+        border-radius: 16px;
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+    
     .gallery-modal-grid {
         grid-template-columns: repeat(2, 1fr);
-        padding: 18px;
-        gap: 16px;
+        padding: 16px;
+        gap: 12px;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .gallery-thumb {
+        min-height: auto;
     }
 
     .gallery-thumb img {
-        height: 220px;
+        height: 160px;
     }
 
     .gallery-thumb video {
-        height: 220px;
+        height: 160px;
     }
 
-    .gallery-modal-panel {
-        max-height: 94vh;
-        border-radius: 20px 20px 0 0;
-        margin: 6vh 8px 0;
+    .gallery-thumb-img-wrap {
+        min-height: 160px;
     }
 
     .gallery-modal-header {
-        padding: 18px 20px;
+        padding: 16px 18px;
+        flex-shrink: 0;
+    }
+    
+    .gallery-modal-header h3 {
+        font-size: 1.1rem;
+    }
+
+    .gallery-modal-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+
+    .gallery-modal-close {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
     }
 
     .lightbox-img {
