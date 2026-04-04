@@ -3,7 +3,7 @@
     {
       "id": "star-industries",
       "name": "Star Industries", 
-      "logo": "assets/clients/placeholder-logo.svg",
+      "logo": "assets/clients/star-industries-logo.png",
       "description": "Industrial workwear and safety equipment",
       "category": "Industrial",
       "featured": true
@@ -11,7 +11,7 @@
     {
       "id": "konnect-diagnostics",
       "name": "Konnect Diagnostics",
-      "logo": "assets/clients/placeholder-logo.svg", 
+      "logo": "assets/clients/konnect-diagnostics-logo.png", 
       "description": "Healthcare and diagnostic services",
       "category": "Healthcare",
       "featured": true
@@ -19,7 +19,7 @@
     {
       "id": "aradhana-academy",
       "name": "Aradhana Academy",
-      "logo": "assets/clients/placeholder-logo.svg",
+      "logo": "assets/clients/aradhana-academy-logo.png",
       "description": "Educational institution", 
       "category": "Education",
       "featured": false
@@ -27,7 +27,7 @@
     {
       "id": "sri-gouthami-high-school",
       "name": "Sri Gouthami High School",
-      "logo": "assets/clients/placeholder-logo.svg",
+      "logo": "assets/clients/sri-gouthami-logo.png",
       "description": "Secondary education institution",
       "category": "Education", 
       "featured": false
@@ -35,7 +35,7 @@
     {
       "id": "laurus-school",
       "name": "Laurus School",
-      "logo": "assets/clients/placeholder-logo.svg",
+      "logo": "assets/clients/laurus-school-logo.png",
       "description": "Premium educational institution",
       "category": "Education",
       "featured": true
@@ -43,7 +43,7 @@
     {
       "id": "techolution",
       "name": "Techolution", 
-      "logo": "assets/clients/placeholder-logo.svg",
+      "logo": "assets/clients/techolution-logo.png",
       "description": "Technology and software solutions",
       "category": "Corporate",
       "featured": true
@@ -51,7 +51,7 @@
     {
       "id": "deloitte",
       "name": "Deloitte",
-      "logo": "assets/clients/placeholder-logo.svg", 
+      "logo": "assets/clients/deloitte-logo.png", 
       "description": "Global consulting and professional services",
       "category": "Corporate",
       "featured": true
@@ -59,7 +59,7 @@
     {
       "id": "tsrtc",
       "name": "TSRTC",
-      "logo": "assets/clients/placeholder-logo.svg",
+      "logo": "assets/clients/tsrtc-logo.png",
       "description": "Telangana State Road Transport Corporation", 
       "category": "Government",
       "featured": false
@@ -67,7 +67,7 @@
     {
       "id": "vnrvjiet",
       "name": "VNRVJIET",
-      "logo": "assets/clients/placeholder-logo.svg",
+      "logo": "assets/clients/vnrvjiet-logo.png",
       "description": "Engineering college and technical education",
       "category": "Education",
       "featured": false
