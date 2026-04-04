@@ -452,6 +452,42 @@
       opacity: 0.8;
     }
 
+    .upload-status {
+      font-size: 11px;
+      font-weight: 500;
+      margin-top: 8px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      backdrop-filter: blur(5px);
+    }
+
+    .upload-status.pending {
+      background: rgba(255, 193, 7, 0.15);
+      color: #ffc107;
+      border: 1px solid rgba(255, 193, 7, 0.3);
+    }
+
+    .upload-status.uploading {
+      background: rgba(33, 150, 243, 0.15);
+      color: #2196f3;
+      border: 1px solid rgba(33, 150, 243, 0.3);
+    }
+
+    .upload-status.uploaded {
+      background: rgba(76, 175, 80, 0.15);
+      color: #4caf50;
+      border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+
+    .upload-status.failed {
+      background: rgba(244, 67, 54, 0.15);
+      color: #f44336;
+      border: 1px solid rgba(244, 67, 54, 0.3);
+    }
+
     /* Upload instructions styling */
     .upload-notice {
       background: rgba(212, 185, 106, 0.9);
@@ -872,14 +908,14 @@
 
     <div class="admin-content">
       <div class="info-banner">
-        <h3><i class="fas fa-info-circle"></i> Admin Panel Guide</h3>
+        <h3><i class="fas fa-magic"></i> Fully Automatic Admin Panel</h3>
         <p>
           • Edit image captions directly in the text fields<br>
           • Click the × button to remove images<br>
-          • Add new images using the file selectors<br>
-          • Click "Save All Changes" when you're done<br>
-          • New images need to be manually uploaded to <code>assets/uploads/</code> folder<br>
-          • <strong>Background Removal:</strong> Upload transparent PNG/WebP files for no-background look, or edit images manually before upload<br>
+          • Add new images using the file selectors - <strong>they upload automatically!</strong><br>
+          • Click "Save All Changes" to publish everything to your live website<br>
+          • <strong>Everything is automatic</strong> - no manual upload or GitHub knowledge needed!<br>
+          • <strong>Background Removal:</strong> Upload transparent PNG/WebP files for no-background look<br>
           • <strong>Live Preview:</strong> <a href="../" target="_blank" style="color: #d4b96a; text-decoration: underline;">Open Main Site</a> to see your gallery live
         </p>
       </div>
@@ -982,6 +1018,18 @@
         <div class="images-grid" id="grid-${categoryKey}">
           ${categoryData.images.map((img, index) => {
             const imageSrc = img._preview || `../${img.src}`;
+            let statusIndicator = '';
+            
+            if (img._uploadStatus === 'pending') {
+              statusIndicator = '<div class="upload-status pending"><i class="fas fa-clock"></i> Ready to upload</div>';
+            } else if (img._uploadStatus === 'uploading') {
+              statusIndicator = '<div class="upload-status uploading"><i class="fas fa-spinner fa-spin"></i> Uploading...</div>';
+            } else if (img._uploadStatus === 'uploaded') {
+              statusIndicator = '<div class="upload-status uploaded"><i class="fas fa-check"></i> Uploaded</div>';
+            } else if (img._uploadStatus === 'failed') {
+              statusIndicator = '<div class="upload-status failed"><i class="fas fa-times"></i> Upload failed</div>';
+            }
+            
             return `
             <div class="image-item">
               <button class="remove-btn" onclick="removeImage('${categoryKey}', ${index})">&times;</button>
@@ -989,7 +1037,7 @@
               <input type="text" value="${img.caption}" 
                      onchange="updateCaption('${categoryKey}', ${index}, this.value)"
                      placeholder="Image caption">
-              ${img._preview ? '<div class="new-file-indicator"><i class="fas fa-upload"></i> New file - needs upload</div>' : ''}
+              ${statusIndicator}
             </div>
           `;}).join('')}
         </div>
@@ -998,9 +1046,9 @@
           <h4 style="color: #d4b96a; margin: 0 0 12px; font-size: 1rem;">
             <i class="fas fa-plus"></i> Add New Images
           </h4>
-          <div style="background: rgba(255, 107, 107, 0.1); border: 1px solid rgba(255, 107, 107, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 16px;">
+          <div style="background: rgba(76, 175, 80, 0.1); border: 1px solid rgba(76, 175, 80, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 16px;">
             <p style="font-size: 12px; color: rgba(255,255,255,0.9); margin: 0;">
-              <strong>⚠️ Important:</strong> This admin panel generates file references only. After saving, you must manually upload the actual image files to your GitHub repository's <code>assets/uploads/</code> folder with the exact filenames shown.
+              <strong>✨ Automatic Upload:</strong> Just select your images and click "Add Images". They'll be uploaded automatically when you save! No technical knowledge required.
             </p>
           </div>
           <p style="font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 16px;">
@@ -1010,7 +1058,7 @@
             <input type="file" id="file-${categoryKey}" accept="image/*,video/*" multiple>
             <input type="text" id="caption-${categoryKey}" placeholder="Caption for new images">
             <button class="add-btn" onclick="addImages('${categoryKey}')">
-              <i class="fas fa-plus"></i> Add Reference
+              <i class="fas fa-plus"></i> Add Images
             </button>
           </div>
         </div>
@@ -1045,25 +1093,103 @@
         // Create a preview URL for immediate display
         const previewUrl = URL.createObjectURL(file);
         
-        // Generate the final file path (user will need to upload manually to this location)
+        // Generate the final file path
         const timestamp = Date.now() + index;
         const extension = file.name.split('.').pop();
-        const fileName = `assets/uploads/${timestamp}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+        const cleanName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_').substring(0, 30);
+        const fileName = `${timestamp}-${cleanName}`;
         
         galleryData[categoryKey].images.push({
-          src: fileName,
+          src: `assets/uploads/${fileName}`,
           caption: caption,
-          _preview: previewUrl, // Temporary preview URL
-          _originalFile: file // Keep reference to original file
+          _preview: previewUrl,
+          _originalFile: file,
+          _fileName: fileName,
+          _uploadStatus: 'pending'
         });
       });
       
       fileInput.value = '';
       captionInput.value = '';
       renderCategories();
+    }
+
+    async function uploadPendingFiles() {
+      const pendingFiles = [];
       
-      // Show upload instructions
-      showUploadInstructions();
+      // Collect all pending files
+      Object.entries(galleryData).forEach(([categoryKey, category]) => {
+        category.images.forEach((img, index) => {
+          if (img._uploadStatus === 'pending' && img._originalFile) {
+            pendingFiles.push({
+              categoryKey,
+              imageIndex: index,
+              file: img._originalFile,
+              fileName: img._fileName
+            });
+          }
+        });
+      });
+
+      if (pendingFiles.length === 0) {
+        return true; // No files to upload
+      }
+
+      // Upload each file
+      for (const fileInfo of pendingFiles) {
+        try {
+          // Update status to uploading
+          galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._uploadStatus = 'uploading';
+          renderCategories();
+
+          // Convert file to base64
+          const fileContent = await fileToBase64(fileInfo.file);
+          
+          const uploadResponse = await fetch('/.netlify/functions/save-gallery', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              password: ADMIN_PASSWORD,
+              action: 'upload-file',
+              fileName: fileInfo.fileName,
+              fileContent: fileContent.split(',')[1], // Remove data:image/... prefix
+              fileType: fileInfo.file.type
+            })
+          });
+
+          const result = await uploadResponse.json();
+          
+          if (uploadResponse.ok) {
+            // Mark as uploaded
+            galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._uploadStatus = 'uploaded';
+            // Remove temporary data
+            delete galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._preview;
+            delete galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._originalFile;
+            delete galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._fileName;
+          } else {
+            // Mark as failed
+            galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._uploadStatus = 'failed';
+            throw new Error(result.error || 'Upload failed');
+          }
+        } catch (error) {
+          console.error('File upload error:', error);
+          galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._uploadStatus = 'failed';
+        }
+      }
+
+      renderCategories();
+      return true;
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
     }
 
     function showUploadInstructions() {
@@ -1116,11 +1242,22 @@
       const button = document.getElementById('saveBtn');
       const originalText = button.innerHTML;
       
-      button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+      button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
       button.disabled = true;
       
       try {
-        // Clean up the data before saving (remove preview URLs and file references)
+        // Step 1: Upload any pending files
+        button.innerHTML = '<i class="fas fa-upload fa-spin"></i> Uploading Files...';
+        const filesUploaded = await uploadPendingFiles();
+        
+        if (!filesUploaded) {
+          throw new Error('File upload failed');
+        }
+
+        // Step 2: Save gallery data
+        button.innerHTML = '<i class="fas fa-save fa-spin"></i> Saving Gallery...';
+        
+        // Clean up the data before saving (remove any remaining upload metadata)
         const cleanGalleryData = {};
         Object.entries(galleryData).forEach(([key, category]) => {
           cleanGalleryData[key] = {
@@ -1139,6 +1276,7 @@
           },
           body: JSON.stringify({
             password: ADMIN_PASSWORD,
+            action: 'save-gallery',
             galleryData: cleanGalleryData
           })
         });
@@ -1146,16 +1284,15 @@
         const result = await response.json();
         
         if (response.ok) {
-          button.innerHTML = '<i class="fas fa-check"></i> Data Ready!';
-          // Show the JSON data for manual copy-paste
-          showSaveInstructions(cleanGalleryData);
+          button.innerHTML = '<i class="fas fa-check"></i> All Done!';
+          showSuccessMessage(result.message);
           localStorage.removeItem('veGalleryDraft');
         } else {
           throw new Error(result.error || 'Save failed');
         }
         
       } catch (error) {
-        console.error('Save failed:', error);
+        console.error('Save process failed:', error);
         button.innerHTML = '<i class="fas fa-times"></i> Save Failed';
         showError('Failed to save changes: ' + error.message);
       }
@@ -1165,6 +1302,36 @@
         button.disabled = false;
       }, 3000);
     });
+
+    function showSuccessMessage(message) {
+      const div = document.createElement('div');
+      div.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+        color: white;
+        padding: 24px 32px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        z-index: 10000;
+        text-align: center;
+        max-width: 90%;
+      `;
+      div.innerHTML = `
+        <h3 style="margin: 0 0 8px;"><i class="fas fa-check-circle"></i> Success!</h3>
+        <p style="margin: 0; opacity: 0.9;">${message}</p>
+        <p style="margin: 8px 0 0; font-size: 14px; opacity: 0.8;">
+          Your website will update automatically within a few minutes.
+        </p>
+      `;
+      document.body.appendChild(div);
+      
+      setTimeout(() => {
+        if (div.parentElement) div.remove();
+      }, 5000);
+    }
 
     function showSaveInstructions(data) {
       const modal = document.createElement('div');

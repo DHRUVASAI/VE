@@ -25,7 +25,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { password, galleryData } = JSON.parse(event.body || '{}');
+    const { password, galleryData, action } = JSON.parse(event.body || '{}');
     
     // Verify admin password
     const ADMIN_PASSWORD = process.env.VE_ADMIN_PASSWORD || 'VEAdmin2024!';
@@ -40,40 +40,151 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Validate gallery data structure
-    if (!galleryData || typeof galleryData !== 'object') {
+    if (action === 'save-gallery') {
+      // Save gallery data using GitHub API
+      const githubToken = process.env.GITHUB_TOKEN;
+      const repoOwner = 'DHRUVASAI';
+      const repoName = 'VE';
+      const filePath = 'data/services-gallery.json';
+
+      if (!githubToken) {
+        return {
+          statusCode: 500,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          },
+          body: JSON.stringify({ 
+            error: 'GitHub token not configured. Please set GITHUB_TOKEN environment variable.' 
+          })
+        };
+      }
+
+      // Get current file SHA
+      const getCurrentFileResponse = await fetch(
+        `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`,
+        {
+          headers: {
+            'Authorization': `token ${githubToken}`,
+            'User-Agent': 'VE-Admin-Panel'
+          }
+        }
+      );
+
+      let sha;
+      if (getCurrentFileResponse.ok) {
+        const currentFile = await getCurrentFileResponse.json();
+        sha = currentFile.sha;
+      }
+
+      // Update file content
+      const content = Buffer.from(JSON.stringify(galleryData, null, 2)).toString('base64');
+      
+      const updateResponse = await fetch(
+        `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${githubToken}`,
+            'Content-Type': 'application/json',
+            'User-Agent': 'VE-Admin-Panel'
+          },
+          body: JSON.stringify({
+            message: `Update gallery data via admin panel - ${new Date().toISOString()}`,
+            content: content,
+            sha: sha
+          })
+        }
+      );
+
+      if (!updateResponse.ok) {
+        const errorData = await updateResponse.json();
+        throw new Error(`GitHub API error: ${errorData.message}`);
+      }
+
       return {
-        statusCode: 400,
+        statusCode: 200,
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         },
-        body: JSON.stringify({ error: 'Invalid gallery data' })
+        body: JSON.stringify({ 
+          success: true, 
+          message: 'Gallery data updated successfully! Your website will update in a few minutes.',
+          timestamp: new Date().toISOString()
+        })
       };
     }
 
-    // For now, we'll return the data as confirmation
-    // In a real implementation with a Git-based CMS, you'd commit changes here
-    // For this simple setup, the admin will need to manually update the JSON file
-    
-    console.log('Gallery data received:', JSON.stringify(galleryData, null, 2));
-    
+    if (action === 'upload-file') {
+      // Handle file upload to GitHub
+      const { fileName, fileContent, fileType } = JSON.parse(event.body);
+      
+      const githubToken = process.env.GITHUB_TOKEN;
+      const repoOwner = 'DHRUVASAI';
+      const repoName = 'VE';
+      const filePath = `assets/uploads/${fileName}`;
+
+      if (!githubToken) {
+        return {
+          statusCode: 500,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+          },
+          body: JSON.stringify({ 
+            error: 'GitHub token not configured' 
+          })
+        };
+      }
+
+      // Upload file to GitHub
+      const uploadResponse = await fetch(
+        `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Authorization': `token ${githubToken}`,
+            'Content-Type': 'application/json',
+            'User-Agent': 'VE-Admin-Panel'
+          },
+          body: JSON.stringify({
+            message: `Upload ${fileName} via admin panel`,
+            content: fileContent // Base64 encoded content
+          })
+        }
+      );
+
+      if (!uploadResponse.ok) {
+        const errorData = await uploadResponse.json();
+        throw new Error(`File upload failed: ${errorData.message}`);
+      }
+
+      return {
+        statusCode: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*'
+        },
+        body: JSON.stringify({ 
+          success: true, 
+          message: 'File uploaded successfully!',
+          filePath: filePath
+        })
+      };
+    }
+
     return {
-      statusCode: 200,
+      statusCode: 400,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
-      body: JSON.stringify({ 
-        success: true, 
-        message: 'Gallery data validated successfully. Please manually update data/services-gallery.json with the provided data.',
-        data: galleryData,
-        timestamp: new Date().toISOString()
-      })
+      body: JSON.stringify({ error: 'Invalid action' })
     };
 
   } catch (error) {
-    console.error('Save gallery error:', error);
+    console.error('API error:', error);
     
     return {
       statusCode: 500,
