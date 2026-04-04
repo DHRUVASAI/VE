@@ -1022,6 +1022,13 @@
       transition: all 0.3s ease;
     }
 
+    /* Ensure dropdown options are visible */
+    select option {
+      background: #1a2332 !important;
+      color: #ffffff !important;
+      padding: 8px 12px;
+    }
+
     .client-info input:focus, .client-info select:focus {
       outline: none;
       border-color: rgba(212, 185, 106, 0.5);
@@ -1090,6 +1097,33 @@
       color: rgba(255, 255, 255, 0.9);
       font-size: 14px;
       transition: all 0.3s ease;
+    }
+
+    /* Fix for dropdown options visibility */
+    .client-form-grid select option {
+      background: #1a2332;
+      color: #ffffff;
+      padding: 8px 12px;
+      border: none;
+    }
+
+    .client-info select option {
+      background: #1a2332;
+      color: #ffffff;
+      padding: 8px 12px;
+      border: none;
+    }
+
+    /* For better browser compatibility */
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.7)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      background-size: 16px;
+      padding-right: 32px;
     }
 
     .client-form-grid input:focus, .client-form-grid select:focus {
