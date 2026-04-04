@@ -286,38 +286,52 @@
         font-size: 1.8rem;
     }
 
-    /* Services & Portfolio — Horizontal Swipe on Mobile/Tablet */
+    /* Services & Portfolio — Better Mobile Layout */
     .services-grid,
     .portfolio-grid {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        gap: 16px;
-        padding-bottom: 24px;
-        -webkit-overflow-scrolling: touch;
-        scroll-behavior: smooth;
-        scrollbar-width: none;
-
-        /* Full Bleed Carousel Effect */
-        margin-left: -16px;
-        margin-right: -16px;
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
-    .services-grid::-webkit-scrollbar,
-    .portfolio-grid::-webkit-scrollbar {
-        display: none;
-        /* Safari/Chrome */
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0;
+        margin: 0;
+        overflow: visible;
     }
 
     .service-card {
-        flex: 0 0 calc(80% - 16px);
-        max-width: 340px;
-        scroll-snap-align: center;
-        padding: 24px 18px;
+        flex: none;
+        max-width: none;
+        padding: 28px 24px;
+        margin: 0;
+    }
+
+    .service-gallery-btn {
+        background: linear-gradient(135deg, var(--gold), var(--gold-soft));
+        color: var(--navy-deep);
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(184, 150, 62, 0.3);
+        margin-top: 16px;
+        justify-content: center;
+        border: none;
+        width: 100%;
+    }
+
+    .service-gallery-btn:hover,
+    .service-gallery-btn:active {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(184, 150, 62, 0.4);
+        background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+    }
+
+    .service-gallery-btn i {
+        font-size: 1rem;
+        margin-right: 8px;
     }
 
     .portfolio-item {
@@ -462,20 +476,37 @@
         font-size: 0.55rem;
     }
 
-    /* Mobile carousel adjustments */
+    /* Mobile services - single column, no scrolling */
     .services-grid,
     .portfolio-grid {
-        gap: 12px;
-        margin-left: -16px;
-        margin-right: -16px;
-        padding-left: 16px;
-        padding-right: 16px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin: 0;
+        padding: 0;
     }
 
     .service-card {
         padding: 24px 20px;
-        flex: 0 0 85%;
-        display: block;
+        flex: none;
+        max-width: none;
+    }
+
+    .service-gallery-btn {
+        background: var(--gold);
+        color: var(--navy-deep);
+        padding: 14px 20px;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 700;
+        margin-top: 18px;
+        width: 100%;
+        justify-content: center;
+        box-shadow: 0 3px 12px rgba(184, 150, 62, 0.3);
+    }
+
+    .service-gallery-btn:active {
+        transform: scale(0.98);
     }
 
     .service-icon {
@@ -3151,7 +3182,7 @@ footer {
     justify-content: center;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.35s ease;
+    transition: opacity 0.25s ease;
 }
 
 .gallery-modal.open {
@@ -4790,4 +4821,40 @@ body,
 .form-group input,
 .form-group textarea {
     border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+
+/* ============================================================
+   MOBILE TOUCH ENHANCEMENTS FOR SERVICE CARDS
+   ============================================================ */
+@media (max-width: 768px) {
+    .service-card {
+        cursor: pointer;
+        -webkit-tap-highlight-color: rgba(184, 150, 62, 0.2);
+        touch-action: manipulation;
+        user-select: none;
+    }
+    
+    .service-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+    
+    /* Make gallery button always visible and touchable on mobile */
+    .service-gallery-btn {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        background: var(--gold) !important;
+        color: var(--navy-deep) !important;
+        border-color: var(--gold) !important;
+    }
+    
+    /* Faster gallery modal animation on mobile */
+    .gallery-modal {
+        transition: opacity 0.2s ease;
+    }
+    
+    .gallery-modal-panel {
+        transition: transform 0.25s ease;
+    }
 }

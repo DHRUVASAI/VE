@@ -588,3 +588,47 @@ document.addEventListener('keydown', e => {
         if (e.key === 'ArrowRight') lightboxNext.click();
     }
 });
+
+// ==================== MOBILE TOUCH ENHANCEMENTS ====================
+document.addEventListener("DOMContentLoaded", function() {
+    // Improve mobile touch responsiveness for service cards
+    const serviceCards = document.querySelectorAll(".service-card[data-category]");
+    
+    serviceCards.forEach(card => {
+        // Add visual feedback for touch on mobile
+        card.addEventListener("touchstart", function() {
+            this.style.transform = "scale(0.98)";
+        }, { passive: true });
+        
+        card.addEventListener("touchend", function() {
+            setTimeout(() => {
+                this.style.transform = "";
+            }, 150);
+        }, { passive: true });
+        
+        card.addEventListener("touchcancel", function() {
+            this.style.transform = "";
+        }, { passive: true });
+    });
+    
+    // Faster gallery opening on mobile
+    if (window.matchMedia("(max-width: 768px)").matches) {
+        const galleryModal = document.getElementById("galleryModal");
+        if (galleryModal) {
+            // Override transition for mobile
+            galleryModal.style.transition = "opacity 0.2s ease";
+        }
+    }
+    
+    // Prevent double-tap zoom on service cards
+    serviceCards.forEach(card => {
+        let lastTouchEnd = 0;
+        card.addEventListener("touchend", function(e) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                e.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    });
+});
