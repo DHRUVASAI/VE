@@ -488,6 +488,99 @@
       border: 1px solid rgba(244, 67, 54, 0.3);
     }
 
+    /* Tab Navigation */
+    .tab-btn {
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: rgba(255, 255, 255, 0.7);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #d4b96a 0%, #b8963e 100%);
+      color: #0f1527;
+      border-color: #d4b96a;
+    }
+
+    .tab-btn:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    /* Client Management */
+    .client-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .client-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(212, 185, 106, 0.3);
+    }
+
+    .client-logo {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px;
+    }
+
+    .client-info {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .client-info input,
+    .client-info select {
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 13px;
+    }
+
+    .client-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .client-featured {
+      background: rgba(76, 175, 80, 0.15);
+      color: #4caf50;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(76, 175, 80, 0.3);
+    }
+
+    .add-client-form {
+      background: rgba(76, 175, 80, 0.05);
+      border: 1px solid rgba(76, 175, 80, 0.2);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
     /* Upload instructions styling */
     .upload-notice {
       background: rgba(212, 185, 106, 0.9);
@@ -881,6 +974,218 @@
     .admin-header {
       animation: fadeIn 0.4s ease-out;
     }
+
+    /* Client Management Styles */
+    .client-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 16px;
+      position: relative;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .client-item:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(212, 185, 106, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .client-logo {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px;
+    }
+
+    .client-info {
+      display: grid;
+      grid-template-columns: 1fr 120px;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .client-info input, .client-info select {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      padding: 8px 12px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .client-info input:focus, .client-info select:focus {
+      outline: none;
+      border-color: rgba(212, 185, 106, 0.5);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .client-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      min-width: 100px;
+    }
+
+    .client-featured {
+      background: linear-gradient(135deg, #d4b96a, #f4d03f);
+      color: #2c3e50;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .new-client-form {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .new-client-form h3 {
+      color: rgba(255, 255, 255, 0.9);
+      margin: 0 0 16px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .client-form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .client-form-grid .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .client-form-grid label {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .client-form-grid input, .client-form-grid select {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      padding: 10px 12px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .client-form-grid input:focus, .client-form-grid select:focus {
+      outline: none;
+      border-color: rgba(212, 185, 106, 0.5);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .client-form-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .featured-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+    }
+
+    .add-client-btn {
+      background: linear-gradient(135deg, #d4b96a, #f4d03f);
+      color: #2c3e50;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .add-client-btn:hover {
+      background: linear-gradient(135deg, #f4d03f, #d4b96a);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(212, 185, 106, 0.3);
+    }
+
+    /* Mobile responsiveness for client management */
+    @media (max-width: 768px) {
+      .client-item {
+        grid-template-columns: 60px 1fr;
+        grid-template-rows: auto auto;
+        gap: 12px;
+      }
+
+      .client-actions {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .client-logo {
+        width: 60px;
+        height: 60px;
+      }
+
+      .client-info {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
+      .client-form-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .client-form-actions {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .client-item {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .client-logo {
+        width: 50px;
+        height: 50px;
+        justify-self: center;
+      }
+
+      .client-info input {
+        font-size: 12px;
+        padding: 6px 8px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -910,17 +1215,78 @@
       <div class="info-banner">
         <h3><i class="fas fa-magic"></i> Fully Automatic Admin Panel</h3>
         <p>
-          • Edit image captions directly in the text fields<br>
-          • Click the × button to remove images<br>
-          • Add new images using the file selectors - <strong>they upload automatically!</strong><br>
+          • Manage your <strong>gallery images</strong> and <strong>client information</strong> easily<br>
+          • Edit captions and client details directly in the text fields<br>
+          • Add new images and client logos using the file selectors - <strong>they upload automatically!</strong><br>
           • Click "Save All Changes" to publish everything to your live website<br>
           • <strong>Everything is automatic</strong> - no manual upload or GitHub knowledge needed!<br>
-          • <strong>Background Removal:</strong> Upload transparent PNG/WebP files for no-background look<br>
-          • <strong>Live Preview:</strong> <a href="../" target="_blank" style="color: #d4b96a; text-decoration: underline;">Open Main Site</a> to see your gallery live
+          • <strong>Live Preview:</strong> <a href="../" target="_blank" style="color: #d4b96a; text-decoration: underline;">Open Main Site</a> to see changes live
         </p>
       </div>
+
+      <!-- Navigation Tabs -->
+      <div style="display: flex; gap: 16px; margin-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 16px;">
+        <button id="galleryTab" class="tab-btn active" onclick="switchTab('gallery')">
+          <i class="fas fa-images"></i> Gallery Management
+        </button>
+        <button id="clientsTab" class="tab-btn" onclick="switchTab('clients')">
+          <i class="fas fa-users"></i> Client Management
+        </button>
+      </div>
+
+      <!-- Gallery Section -->
+      <div id="gallerySection">
+        <h2 style="color: #d4b96a; margin-bottom: 24px; font-size: 1.4rem;">
+          <i class="fas fa-images"></i> Our Specialized Services Gallery
+        </h2>
+        <div id="categoriesContainer"></div>
+      </div>
+
+      <!-- Clients Section -->
+      <div id="clientsSection" style="display: none;">
+        <h2 style="color: #d4b96a; margin-bottom: 24px; font-size: 1.4rem;">
+          <i class="fas fa-users"></i> Our Valued Clients
+        </h2>
+        <div id="clientsContainer"></div>
+        
+        <div class="category-section">
+          <div class="category-header">
+            <i class="fas fa-plus" style="color: #4caf50;"></i>
+            <h2>Add New Client</h2>
+          </div>
+          
+          <div class="add-client-form">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+              <input type="text" id="newClientName" placeholder="Client Name (e.g., Star Industries)" style="padding: 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff;">
+              <select id="newClientCategory" style="padding: 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff;">
+                <option value="">Select Category</option>
+                <option value="Industrial">Industrial</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Education">Education</option>
+                <option value="Corporate">Corporate</option>
+                <option value="Government">Government</option>
+                <option value="Retail">Retail</option>
+                <option value="Hospitality">Hospitality</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div style="margin-bottom: 16px;">
+              <input type="text" id="newClientDescription" placeholder="Client Description (e.g., Leading manufacturer of industrial safety equipment)" style="width: 100%; padding: 12px; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; background: rgba(255,255,255,0.1); color: #fff;">
+            </div>
+            <div style="display: flex; gap: 16px; align-items: center;">
+              <input type="file" id="newClientLogo" accept="image/*" style="flex: 1; padding: 10px 12px; border: 2px dashed rgba(212, 185, 106, 0.3); border-radius: 8px; background: rgba(255, 255, 255, 0.05); color: #fff; font-size: 13px;">
+              <label style="display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.9);">
+                <input type="checkbox" id="newClientFeatured" style="margin: 0;">
+                Featured Client
+              </label>
+              <button onclick="addNewClient()" class="add-btn">
+                <i class="fas fa-plus"></i> Add Client
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       
-      <div id="categoriesContainer"></div>
       <button id="saveBtn" class="save-btn">
         <i class="fas fa-save"></i> Save All Changes
       </button>
@@ -933,6 +1299,7 @@
     
     // State
     let galleryData = {};
+    let clientsData = { clients: [] };
     let isLoggedIn = localStorage.getItem('veAdminAuth') === 'true';
 
     // Initialize
@@ -982,7 +1349,9 @@
       document.getElementById('adminInterface').style.display = 'block';
       
       await loadGalleryData();
+      await loadClientsData();
       renderCategories();
+      renderClients();
     }
 
     async function loadGalleryData() {
@@ -992,6 +1361,17 @@
       } catch (error) {
         console.error('Failed to load gallery data:', error);
         showError('Failed to load gallery data');
+      }
+    }
+
+    async function loadClientsData() {
+      try {
+        const response = await fetch('../data/clients.json');
+        clientsData = await response.json();
+      } catch (error) {
+        console.error('Failed to load clients data:', error);
+        // Initialize with empty structure if file doesn't exist
+        clientsData = { clients: [] };
       }
     }
 
@@ -1117,11 +1497,12 @@
     async function uploadPendingFiles() {
       const pendingFiles = [];
       
-      // Collect all pending files
+      // Collect all pending gallery files
       Object.entries(galleryData).forEach(([categoryKey, category]) => {
         category.images.forEach((img, index) => {
           if (img._uploadStatus === 'pending' && img._originalFile) {
             pendingFiles.push({
+              type: 'gallery',
               categoryKey,
               imageIndex: index,
               file: img._originalFile,
@@ -1129,6 +1510,18 @@
             });
           }
         });
+      });
+
+      // Collect all pending client files
+      clientsData.clients.forEach((client, index) => {
+        if (client._uploadStatus === 'pending' && client._originalFile) {
+          pendingFiles.push({
+            type: 'client',
+            clientIndex: index,
+            file: client._originalFile,
+            fileName: client._fileName
+          });
+        }
       });
 
       if (pendingFiles.length === 0) {
@@ -1139,8 +1532,13 @@
       for (const fileInfo of pendingFiles) {
         try {
           // Update status to uploading
-          galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._uploadStatus = 'uploading';
+          if (fileInfo.type === 'gallery') {
+            galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._uploadStatus = 'uploading';
+          } else {
+            clientsData.clients[fileInfo.clientIndex]._uploadStatus = 'uploading';
+          }
           renderCategories();
+          renderClients();
 
           // Convert file to base64
           const fileContent = await fileToBase64(fileInfo.file);
@@ -1162,24 +1560,41 @@
           const result = await uploadResponse.json();
           
           if (uploadResponse.ok) {
-            // Mark as uploaded
-            galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._uploadStatus = 'uploaded';
-            // Remove temporary data
-            delete galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._preview;
-            delete galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._originalFile;
-            delete galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._fileName;
+            // Mark as uploaded and clean up
+            if (fileInfo.type === 'gallery') {
+              const img = galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex];
+              img._uploadStatus = 'uploaded';
+              delete img._preview;
+              delete img._originalFile;
+              delete img._fileName;
+            } else {
+              const client = clientsData.clients[fileInfo.clientIndex];
+              client._uploadStatus = 'uploaded';
+              delete client._preview;
+              delete client._originalFile;
+              delete client._fileName;
+            }
           } else {
             // Mark as failed
-            galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._uploadStatus = 'failed';
+            if (fileInfo.type === 'gallery') {
+              galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._uploadStatus = 'failed';
+            } else {
+              clientsData.clients[fileInfo.clientIndex]._uploadStatus = 'failed';
+            }
             throw new Error(result.error || 'Upload failed');
           }
         } catch (error) {
           console.error('File upload error:', error);
-          galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._uploadStatus = 'failed';
+          if (fileInfo.type === 'gallery') {
+            galleryData[fileInfo.categoryKey].images[fileInfo.imageIndex]._uploadStatus = 'failed';
+          } else {
+            clientsData.clients[fileInfo.clientIndex]._uploadStatus = 'failed';
+          }
         }
       }
 
       renderCategories();
+      renderClients();
       return true;
     }
 
@@ -1254,10 +1669,10 @@
           throw new Error('File upload failed');
         }
 
-        // Step 2: Save gallery data
-        button.innerHTML = '<i class="fas fa-save fa-spin"></i> Saving Gallery...';
+        // Step 2: Save both gallery and client data
+        button.innerHTML = '<i class="fas fa-save fa-spin"></i> Saving Data...';
         
-        // Clean up the data before saving (remove any remaining upload metadata)
+        // Clean up the gallery data before saving
         const cleanGalleryData = {};
         Object.entries(galleryData).forEach(([key, category]) => {
           cleanGalleryData[key] = {
@@ -1268,6 +1683,18 @@
             }))
           };
         });
+
+        // Clean up the client data before saving
+        const cleanClientData = {
+          clients: clientsData.clients.map(client => ({
+            id: client.id,
+            name: client.name,
+            description: client.description,
+            category: client.category,
+            logo: client.logo,
+            featured: client.featured
+          }))
+        };
         
         const response = await fetch('/.netlify/functions/save-gallery', {
           method: 'POST',
@@ -1277,7 +1704,8 @@
           body: JSON.stringify({
             password: ADMIN_PASSWORD,
             action: 'save-gallery',
-            galleryData: cleanGalleryData
+            galleryData: cleanGalleryData,
+            clientData: cleanClientData
           })
         });
         
@@ -1287,6 +1715,7 @@
           button.innerHTML = '<i class="fas fa-check"></i> All Done!';
           showSuccessMessage(result.message);
           localStorage.removeItem('veGalleryDraft');
+          localStorage.removeItem('veClientsDraft');
         } else {
           throw new Error(result.error || 'Save failed');
         }
@@ -1482,11 +1911,138 @@
       clearTimeout(saveTimeout);
       saveTimeout = setTimeout(() => {
         localStorage.setItem('veGalleryDraft', JSON.stringify(galleryData));
+        localStorage.setItem('veClientsDraft', JSON.stringify(clientsData));
       }, 1000);
     }
 
     // Add auto-save to input changes
     document.addEventListener('input', autoSave);
+
+    // Tab switching
+    function switchTab(tab) {
+      if (tab === 'gallery') {
+        document.getElementById('galleryTab').classList.add('active');
+        document.getElementById('clientsTab').classList.remove('active');
+        document.getElementById('gallerySection').style.display = 'block';
+        document.getElementById('clientsSection').style.display = 'none';
+      } else {
+        document.getElementById('galleryTab').classList.remove('active');
+        document.getElementById('clientsTab').classList.add('active');
+        document.getElementById('gallerySection').style.display = 'none';
+        document.getElementById('clientsSection').style.display = 'block';
+      }
+    }
+
+    // Client management functions
+    function renderClients() {
+      const container = document.getElementById('clientsContainer');
+      container.innerHTML = '';
+
+      clientsData.clients.forEach((client, index) => {
+        const clientEl = createClientElement(client, index);
+        container.appendChild(clientEl);
+      });
+    }
+
+    function createClientElement(client, index) {
+      const div = document.createElement('div');
+      div.className = 'client-item';
+      
+      const logoSrc = client._preview || `../${client.logo}`;
+      const featuredBadge = client.featured ? '<div class="client-featured">Featured</div>' : '';
+      
+      div.innerHTML = `
+        <img src="${logoSrc}" alt="${client.name}" class="client-logo" onerror="this.style.display='none'">
+        <div class="client-info">
+          <input type="text" value="${client.name}" onchange="updateClient(${index}, 'name', this.value)" placeholder="Client Name">
+          <select onchange="updateClient(${index}, 'category', this.value)">
+            <option value="">Category</option>
+            ${['Industrial', 'Healthcare', 'Education', 'Corporate', 'Government', 'Retail', 'Hospitality', 'Other'].map(cat => 
+              `<option value="${cat}" ${client.category === cat ? 'selected' : ''}>${cat}</option>`
+            ).join('')}
+          </select>
+          <input type="text" value="${client.description}" onchange="updateClient(${index}, 'description', this.value)" placeholder="Description" style="grid-column: 1 / -1;">
+        </div>
+        <div class="client-actions">
+          <label style="display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.9); font-size: 12px;">
+            <input type="checkbox" ${client.featured ? 'checked' : ''} onchange="updateClient(${index}, 'featured', this.checked)">
+            Featured
+          </label>
+          ${featuredBadge}
+          <button class="remove-btn" onclick="removeClient(${index})" style="position: static; width: auto; height: auto; padding: 4px 8px;">
+            <i class="fas fa-trash"></i> Remove
+          </button>
+        </div>
+      `;
+      
+      return div;
+    }
+
+    function updateClient(index, field, value) {
+      clientsData.clients[index][field] = value;
+      if (field === 'name') {
+        // Update ID when name changes
+        clientsData.clients[index].id = value.toLowerCase().replace(/[^a-z0-9]/g, '-');
+      }
+    }
+
+    function removeClient(index) {
+      if (confirm('Remove this client?')) {
+        clientsData.clients.splice(index, 1);
+        renderClients();
+      }
+    }
+
+    function addNewClient() {
+      const nameEl = document.getElementById('newClientName');
+      const categoryEl = document.getElementById('newClientCategory');
+      const descriptionEl = document.getElementById('newClientDescription');
+      const logoEl = document.getElementById('newClientLogo');
+      const featuredEl = document.getElementById('newClientFeatured');
+      
+      if (!nameEl.value.trim()) {
+        alert('Please enter a client name');
+        return;
+      }
+      
+      const name = nameEl.value.trim();
+      const id = name.toLowerCase().replace(/[^a-z0-9]/g, '-');
+      
+      const newClient = {
+        id: id,
+        name: name,
+        description: descriptionEl.value.trim() || 'Valued client',
+        category: categoryEl.value || 'Other',
+        featured: featuredEl.checked,
+        _uploadStatus: 'pending'
+      };
+      
+      if (logoEl.files.length > 0) {
+        const file = logoEl.files[0];
+        const previewUrl = URL.createObjectURL(file);
+        const timestamp = Date.now();
+        const extension = file.name.split('.').pop();
+        const fileName = `${timestamp}-${id}-logo.${extension}`;
+        
+        newClient.logo = `assets/clients/${fileName}`;
+        newClient._preview = previewUrl;
+        newClient._originalFile = file;
+        newClient._fileName = fileName;
+      } else {
+        newClient.logo = 'assets/clients/default-logo.png';
+      }
+      
+      clientsData.clients.push(newClient);
+      
+      // Clear form
+      nameEl.value = '';
+      categoryEl.value = '';
+      descriptionEl.value = '';
+      logoEl.value = '';
+      featuredEl.checked = false;
+      
+      renderClients();
+    }
   </script>
 
   <!-- FontAwesome for icons -->

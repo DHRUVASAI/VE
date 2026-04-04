@@ -25,7 +25,7 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { password, galleryData, action, fileName, fileContent, fileType } = JSON.parse(event.body || '{}');
+    const { password, galleryData, clientData, action, fileName, fileContent, fileType } = JSON.parse(event.body || '{}');
     
     // Verify admin password
     const ADMIN_PASSWORD = process.env.VE_ADMIN_PASSWORD || 'VEAdmin2024!';
@@ -46,12 +46,11 @@ exports.handler = async (event, context) => {
     console.log('github exists:', !!process.env.github);
 
     if (action === 'save-gallery') {
-      // Save gallery data using GitHub API
+      // Save both gallery and client data using GitHub API
       const githubToken = process.env.GITHUB_TOKEN || process.env.github;
       const repoOwner = 'DHRUVASAI';
       const repoName = 'VE';
-      const filePath = 'data/services-gallery.json';
-
+      
       if (!githubToken) {
         return {
           statusCode: 500,
@@ -67,46 +66,104 @@ exports.handler = async (event, context) => {
       }
 
       try {
-        // Get current file SHA
-        const getCurrentFileResponse = await fetch(
-          `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`,
-          {
-            headers: {
-              'Authorization': `token ${githubToken}`,
-              'User-Agent': 'VE-Admin-Panel'
+        const results = [];
+        
+        // Save gallery data
+        if (galleryData) {
+          const galleryFilePath = 'data/services-gallery.json';
+          
+          // Get current gallery file SHA
+          const getCurrentGalleryResponse = await fetch(
+            `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${galleryFilePath}`,
+            {
+              headers: {
+                'Authorization': `token ${githubToken}`,
+                'User-Agent': 'VE-Admin-Panel'
+              }
             }
-          }
-        );
+          );
 
-        let sha;
-        if (getCurrentFileResponse.ok) {
-          const currentFile = await getCurrentFileResponse.json();
-          sha = currentFile.sha;
+          let gallerySha;
+          if (getCurrentGalleryResponse.ok) {
+            const currentFile = await getCurrentGalleryResponse.json();
+            gallerySha = currentFile.sha;
+          }
+
+          // Update gallery file content
+          const galleryContent = Buffer.from(JSON.stringify(galleryData, null, 2)).toString('base64');
+          
+          const updateGalleryResponse = await fetch(
+            `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${galleryFilePath}`,
+            {
+              method: 'PUT',
+              headers: {
+                'Authorization': `token ${githubToken}`,
+                'Content-Type': 'application/json',
+                'User-Agent': 'VE-Admin-Panel'
+              },
+              body: JSON.stringify({
+                message: `Update gallery data via admin panel - ${new Date().toISOString()}`,
+                content: galleryContent,
+                sha: gallerySha
+              })
+            }
+          );
+
+          if (!updateGalleryResponse.ok) {
+            const errorData = await updateGalleryResponse.json();
+            throw new Error(`Gallery update failed: ${errorData.message}`);
+          }
+          
+          results.push('Gallery data updated');
         }
 
-        // Update file content
-        const content = Buffer.from(JSON.stringify(galleryData, null, 2)).toString('base64');
-        
-        const updateResponse = await fetch(
-          `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`,
-          {
-            method: 'PUT',
-            headers: {
-              'Authorization': `token ${githubToken}`,
-              'Content-Type': 'application/json',
-              'User-Agent': 'VE-Admin-Panel'
-            },
-            body: JSON.stringify({
-              message: `Update gallery data via admin panel - ${new Date().toISOString()}`,
-              content: content,
-              sha: sha
-            })
-          }
-        );
+        // Save client data
+        if (clientData) {
+          const clientFilePath = 'data/clients.json';
+          
+          // Get current client file SHA
+          const getCurrentClientResponse = await fetch(
+            `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${clientFilePath}`,
+            {
+              headers: {
+                'Authorization': `token ${githubToken}`,
+                'User-Agent': 'VE-Admin-Panel'
+              }
+            }
+          );
 
-        if (!updateResponse.ok) {
-          const errorData = await updateResponse.json();
-          throw new Error(`GitHub API error: ${errorData.message}`);
+          let clientSha;
+          if (getCurrentClientResponse.ok) {
+            const currentFile = await getCurrentClientResponse.json();
+            clientSha = currentFile.sha;
+          }
+
+          // Update client file content
+          const clientContent = Buffer.from(JSON.stringify(clientData, null, 2)).toString('base64');
+          
+          const updateClientResponse = await fetch(
+            `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${clientFilePath}`,
+            {
+              method: 'PUT',
+              headers: {
+                'Authorization': `token ${githubToken}`,
+                'Content-Type': 'application/json',
+                'User-Agent': 'VE-Admin-Panel'
+              },
+              body: JSON.stringify({
+                message: `Update client data via admin panel - ${new Date().toISOString()}`,
+                content: clientContent,
+                sha: clientSha
+              })
+            }
+          );
+
+          if (!updateClientResponse.ok) {
+            const errorData = await updateClientResponse.json();
+            throw new Error(`Client update failed: ${errorData.message}`);
+          }
+          
+          results.push('Client data updated');
         }
 
         return {
@@ -117,7 +174,7 @@ exports.handler = async (event, context) => {
           },
           body: JSON.stringify({ 
             success: true, 
-            message: 'Gallery data updated successfully! Your website will update in a few minutes.',
+            message: `${results.join(' and ')} successfully! Your website will update in a few minutes.`,
             timestamp: new Date().toISOString()
           })
         };
@@ -142,7 +199,14 @@ exports.handler = async (event, context) => {
       const githubToken = process.env.GITHUB_TOKEN || process.env.github;
       const repoOwner = 'DHRUVASAI';
       const repoName = 'VE';
-      const filePath = `assets/uploads/${fileName}`;
+      
+      // Determine upload path based on file name
+      let filePath;
+      if (fileName.includes('logo')) {
+        filePath = `assets/clients/${fileName}`;
+      } else {
+        filePath = `assets/uploads/${fileName}`;
+      }
 
       if (!githubToken) {
         return {
