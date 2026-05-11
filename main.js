@@ -1,14 +1,47 @@
-// ==================== SPLASH INTRO ====================
-const splash = document.getElementById('introSplash');
-if (splash) {
-    document.body.classList.add('splash-active');
-    setTimeout(() => {
-        document.body.classList.remove('splash-active');
-    }, 2800);
-    setTimeout(() => {
-        splash.remove();
-    }, 3800);
-}
+// ==================== INTRO SPLASH (v2: opacity only + remove node) ====================
+(function initIntroSplash() {
+    const el = document.getElementById('introSplash');
+    if (!el) return;
+
+    let finished = false;
+    function finish() {
+        if (finished) return;
+        finished = true;
+        document.body.classList.remove('intro-splash-active');
+        if (el.isConnected) {
+            el.removeAttribute('aria-busy');
+            el.setAttribute('aria-hidden', 'true');
+            el.remove();
+        }
+    }
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        finish();
+        return;
+    }
+
+    document.body.classList.add('intro-splash-active');
+
+    const mobile = window.matchMedia('(max-width: 768px)').matches;
+    const displayMs = mobile ? 1500 : 2000;
+    const fadeMs = 420;
+
+    function hide() {
+        el.classList.add('intro-splash--hide');
+        const fallback = window.setTimeout(finish, fadeMs + 120);
+        el.addEventListener(
+            'transitionend',
+            (ev) => {
+                if (ev.target !== el || ev.propertyName !== 'opacity') return;
+                window.clearTimeout(fallback);
+                finish();
+            },
+            { passive: true }
+        );
+    }
+
+    window.setTimeout(hide, displayMs);
+})();
 
 // ==================== NAVBAR + TRUST BAR ====================
 const nav = document.getElementById('navbar');
@@ -18,6 +51,7 @@ const trustBar = document.getElementById('topTrustBar');
 const TRUST_BAR_H = trustBar ? trustBar.offsetHeight : 40;
 
 window.addEventListener('scroll', () => {
+    if (!nav) return;
     const scrolled = window.scrollY > 80;
     nav.classList.toggle('scrolled', scrolled);
     if (trustBar) {
@@ -26,20 +60,24 @@ window.addEventListener('scroll', () => {
     }
 });
 
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    hamburger.classList.toggle('active');
-});
-
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const target = document.querySelector(link.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        navLinks.classList.remove('active');
-        hamburger.classList.remove('active');
+if (hamburger && navLinks) {
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
     });
-});
+}
+
+if (navLinks) {
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const target = document.querySelector(link.getAttribute('href'));
+            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            navLinks.classList.remove('active');
+            if (hamburger) hamburger.classList.remove('active');
+        });
+    });
+}
 
 // ==================== SCROLL PROGRESS BAR ====================
 const scrollProgressBar = document.getElementById('scrollProgress');
@@ -231,8 +269,9 @@ if (heroCanvas && hero) {
         }
     }
 
-    // Create threads
-    const threadCount = Math.min(35, Math.floor(heroCanvas.width / 40));
+    const lightCanvas = window.matchMedia('(max-width: 768px)').matches;
+    const maxThreads = lightCanvas ? 10 : 35;
+    const threadCount = Math.min(maxThreads, Math.floor(heroCanvas.width / (lightCanvas ? 32 : 40)));
     for (let i = 0; i < threadCount; i++) {
         threads.push(new Thread());
     }
@@ -266,18 +305,20 @@ if (heroSubtitle) {
     heroSubtitle.textContent = '';
     heroSubtitle.style.minHeight = '3em';
     let charIndex = 0;
-    const typeDelay = 3500; // Wait for splash to finish
 
+    const mobileHero = window.matchMedia('(max-width: 768px)').matches;
+    const typeStart = mobileHero ? 900 : 1500;
+    const typeStep = mobileHero ? 4 : 10;
     setTimeout(() => {
         function typeChar() {
             if (charIndex < fullText.length) {
                 heroSubtitle.textContent += fullText[charIndex];
                 charIndex++;
-                setTimeout(typeChar, 10 + Math.random() * 10);
+                setTimeout(typeChar, typeStep + Math.random() * typeStep);
             }
         }
         typeChar();
-    }, 1500); // Start sooner after splash
+    }, typeStart);
 }
 
 // ==================== CONTACT FORM — REAL SUBMISSION via Formspree ====================
@@ -450,24 +491,36 @@ async function loadGalleryDataFromCMS() {
 
 loadGalleryDataFromCMS();
 
+function safeMediaUrl(src) {
+    if (!src || /^data:|^https?:|^\/\//i.test(src)) return src;
+    try {
+        return encodeURI(src);
+    } catch {
+        return src;
+    }
+}
+
 // Modal elements
 const galleryModal = document.getElementById('galleryModal');
 const galleryGrid = document.getElementById('galleryModalGrid');
 const galleryTitle = document.getElementById('galleryModalTitle');
 const galleryIcon = document.getElementById('galleryModalIcon');
 const modalClose = document.getElementById('galleryModalClose');
-const backdrop = galleryModal.querySelector('.gallery-modal-backdrop');
+const backdrop = galleryModal ? galleryModal.querySelector('.gallery-modal-backdrop') : null;
 
 // Lightbox elements
 const lightbox = document.getElementById('galleryLightbox');
 const lightboxImg = document.getElementById('lightboxImg');
-const lightboxVideo = document.createElement('video');
-lightboxVideo.className = 'lightbox-video';
-lightboxVideo.id = 'lightboxVideo';
-lightboxVideo.controls = true;
-lightboxVideo.playsInline = true;
-lightboxVideo.style.display = 'none';
-lightboxImg.insertAdjacentElement('afterend', lightboxVideo);
+let lightboxVideo = null;
+if (lightboxImg) {
+    lightboxVideo = document.createElement('video');
+    lightboxVideo.className = 'lightbox-video';
+    lightboxVideo.id = 'lightboxVideo';
+    lightboxVideo.controls = true;
+    lightboxVideo.playsInline = true;
+    lightboxVideo.style.display = 'none';
+    lightboxImg.insertAdjacentElement('afterend', lightboxVideo);
+}
 const lightboxCap = document.getElementById('lightboxCaption');
 const lightboxClose = document.getElementById('lightboxClose');
 const lightboxPrev = document.getElementById('lightboxPrev');
@@ -481,6 +534,7 @@ function isVideoFile(src) {
 }
 
 function openGallery(category) {
+    if (!galleryModal || !galleryGrid || !galleryTitle || !galleryIcon) return;
     const data = GALLERY_DATA[category];
     if (!data) return;
 
@@ -492,12 +546,27 @@ function openGallery(category) {
     data.images.forEach((img, idx) => {
         const thumb = document.createElement('div');
         thumb.className = 'gallery-thumb';
-        const mediaMarkup = isVideoFile(img.src)
-            ? `<video src="${img.src}" muted playsinline preload="metadata"></video>`
-            : `<img src="${img.src}" alt="${img.caption}" loading="lazy">`;
-
-        thumb.innerHTML = `${mediaMarkup}<div class="gallery-thumb-caption">${img.caption}</div>`;
-        // set pointer on the whole card
+        const src = safeMediaUrl(img.src);
+        let mediaEl;
+        if (isVideoFile(img.src)) {
+            mediaEl = document.createElement('video');
+            mediaEl.src = src;
+            mediaEl.muted = true;
+            mediaEl.playsInline = true;
+            mediaEl.setAttribute('playsinline', '');
+            mediaEl.preload = 'metadata';
+        } else {
+            mediaEl = document.createElement('img');
+            mediaEl.src = src;
+            mediaEl.alt = img.caption || '';
+            mediaEl.loading = 'lazy';
+            mediaEl.decoding = 'async';
+        }
+        const capEl = document.createElement('div');
+        capEl.className = 'gallery-thumb-caption';
+        capEl.textContent = img.caption || '';
+        thumb.appendChild(mediaEl);
+        thumb.appendChild(capEl);
         thumb.addEventListener('click', () => openLightbox(idx));
         galleryGrid.appendChild(thumb);
     });
@@ -507,31 +576,37 @@ function openGallery(category) {
 }
 
 function closeGallery() {
+    if (!galleryModal) return;
     galleryModal.classList.remove('open');
     document.body.style.overflow = '';
     closeLightbox();
 }
 
 function openLightbox(idx) {
+    if (!lightbox) return;
     currentIndex = idx;
     updateLightbox();
     lightbox.classList.add('open');
 }
 
 function closeLightbox() {
+    if (!lightbox) return;
     lightbox.classList.remove('open');
 }
 
 function updateLightbox() {
+    if (!lightboxImg || !lightboxCap || !lightboxPrev || !lightboxNext || !lightboxVideo) return;
     const img = currentImages[currentIndex];
+    if (!img) return;
     const isVideo = isVideoFile(img.src);
+    const src = safeMediaUrl(img.src);
 
     lightboxCap.textContent = img.caption;
 
     if (isVideo) {
         lightboxImg.style.display = 'none';
         lightboxVideo.style.display = 'block';
-        lightboxVideo.src = img.src;
+        lightboxVideo.src = src;
         lightboxVideo.load();
     } else {
         lightboxVideo.pause();
@@ -540,11 +615,11 @@ function updateLightbox() {
 
         lightboxImg.style.display = 'block';
         lightboxImg.style.opacity = '0';
-        setTimeout(() => {
-            lightboxImg.src = img.src;
-            lightboxImg.alt = img.caption;
+        requestAnimationFrame(() => {
+            lightboxImg.src = src;
+            lightboxImg.alt = img.caption || '';
             lightboxImg.style.opacity = '1';
-        }, 150);
+        });
     }
 
     lightboxPrev.style.display = currentImages.length > 1 ? 'flex' : 'none';
@@ -563,72 +638,40 @@ document.querySelectorAll('.service-card[data-category]').forEach(card => {
 });
 
 // Close modal via button or backdrop
-modalClose.addEventListener('click', closeGallery);
-backdrop.addEventListener('click', closeGallery);
+if (modalClose) modalClose.addEventListener('click', closeGallery);
+if (backdrop) backdrop.addEventListener('click', closeGallery);
 
 // Lightbox controls
-lightboxClose.addEventListener('click', closeLightbox);
-lightboxPrev.addEventListener('click', () => {
-    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
-    updateLightbox();
-});
-lightboxNext.addEventListener('click', () => {
-    currentIndex = (currentIndex + 1) % currentImages.length;
-    updateLightbox();
-});
+if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+if (lightboxPrev) {
+    lightboxPrev.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+        updateLightbox();
+    });
+}
+if (lightboxNext) {
+    lightboxNext.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % currentImages.length;
+        updateLightbox();
+    });
+}
 
 // Keyboard navigation
 document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-        if (lightbox.classList.contains('open')) closeLightbox();
-        else if (galleryModal.classList.contains('open')) closeGallery();
+        if (lightbox && lightbox.classList.contains('open')) closeLightbox();
+        else if (galleryModal && galleryModal.classList.contains('open')) closeGallery();
     }
-    if (lightbox.classList.contains('open')) {
-        if (e.key === 'ArrowLeft') lightboxPrev.click();
-        if (e.key === 'ArrowRight') lightboxNext.click();
+    if (lightbox && lightbox.classList.contains('open')) {
+        if (e.key === 'ArrowLeft' && lightboxPrev) lightboxPrev.click();
+        if (e.key === 'ArrowRight' && lightboxNext) lightboxNext.click();
     }
 });
 
 // ==================== MOBILE TOUCH ENHANCEMENTS ====================
-document.addEventListener("DOMContentLoaded", function() {
-    // Improve mobile touch responsiveness for service cards
-    const serviceCards = document.querySelectorAll(".service-card[data-category]");
-    
-    serviceCards.forEach(card => {
-        // Add visual feedback for touch on mobile
-        card.addEventListener("touchstart", function() {
-            this.style.transform = "scale(0.98)";
-        }, { passive: true });
-        
-        card.addEventListener("touchend", function() {
-            setTimeout(() => {
-                this.style.transform = "";
-            }, 150);
-        }, { passive: true });
-        
-        card.addEventListener("touchcancel", function() {
-            this.style.transform = "";
-        }, { passive: true });
-    });
-    
-    // Faster gallery opening on mobile
-    if (window.matchMedia("(max-width: 768px)").matches) {
-        const galleryModal = document.getElementById("galleryModal");
-        if (galleryModal) {
-            // Override transition for mobile
-            galleryModal.style.transition = "opacity 0.2s ease";
-        }
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia('(max-width: 768px)').matches) {
+        const gm = document.getElementById('galleryModal');
+        if (gm) gm.style.transition = 'opacity 0.2s ease';
     }
-    
-    // Prevent double-tap zoom on service cards
-    serviceCards.forEach(card => {
-        let lastTouchEnd = 0;
-        card.addEventListener("touchend", function(e) {
-            const now = Date.now();
-            if (now - lastTouchEnd <= 300) {
-                e.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-    });
 });

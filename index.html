@@ -13,7 +13,7 @@
     <meta name="description"
         content="Venkateshwara Enterprises - Leading manufacturer of premium School, Industrial, Healthcare and Corporate uniforms in Hyderabad since years.">
     <link rel="icon" type="image/png" href="assets/logo.png">
-    <link rel="stylesheet" href="style.css?v=4.0">
+    <link rel="stylesheet" href="style.css?v=7.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
@@ -34,14 +34,21 @@
 
 <body>
 
-    <!-- Cinematic Splash Intro -->
-    <div id="introSplash" class="intro-splash">
-        <div class="splash-content">
-            <img src="assets/logo.png" alt="VE" class="splash-logo">
-            <div class="splash-bar">
-                <div class="splash-bar-fill"></div>
+    <!-- Intro splash: opacity-only; removed after fade (main.js) -->
+    <div id="introSplash" class="intro-splash" role="status" aria-live="polite" aria-busy="true">
+        <div class="intro-splash__panel">
+            <img src="assets/logo.png" alt="Venkateshwara Enterprises" class="intro-splash__logo" width="96"
+                height="96" decoding="async">
+            <span class="intro-splash__title">Venkateshwara Enterprises</span>
+            <span class="intro-splash__tagline">Premium uniform manufacturers</span>
+            <div class="intro-splash__load" aria-hidden="true">
+                <div class="intro-splash__load-track">
+                    <div class="intro-splash__load-fill">
+                        <span class="intro-splash__load-glint"></span>
+                    </div>
+                </div>
+                <span class="intro-splash__load-label">Loading experience</span>
             </div>
-            <span class="splash-tagline">Premium Uniform Manufacturers</span>
         </div>
     </div>
 
@@ -395,8 +402,7 @@
                     </div>
                 </div>
                 <div class="contact-form-wrap">
-                    <form id="contactForm" action="https://formspree.io/f/Vnagaraju@venkateshwaraenterprises.net"
-                        action="https://formspree.io/f/xgolpbog" method="POST">
+                    <form id="contactForm" action="https://formspree.io/f/xgolpbog" method="POST">
                         <input type="hidden" name="_subject" value="New Inquiry from Venkateshwara Enterprises Website">
                         <input type="hidden" name="_replyto" id="replyTo">
                         <input type="hidden" name="_next" value="">
@@ -640,7 +646,7 @@
         </div>
     </div>
 
-    <script src="main.js"></script>
+    <script src="main.js?v=5"></script>
 </body>
 
 </html>
