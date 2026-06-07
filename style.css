@@ -145,7 +145,7 @@
 
     .hero-stats {
         gap: 30px;
-        margin: 0 -20px;
+        margin: 0; /* removed negative margin */
         padding: 30px 20px 0;
     }
 
@@ -2996,7 +2996,7 @@ footer {
 
     .hero-stats {
         gap: 30px;
-        margin: 0 -20px;
+        margin: 0; /* removed negative margin that pushed hero off-center */
         padding: 30px 20px 0;
     }
 }
