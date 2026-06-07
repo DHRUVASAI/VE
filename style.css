@@ -688,6 +688,7 @@
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden; /* Prevents any child element from expanding page width */
 }
 
 body {
@@ -1252,11 +1253,11 @@ nav.scrolled {
     justify-content: center;
     gap: 50px;
     border-top: 1px solid rgba(184, 150, 62, 0.2);
-    padding-top: 40px;
     background: rgba(0, 0, 0, 0.2);
-    margin: 0 -40px;
+    margin: 0; /* removed negative margins that caused mobile overflow */
     padding: 40px 40px 0;
     border-radius: 16px;
+    width: 100%;
 }
 
 .stat {
@@ -1387,7 +1388,7 @@ nav.scrolled {
 
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
     gap: 30px;
 }
 
