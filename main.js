@@ -562,10 +562,15 @@ function openGallery(category) {
             mediaEl.loading = 'lazy';
             mediaEl.decoding = 'async';
         }
+        const imgWrap = document.createElement('div');
+        imgWrap.className = 'gallery-thumb-img-wrap';
+        imgWrap.appendChild(mediaEl);
+
         const capEl = document.createElement('div');
         capEl.className = 'gallery-thumb-caption';
         capEl.textContent = img.caption || '';
-        thumb.appendChild(mediaEl);
+
+        thumb.appendChild(imgWrap);
         thumb.appendChild(capEl);
         thumb.addEventListener('click', () => openLightbox(idx));
         galleryGrid.appendChild(thumb);
