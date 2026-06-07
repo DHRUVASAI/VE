@@ -1533,6 +1533,12 @@ nav.scrolled {
     border-bottom: 1px solid var(--glass-border);
 }
 
+.clients-marquee {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+}
+
 .clients-track {
     display: flex;
     gap: 20px;
