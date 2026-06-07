@@ -4167,7 +4167,7 @@ nav.scrolled {
 
     .hero-stats {
         gap: 30px;
-        margin: 0 -20px;
+        margin: 0; /* FIXED: removed negative margin that broke desktop/tablet hero layout */
         padding: 30px 20px 0;
     }
 
