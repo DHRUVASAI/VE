@@ -43,27 +43,23 @@
     window.setTimeout(hide, displayMs);
 })();
 
-// ==================== NAVBAR + TRUST BAR ====================
+// ==================== NAVBAR + HAMBURGER ====================
 const nav = document.getElementById('navbar');
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
-const trustBar = document.getElementById('topTrustBar');
-const TRUST_BAR_H = trustBar ? trustBar.offsetHeight : 40;
 
 window.addEventListener('scroll', () => {
     if (!nav) return;
     const scrolled = window.scrollY > 80;
     nav.classList.toggle('scrolled', scrolled);
-    if (trustBar) {
-        trustBar.classList.toggle('hidden', scrolled);
-        nav.style.top = scrolled ? '0px' : TRUST_BAR_H + 'px';
-    }
-});
+}, { passive: true });
 
 if (hamburger && navLinks) {
     hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        hamburger.classList.toggle('active');
+        const isActive = navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active', isActive);
+        // Lock body scroll when mobile menu is open
+        document.body.style.overflow = isActive ? 'hidden' : '';
     });
 }
 
@@ -72,9 +68,12 @@ if (navLinks) {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const target = document.querySelector(link.getAttribute('href'));
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
             navLinks.classList.remove('active');
             if (hamburger) hamburger.classList.remove('active');
+            document.body.style.overflow = '';
         });
     });
 }
@@ -90,6 +89,7 @@ if (scrollProgressBar) {
 }
 
 // ==================== ACTIVE NAV LINK HIGHLIGHT ====================
+// Only observe visible sections (filters out hidden #portfolio)
 const sections = document.querySelectorAll('section[id]');
 const navLinksAll = document.querySelectorAll('.nav-links a[href^="#"]');
 
@@ -107,7 +107,13 @@ const navObserver = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.3, rootMargin: '-80px 0px -40% 0px' });
 
-sections.forEach(section => navObserver.observe(section));
+sections.forEach(section => {
+    // Skip hidden sections (e.g., portfolio with display:none)
+    if (section.offsetParent !== null || section.style.display !== 'none') {
+        if (section.style.display === 'none') return;
+        navObserver.observe(section);
+    }
+});
 
 // ==================== ENERGETIC SCROLL REVEAL ====================
 const energeticObserver = new IntersectionObserver((entries) => {
@@ -136,7 +142,7 @@ const countObserver = new IntersectionObserver((entries) => {
         if (!entry.isIntersecting) return;
         const el = entry.target;
         const target = parseInt(el.dataset.count, 10);
-        const duration = 1200; // Faster count
+        const duration = 1200;
         const startTime = performance.now();
         
         const update = (now) => {
@@ -157,12 +163,14 @@ counters.forEach(c => countObserver.observe(c));
 
 // ==================== BACK TO TOP ====================
 const backBtn = document.getElementById('backToTop');
-window.addEventListener('scroll', () => {
-    backBtn.classList.toggle('visible', window.scrollY > 600);
-});
-backBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+if (backBtn) {
+    window.addEventListener('scroll', () => {
+        backBtn.classList.toggle('visible', window.scrollY > 600);
+    }, { passive: true });
+    backBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
 
 // ==================== 3D TILT SERVICE CARDS ====================
 if (window.matchMedia('(hover: hover)').matches) {
@@ -243,7 +251,6 @@ if (heroCanvas && hero) {
             if (this.x < -this.length || this.x > heroCanvas.width + this.length ||
                 this.y < -this.length || this.y > heroCanvas.height + this.length) {
                 this.reset();
-                // Re-enter from a random edge
                 const edge = Math.floor(Math.random() * 4);
                 if (edge === 0) { this.x = -this.length; this.y = Math.random() * heroCanvas.height; }
                 else if (edge === 1) { this.x = heroCanvas.width + this.length; this.y = Math.random() * heroCanvas.height; }
@@ -299,7 +306,8 @@ if (heroCanvas && hero) {
 }
 
 // ==================== TYPEWRITER EFFECT ON HERO SUBTITLE ====================
-const heroSubtitle = hero ? hero.querySelector('.hero-content > p') : null;
+// Fixed: target the <p> inside .hero-glass-card, not a direct child of .hero-content
+const heroSubtitle = hero ? hero.querySelector('.hero-glass-card p') : null;
 if (heroSubtitle) {
     const fullText = heroSubtitle.textContent.trim();
     heroSubtitle.textContent = '';
@@ -326,16 +334,42 @@ const form = document.getElementById('contactForm');
 if (form) {
     const emailInput = document.getElementById('email');
     const replyTo = document.getElementById('replyTo');
-    if (emailInput) {
+    if (emailInput && replyTo) {
         emailInput.addEventListener('input', () => {
             replyTo.value = emailInput.value;
         });
     }
 
+    // Inline validation feedback
+    form.querySelectorAll('input[required], textarea[required]').forEach(field => {
+        field.addEventListener('blur', () => {
+            if (!field.value.trim()) {
+                field.classList.add('field-error');
+            } else {
+                field.classList.remove('field-error');
+            }
+        });
+        field.addEventListener('input', () => {
+            if (field.value.trim()) {
+                field.classList.remove('field-error');
+            }
+        });
+    });
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const btn = form.querySelector('button[type="submit"]');
         const original = btn.innerText;
+
+        // Validate required fields
+        let hasError = false;
+        form.querySelectorAll('input[required], textarea[required]').forEach(field => {
+            if (!field.value.trim()) {
+                field.classList.add('field-error');
+                hasError = true;
+            }
+        });
+        if (hasError) return;
 
         btn.innerText = 'Sending…';
         btn.disabled = true;
@@ -357,7 +391,7 @@ if (form) {
                 btn.style.color = '#fff';
                 btn.style.opacity = '1';
                 form.reset();
-                replyTo.value = '';
+                if (replyTo) replyTo.value = '';
             } else {
                 const json = await response.json();
                 if (json.errors) {
@@ -672,6 +706,36 @@ document.addEventListener('keydown', e => {
         if (e.key === 'ArrowRight' && lightboxNext) lightboxNext.click();
     }
 });
+
+// ==================== LIGHTBOX TOUCH SWIPE GESTURES ====================
+if (lightbox) {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+
+    lightbox.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    lightbox.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const touchEndY = e.changedTouches[0].screenY;
+        const deltaX = touchEndX - touchStartX;
+        const deltaY = Math.abs(touchEndY - touchStartY);
+
+        // Only trigger swipe if horizontal movement is significant and > vertical
+        if (Math.abs(deltaX) > 50 && Math.abs(deltaX) > deltaY) {
+            if (deltaX < 0 && lightboxNext) {
+                // Swipe left → next
+                lightboxNext.click();
+            } else if (deltaX > 0 && lightboxPrev) {
+                // Swipe right → previous
+                lightboxPrev.click();
+            }
+        }
+    }, { passive: true });
+}
 
 // ==================== MOBILE TOUCH ENHANCEMENTS ====================
 document.addEventListener('DOMContentLoaded', () => {
