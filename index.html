@@ -24,7 +24,7 @@
     <meta name="twitter:description" content="Hyderabad's premier uniform manufacturing company — delivering precision-crafted uniforms to schools, hospitals, corporates, and industries.">
 
     <link rel="icon" type="image/png" href="assets/logo.png">
-    <link rel="stylesheet" href="style.css?v=8.0">
+    <link rel="stylesheet" href="style.css?v=9.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap"
@@ -41,24 +41,66 @@
             }
         })();
     </script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": ["LocalBusiness", "ClothingStore"],
+        "name": "Venkateshwara Enterprises",
+        "description": "Premium manufacturer of school, industrial, healthcare, and corporate uniforms in Hyderabad, Telangana.",
+        "url": "https://venkateswaraenterprises.netlify.app/",
+        "telephone": "+91-7013107335",
+        "email": "Vnagaraju@venkateshwaraenterprises.net",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "H.No:5-5, 35/214, Above Sri Sai Cutting Tools, Shakthi Puram, Prashanth Nagar, Mythri Nagar",
+            "addressLocality": "Kukatpally, Hyderabad",
+            "addressRegion": "Telangana",
+            "postalCode": "500072",
+            "addressCountry": "IN"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "17.4875",
+            "longitude": "78.3953"
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+            "opens": "09:00",
+            "closes": "19:00"
+        },
+        "priceRange": "$$",
+        "image": "https://venkateswaraenterprises.netlify.app/assets/logo.png",
+        "sameAs": ["https://wa.me/917013107335"]
+    }
+    </script>
 </head>
 
 <body>
 
     <!-- Intro splash: opacity-only; removed after fade (main.js) -->
+    <!-- Enhanced Cinematic Intro Splash -->
     <div id="introSplash" class="intro-splash" role="status" aria-live="polite" aria-busy="true">
+        <div class="intro-splash__ambient"></div>
         <div class="intro-splash__panel">
-            <img src="assets/logo.png" alt="Venkateshwara Enterprises" class="intro-splash__logo" width="96"
-                height="96" decoding="async">
+            <div class="intro-splash__logo-wrap">
+                <div class="intro-splash__logo-ring"></div>
+                <div class="intro-splash__logo-ring-outer"></div>
+                <img src="assets/logo.png" alt="Venkateshwara Enterprises" class="intro-splash__logo" width="108"
+                    height="108" decoding="async">
+            </div>
             <span class="intro-splash__title">Venkateshwara Enterprises</span>
-            <span class="intro-splash__tagline">Premium uniform manufacturers</span>
+            <span class="intro-splash__tagline">Crafting Professional Identity</span>
             <div class="intro-splash__load" aria-hidden="true">
                 <div class="intro-splash__load-track">
-                    <div class="intro-splash__load-fill">
+                    <div class="intro-splash__load-fill" id="splashLoadFill">
                         <span class="intro-splash__load-glint"></span>
                     </div>
                 </div>
-                <span class="intro-splash__load-label">Loading experience</span>
+                <div class="intro-splash__load-meta">
+                    <span class="intro-splash__load-label">Loading Experience</span>
+                    <span class="intro-splash__counter" id="splashCounter">0%</span>
+                </div>
             </div>
         </div>
     </div>
@@ -78,6 +120,7 @@
         <div class="nav-links" id="navLinks">
             <a href="#hero">Home</a>
             <a href="#services">Services</a>
+            <a href="#catalogue">Catalogue</a>
             <a href="#clients">Clients</a>
             <a href="#contact">Contact</a>
             <a href="#leadership">Leadership</a>
@@ -106,17 +149,22 @@
             </div>
             <div class="hero-stats energetic-reveal">
                 <div class="stat">
-                    <span class="stat-number" data-count="500">0</span><span class="stat-plus">+</span>
+                    <span class="stat-number" data-count="500">500</span><span class="stat-plus">+</span>
                     <span class="stat-label">Clients Served</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat">
-                    <span class="stat-number" data-count="15">0</span><span class="stat-plus">+</span>
+                    <span class="stat-number" data-count="15">15</span><span class="stat-plus">+</span>
                     <span class="stat-label">Years Experience</span>
                 </div>
                 <div class="stat-divider"></div>
                 <div class="stat">
-                    <span class="stat-number" data-count="5">0</span>
+                    <span class="stat-number" data-count="10000">10,000</span><span class="stat-plus">+</span>
+                    <span class="stat-label">Units / Month</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-number" data-count="5">5</span>
                     <span class="stat-label">Industry Sectors</span>
                 </div>
             </div>
@@ -150,6 +198,48 @@
                     <i class="fas fa-headset"></i>
                     <h4>Direct Support</h4>
                     <p>Speak directly with the owner — no middlemen, no delays, just results.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Manufacturing Process -->
+    <section class="section process-section" id="process">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">How We Work</span>
+                <h2>Our 5-Step Manufacturing Process</h2>
+            </div>
+            <div class="process-grid">
+                <div class="process-step">
+                    <div class="process-step-icon"><i class="fas fa-flask"></i></div>
+                    <span class="process-step-number">1</span>
+                    <h3>Fabric Sourcing & Testing</h3>
+                    <p>Premium raw materials undergo GSM audit, color fastness testing, and tear strength analysis before selection.</p>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-icon"><i class="fas fa-drafting-compass"></i></div>
+                    <span class="process-step-number">2</span>
+                    <h3>Custom Pattern Drafting</h3>
+                    <p>Ergonomic patterns designed to your exact specifications — fit, style, and comfort for every body type.</p>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-icon"><i class="fas fa-cut"></i></div>
+                    <span class="process-step-number">3</span>
+                    <h3>Precision Cutting & Embroidery</h3>
+                    <p>Computer-aided cutting with high-density logo embroidery, screen printing, and custom branding.</p>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-icon"><i class="fas fa-cogs"></i></div>
+                    <span class="process-step-number">4</span>
+                    <h3>Industrial Stitching & Assembly</h3>
+                    <p>Reinforced double-needle stitching on industrial machines for maximum durability and professional finish.</p>
+                </div>
+                <div class="process-step">
+                    <div class="process-step-icon"><i class="fas fa-check-double"></i></div>
+                    <span class="process-step-number">5</span>
+                    <h3>Quality Audit & Packaging</h3>
+                    <p>Every unit passes a multi-point quality inspection before custom bulk packaging and dispatch.</p>
                 </div>
             </div>
         </div>
@@ -224,6 +314,104 @@
         </div>
     </section>
 
+    <!-- Product Catalogue -->
+    <section class="section" id="catalogue">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Products</span>
+                <h2>Premium Uniform Catalogue</h2>
+            </div>
+            <div class="catalogue-filters">
+                <button class="catalogue-filter-btn active" data-filter="all">All</button>
+                <button class="catalogue-filter-btn" data-filter="school">School</button>
+                <button class="catalogue-filter-btn" data-filter="corporate">Corporate</button>
+                <button class="catalogue-filter-btn" data-filter="industrial">Industrial</button>
+                <button class="catalogue-filter-btn" data-filter="healthcare">Healthcare</button>
+                <button class="catalogue-filter-btn" data-filter="bags">Bags & Accessories</button>
+            </div>
+            <div class="catalogue-grid">
+                <div class="catalogue-card" data-category="school">
+                    <div class="catalogue-card-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>School Uniform Set</h3>
+                    <div class="catalogue-specs">
+                        <span class="spec-badge"><i class="fas fa-layer-group"></i> Poly-Cotton Twill, 180 GSM</span>
+                        <span class="spec-badge"><i class="fas fa-boxes"></i> MOQ: 100 Units</span>
+                    </div>
+                    <p>Custom logo, house colors available</p>
+                    <div class="catalogue-card-actions">
+                        <a href="#ai-quote" class="btn btn-primary btn-sm">Get Quote</a>
+                        <a href="https://wa.me/917013107335?text=Hi%20VE%20Team%2C%20I%20need%20a%20quote%20for%20School%20Uniform%20Sets." target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i> Inquire</a>
+                    </div>
+                </div>
+                <div class="catalogue-card" data-category="corporate">
+                    <div class="catalogue-card-icon"><i class="fas fa-briefcase"></i></div>
+                    <h3>Corporate Polo Shirt</h3>
+                    <div class="catalogue-specs">
+                        <span class="spec-badge"><i class="fas fa-layer-group"></i> Pique Cotton, 220 GSM</span>
+                        <span class="spec-badge"><i class="fas fa-boxes"></i> MOQ: 50 Units</span>
+                    </div>
+                    <p>Embroidered branding, 12+ colors</p>
+                    <div class="catalogue-card-actions">
+                        <a href="#ai-quote" class="btn btn-primary btn-sm">Get Quote</a>
+                        <a href="https://wa.me/917013107335?text=Hi%20VE%20Team%2C%20I%20need%20a%20quote%20for%20Corporate%20Polo%20Shirts." target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i> Inquire</a>
+                    </div>
+                </div>
+                <div class="catalogue-card" data-category="industrial">
+                    <div class="catalogue-card-icon"><i class="fas fa-hard-hat"></i></div>
+                    <h3>Industrial Coverall</h3>
+                    <div class="catalogue-specs">
+                        <span class="spec-badge"><i class="fas fa-layer-group"></i> Flame Retardant Twill, 280 GSM</span>
+                        <span class="spec-badge"><i class="fas fa-boxes"></i> MOQ: 100 Units</span>
+                    </div>
+                    <p>Hi-vis stripes, safety compliant</p>
+                    <div class="catalogue-card-actions">
+                        <a href="#ai-quote" class="btn btn-primary btn-sm">Get Quote</a>
+                        <a href="https://wa.me/917013107335?text=Hi%20VE%20Team%2C%20I%20need%20a%20quote%20for%20Industrial%20Coveralls." target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i> Inquire</a>
+                    </div>
+                </div>
+                <div class="catalogue-card" data-category="healthcare">
+                    <div class="catalogue-card-icon"><i class="fas fa-stethoscope"></i></div>
+                    <h3>Healthcare Scrub Set</h3>
+                    <div class="catalogue-specs">
+                        <span class="spec-badge"><i class="fas fa-layer-group"></i> Anti-Microbial Poly-Cotton, 200 GSM</span>
+                        <span class="spec-badge"><i class="fas fa-boxes"></i> MOQ: 50 Units</span>
+                    </div>
+                    <p>Infection control certified</p>
+                    <div class="catalogue-card-actions">
+                        <a href="#ai-quote" class="btn btn-primary btn-sm">Get Quote</a>
+                        <a href="https://wa.me/917013107335?text=Hi%20VE%20Team%2C%20I%20need%20a%20quote%20for%20Healthcare%20Scrub%20Sets." target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i> Inquire</a>
+                    </div>
+                </div>
+                <div class="catalogue-card" data-category="bags">
+                    <div class="catalogue-card-icon"><i class="fas fa-shopping-bag"></i></div>
+                    <h3>Custom Branded Bag</h3>
+                    <div class="catalogue-specs">
+                        <span class="spec-badge"><i class="fas fa-layer-group"></i> 600D Polyester</span>
+                        <span class="spec-badge"><i class="fas fa-boxes"></i> MOQ: 200 Units</span>
+                    </div>
+                    <p>Full custom print, reinforced zippers</p>
+                    <div class="catalogue-card-actions">
+                        <a href="#ai-quote" class="btn btn-primary btn-sm">Get Quote</a>
+                        <a href="https://wa.me/917013107335?text=Hi%20VE%20Team%2C%20I%20need%20a%20quote%20for%20Custom%20Branded%20Bags." target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i> Inquire</a>
+                    </div>
+                </div>
+                <div class="catalogue-card" data-category="corporate">
+                    <div class="catalogue-card-icon"><i class="fas fa-user-tie"></i></div>
+                    <h3>Executive Blazer</h3>
+                    <div class="catalogue-specs">
+                        <span class="spec-badge"><i class="fas fa-layer-group"></i> Wool Blend, 300 GSM</span>
+                        <span class="spec-badge"><i class="fas fa-boxes"></i> MOQ: 25 Units</span>
+                    </div>
+                    <p>Tailored fit, satin lining</p>
+                    <div class="catalogue-card-actions">
+                        <a href="#ai-quote" class="btn btn-primary btn-sm">Get Quote</a>
+                        <a href="https://wa.me/917013107335?text=Hi%20VE%20Team%2C%20I%20need%20a%20quote%20for%20Executive%20Blazers." target="_blank" rel="noopener" class="btn btn-whatsapp btn-sm"><i class="fab fa-whatsapp"></i> Inquire</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Clients Marquee -->
     <section class="clients-section" id="clients">
         <div class="container">
@@ -279,6 +467,45 @@
         </div>
     </section>
 
+    <!-- Case Studies -->
+    <section class="section" id="case-studies">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Proven Track Record</span>
+                <h2>Real Results & Long-Standing Client Trust</h2>
+            </div>
+            <div class="case-studies-grid">
+                <div class="case-study-card">
+                    <div class="case-study-metric">
+                        <span class="case-study-number">7+</span>
+                        <span class="case-study-metric-label">Years Partnership</span>
+                    </div>
+                    <h3>Corporate & MNC Sector</h3>
+                    <p>7+ years of uninterrupted uniform manufacturing and trusted supply for multinational corporations and leading corporate enterprises.</p>
+                    <span class="case-study-badge">Corporate & MNCs</span>
+                </div>
+                <div class="case-study-card">
+                    <div class="case-study-metric">
+                        <span class="case-study-number">14+</span>
+                        <span class="case-study-metric-label">Years of Trust</span>
+                    </div>
+                    <h3>Schools & Educational Networks</h3>
+                    <p>14+ years of end-to-end annual uniform supply for premier educational institutions across Hyderabad and Telangana.</p>
+                    <span class="case-study-badge">Premier Education</span>
+                </div>
+                <div class="case-study-card">
+                    <div class="case-study-metric">
+                        <span class="case-study-number">5+</span>
+                        <span class="case-study-metric-label">Years Healthcare Supply</span>
+                    </div>
+                    <h3>Healthcare & Diagnostic Sector</h3>
+                    <p>Trusted supplier of anti-microbial lab coats, surgical scrubs, and hygiene-compliant medical uniforms for leading diagnostic chains and clinics.</p>
+                    <span class="case-study-badge">Healthcare & Diagnostics</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact -->
     <section class="section" id="contact">
         <div class="container">
@@ -288,6 +515,74 @@
                 <p class="section-desc">Ready to outfit your team? Tell us about your requirements and we'll provide a
                     tailored proposal.</p>
             </div>
+
+            <div id="ai-quote" class="ai-quote-wizard">
+                <div class="wizard-header">
+                    <h3><i class="fas fa-robot"></i> Smart Quote Assistant</h3>
+                    <p>Answer 3 quick questions and we'll prepare your custom quote instantly.</p>
+                    <div class="wizard-progress">
+                        <div class="wizard-progress-bar" id="wizardProgressBar"></div>
+                    </div>
+                    <div class="wizard-steps-indicator">
+                        <span class="wizard-step-dot active" data-step="1">1</span>
+                        <span class="wizard-step-dot" data-step="2">2</span>
+                        <span class="wizard-step-dot" data-step="3">3</span>
+                    </div>
+                </div>
+
+                <!-- Step 1: Sector -->
+                <div class="wizard-step active" id="wizardStep1">
+                    <h4>What sector are you from?</h4>
+                    <div class="wizard-options">
+                        <button class="wizard-option" data-value="School / Education"><i class="fas fa-graduation-cap"></i> School / Education</button>
+                        <button class="wizard-option" data-value="Corporate / Office"><i class="fas fa-briefcase"></i> Corporate / Office</button>
+                        <button class="wizard-option" data-value="Industrial / Factory"><i class="fas fa-industry"></i> Industrial / Factory</button>
+                        <button class="wizard-option" data-value="Healthcare / Hospital"><i class="fas fa-stethoscope"></i> Healthcare / Hospital</button>
+                        <button class="wizard-option" data-value="Hospitality / Events"><i class="fas fa-concierge-bell"></i> Hospitality / Events</button>
+                        <button class="wizard-option" data-value="Other"><i class="fas fa-ellipsis-h"></i> Other</button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Quantity -->
+                <div class="wizard-step" id="wizardStep2">
+                    <h4>How many units do you need?</h4>
+                    <div class="wizard-options">
+                        <button class="wizard-option" data-value="50–200 units"><i class="fas fa-box"></i> 50 – 200</button>
+                        <button class="wizard-option" data-value="200–500 units"><i class="fas fa-boxes"></i> 200 – 500</button>
+                        <button class="wizard-option" data-value="500–2,000 units"><i class="fas fa-warehouse"></i> 500 – 2,000</button>
+                        <button class="wizard-option" data-value="2,000+ units"><i class="fas fa-truck-loading"></i> 2,000+</button>
+                    </div>
+                    <button class="wizard-back" id="wizardBack2"><i class="fas fa-arrow-left"></i> Back</button>
+                </div>
+
+                <!-- Step 3: Customization -->
+                <div class="wizard-step" id="wizardStep3">
+                    <h4>What customization do you need?</h4>
+                    <div class="wizard-options wizard-options-multi">
+                        <button class="wizard-option" data-value="Logo Embroidery"><i class="fas fa-pen-nib"></i> Logo Embroidery</button>
+                        <button class="wizard-option" data-value="Screen Printing"><i class="fas fa-print"></i> Screen Printing</button>
+                        <button class="wizard-option" data-value="Custom Fit / Sizing"><i class="fas fa-ruler"></i> Custom Fit / Sizing</button>
+                        <button class="wizard-option" data-value="Reflective Safety Strips"><i class="fas fa-shield-alt"></i> Reflective Safety Strips</button>
+                        <button class="wizard-option" data-value="Custom Fabric / Color"><i class="fas fa-palette"></i> Custom Fabric / Color</button>
+                    </div>
+                    <button class="wizard-submit" id="wizardSubmit"><i class="fas fa-paper-plane"></i> Generate My Quote</button>
+                    <button class="wizard-back" id="wizardBack3"><i class="fas fa-arrow-left"></i> Back</button>
+                </div>
+
+                <!-- Result -->
+                <div class="wizard-result" id="wizardResult" style="display:none;">
+                    <div class="wizard-result-card">
+                        <h4><i class="fas fa-check-circle"></i> Your Quote Summary</h4>
+                        <div class="wizard-summary" id="wizardSummary"></div>
+                        <div class="wizard-result-actions">
+                            <a href="#contactForm" class="btn btn-primary" id="wizardFillForm"><i class="fas fa-file-alt"></i> Fill Inquiry Form</a>
+                            <a href="#" class="btn btn-whatsapp" id="wizardWhatsApp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Send via WhatsApp</a>
+                        </div>
+                        <button class="wizard-restart" id="wizardRestart"><i class="fas fa-redo"></i> Start Over</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="contact-grid">
                 <div class="contact-details">
                     <div class="contact-card">
@@ -333,6 +628,7 @@
                         <input type="hidden" name="_subject" value="New Inquiry from Venkateshwara Enterprises Website">
                         <input type="hidden" name="_replyto" id="replyTo">
                         <input type="hidden" name="_next" value="">
+                        <input type="hidden" name="wizard_data" id="wizardDataField" value="">
 
                         <div class="form-group">
                             <label for="name">Full Name</label>
@@ -355,7 +651,7 @@
                             <textarea id="message" name="message" rows="4"
                                 placeholder="E.g., 200 school shirts, custom logo embroidery..." required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-full">Send Inquiry</button>
+                        <button type="submit" class="btn btn-primary btn-full">Submit Quote Request</button>
                     </form>
                 </div>
             </div>
@@ -425,11 +721,11 @@
                     <div class="testimonial-stars">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="testimonial-text">"Venkateshwara Enterprises delivered 500+ school uniforms for our institution with impeccable quality and on-time delivery. Their attention to detail in stitching and fabric selection is outstanding."</p>
+                    <p class="testimonial-text">"Over 14 years of uninterrupted partnership! Venkateshwara Enterprises has supplied thousands of complete uniform sets with flawless stitching, vibrant colors, and on-time delivery every academic year."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-author-info">
-                            <strong>Laurus School</strong>
-                            <span>Education Partner</span>
+                            <strong>Laurus School & Resonance</strong>
+                            <span>Educational Institutions (14+ Years Partner)</span>
                         </div>
                     </div>
                 </div>
@@ -437,23 +733,23 @@
                     <div class="testimonial-stars">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="testimonial-text">"We've been working with VE for our corporate branding needs — custom polo shirts, caps, and bags. The quality is consistently premium and Mr. Nagaraju's personal attention makes all the difference."</p>
+                    <p class="testimonial-text">"For 7+ years, Venkateshwara Enterprises has consistently delivered top-grade corporate apparel and operations uniforms. The fabric durability, precision embroidery, and professional service are world-class."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-author-info">
                             <strong>GMR Group</strong>
-                            <span>Corporate Client</span>
+                            <span>Corporate & Infrastructure (7+ Years Partner)</span>
                         </div>
                     </div>
                 </div>
                 <div class="testimonial-card">
                     <div class="testimonial-stars">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="testimonial-text">"Their industrial workwear meets all safety standards. We ordered coveralls and safety jackets for our factory floor — excellent durability and the custom branding was perfect."</p>
+                    <p class="testimonial-text">"Their anti-microbial lab coats and medical scrubs meet strict hygiene standards. Outstanding comfort, durable wash resistance, and punctual bulk deliveries for our diagnostic centres."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-author-info">
-                            <strong>Star Industries</strong>
-                            <span>Industrial Client</span>
+                            <strong>Konnect Diagnostics</strong>
+                            <span>Healthcare & Diagnostic Network</span>
                         </div>
                     </div>
                 </div>
@@ -604,8 +900,10 @@
     </div>
 
     <!-- WhatsApp Float -->
-    <a href="https://wa.me/917013107335" class="whatsapp-btn" target="_blank" rel="noopener" title="Chat on WhatsApp">
+    <a href="https://wa.me/917013107335?text=Hi%20VE%20Team%2C%20I%20am%20interested%20in%20your%20uniform%20manufacturing%20services.%20Please%20share%20details." class="whatsapp-btn" target="_blank" rel="noopener" title="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-btn-pulse"></span>
+        <span class="whatsapp-btn-label">Chat with us</span>
     </a>
 
     <!-- Gallery Modal -->
@@ -635,7 +933,7 @@
         </div>
     </div>
 
-    <script src="main.js?v=6"></script>
+    <script src="main.js?v=7.1"></script>
 </body>
 
 </html>

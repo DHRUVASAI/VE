@@ -1,13 +1,19 @@
-// ==================== INTRO SPLASH (v2: opacity only + remove node) ====================
+// ==================== CINEMATIC INTRO SPLASH & HERO CASCADE ====================
 (function initIntroSplash() {
     const el = document.getElementById('introSplash');
-    if (!el) return;
+    const fill = document.getElementById('splashLoadFill');
+    const counter = document.getElementById('splashCounter');
+    if (!el) {
+        document.body.classList.add('hero-revealed');
+        return;
+    }
 
     let finished = false;
     function finish() {
         if (finished) return;
         finished = true;
         document.body.classList.remove('intro-splash-active');
+        document.body.classList.add('hero-revealed');
         if (el.isConnected) {
             el.removeAttribute('aria-busy');
             el.setAttribute('aria-hidden', 'true');
@@ -22,13 +28,31 @@
 
     document.body.classList.add('intro-splash-active');
 
-    const mobile = window.matchMedia('(max-width: 768px)').matches;
-    const displayMs = mobile ? 1500 : 2000;
-    const fadeMs = 420;
+    const duration = window.matchMedia('(max-width: 768px)').matches ? 1400 : 1800;
+    const startTime = performance.now();
+
+    function updateLoader(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        const percent = Math.floor(ease * 100);
+
+        if (fill) fill.style.width = `${percent}%`;
+        if (counter) counter.textContent = `${percent}%`;
+
+        if (progress < 1) {
+            requestAnimationFrame(updateLoader);
+        } else {
+            if (counter) counter.textContent = '100%';
+            if (fill) fill.style.width = '100%';
+            setTimeout(hide, 200);
+        }
+    }
 
     function hide() {
         el.classList.add('intro-splash--hide');
-        const fallback = window.setTimeout(finish, fadeMs + 120);
+        document.body.classList.add('hero-revealed');
+        const fallback = window.setTimeout(finish, 650);
         el.addEventListener(
             'transitionend',
             (ev) => {
@@ -40,7 +64,7 @@
         );
     }
 
-    window.setTimeout(hide, displayMs);
+    requestAnimationFrame(updateLoader);
 })();
 
 // ==================== NAVBAR + HAMBURGER ====================
@@ -142,8 +166,9 @@ const countObserver = new IntersectionObserver((entries) => {
         if (!entry.isIntersecting) return;
         const el = entry.target;
         const target = parseInt(el.dataset.count, 10);
-        const duration = 1200;
+        const duration = 1400;
         const startTime = performance.now();
+        el.textContent = '0';
         
         const update = (now) => {
             const elapsed = now - startTime;
@@ -151,9 +176,9 @@ const countObserver = new IntersectionObserver((entries) => {
             const easeOutQuart = 1 - Math.pow(1 - progress, 4);
             const current = Math.floor(easeOutQuart * target);
             
-            el.textContent = current;
+            el.textContent = current.toLocaleString('en-IN');
             if (progress < 1) requestAnimationFrame(update);
-            else el.textContent = target;
+            else el.textContent = target.toLocaleString('en-IN');
         };
         requestAnimationFrame(update);
         countObserver.unobserve(el);
@@ -744,3 +769,203 @@ document.addEventListener('DOMContentLoaded', () => {
         if (gm) gm.style.transition = 'opacity 0.2s ease';
     }
 });
+
+// ==================== PRODUCT CATALOGUE FILTER ====================
+document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.catalogue-filter-btn');
+    const cards = document.querySelectorAll('.catalogue-card');
+    
+    if (!filterBtns.length) return;
+    
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            
+            const filter = btn.dataset.filter;
+            
+            cards.forEach(card => {
+                if (filter === 'all' || card.dataset.category === filter) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    });
+});
+
+// ==================== AI QUOTE WIZARD ====================
+document.addEventListener('DOMContentLoaded', () => {
+    const wizard = document.getElementById('ai-quote');
+    if (!wizard) return;
+    
+    const steps = wizard.querySelectorAll('.wizard-step');
+    const dots = wizard.querySelectorAll('.wizard-step-dot');
+    const progressBar = document.getElementById('wizardProgressBar');
+    const resultPanel = document.getElementById('wizardResult');
+    const summaryEl = document.getElementById('wizardSummary');
+    
+    let currentStep = 1;
+    const selections = { sector: '', quantity: '', customizations: [] };
+    
+    function showStep(n) {
+        currentStep = n;
+        steps.forEach(s => s.classList.remove('active'));
+        const target = document.getElementById(`wizardStep${n}`);
+        if (target) target.classList.add('active');
+        
+        dots.forEach(d => {
+            const step = parseInt(d.dataset.step);
+            d.classList.remove('active', 'completed');
+            if (step === n) d.classList.add('active');
+            else if (step < n) d.classList.add('completed');
+        });
+        
+        if (progressBar) progressBar.style.width = `${(n / 3) * 100}%`;
+    }
+    
+    // Step 1: Sector selection (single select, auto-advance)
+    const step1Options = wizard.querySelectorAll('#wizardStep1 .wizard-option');
+    step1Options.forEach(opt => {
+        opt.addEventListener('click', () => {
+            step1Options.forEach(o => o.classList.remove('selected'));
+            opt.classList.add('selected');
+            selections.sector = opt.dataset.value;
+            setTimeout(() => showStep(2), 300);
+        });
+    });
+    
+    // Step 2: Quantity selection (single select, auto-advance)
+    const step2Options = wizard.querySelectorAll('#wizardStep2 .wizard-option');
+    step2Options.forEach(opt => {
+        opt.addEventListener('click', () => {
+            step2Options.forEach(o => o.classList.remove('selected'));
+            opt.classList.add('selected');
+            selections.quantity = opt.dataset.value;
+            setTimeout(() => showStep(3), 300);
+        });
+    });
+    
+    // Step 3: Customization (multi-select, no auto-advance)
+    const step3Options = wizard.querySelectorAll('#wizardStep3 .wizard-option');
+    step3Options.forEach(opt => {
+        opt.addEventListener('click', () => {
+            opt.classList.toggle('selected');
+            const val = opt.dataset.value;
+            if (selections.customizations.includes(val)) {
+                selections.customizations = selections.customizations.filter(v => v !== val);
+            } else {
+                selections.customizations.push(val);
+            }
+        });
+    });
+    
+    // Back buttons
+    const back2 = document.getElementById('wizardBack2');
+    const back3 = document.getElementById('wizardBack3');
+    if (back2) back2.addEventListener('click', () => showStep(1));
+    if (back3) back3.addEventListener('click', () => showStep(2));
+    
+    // Submit button
+    const submitBtn = document.getElementById('wizardSubmit');
+    if (submitBtn) {
+        submitBtn.addEventListener('click', () => {
+            // Generate recommendation
+            const fabricRec = getFabricRecommendation(selections.sector);
+            const turnaround = getTurnaroundEstimate(selections.quantity);
+            const customs = selections.customizations.length 
+                ? selections.customizations.join(', ') 
+                : 'None specified';
+            
+            const summaryHTML = `
+                <strong>Sector:</strong> ${selections.sector}<br>
+                <strong>Quantity:</strong> ${selections.quantity}<br>
+                <strong>Customizations:</strong> ${customs}<br>
+                <hr style="border-color: rgba(184,150,62,0.2); margin: 12px 0;">
+                <strong>🧵 Recommended Fabric:</strong> ${fabricRec}<br>
+                <strong>⏱ Estimated Turnaround:</strong> ${turnaround}<br>
+                <strong>📋 Next Step:</strong> Fill the inquiry form below or send directly via WhatsApp!
+            `;
+            
+            if (summaryEl) summaryEl.innerHTML = summaryHTML;
+            
+            // Hide all steps, show result
+            steps.forEach(s => s.classList.remove('active'));
+            if (resultPanel) resultPanel.style.display = 'block';
+            if (progressBar) progressBar.style.width = '100%';
+            dots.forEach(d => { d.classList.remove('active'); d.classList.add('completed'); });
+            
+            // Populate hidden field
+            const hiddenField = document.getElementById('wizardDataField');
+            if (hiddenField) {
+                hiddenField.value = `Sector: ${selections.sector} | Qty: ${selections.quantity} | Customizations: ${customs} | Fabric: ${fabricRec}`;
+            }
+            
+            // Auto-fill the message textarea
+            const msgField = document.querySelector('#contactForm textarea[name="message"]');
+            if (msgField) {
+                msgField.value = `Quote Request:\n• Sector: ${selections.sector}\n• Quantity: ${selections.quantity}\n• Customizations: ${customs}\n• Recommended Fabric: ${fabricRec}\n• Est. Turnaround: ${turnaround}`;
+            }
+            
+            // Set WhatsApp link
+            const waBtn = document.getElementById('wizardWhatsApp');
+            if (waBtn) {
+                const waText = encodeURIComponent(
+                    `Hi VE Team, I need a quote:\n• Sector: ${selections.sector}\n• Quantity: ${selections.quantity}\n• Customizations: ${customs}`
+                );
+                waBtn.href = `https://wa.me/917013107335?text=${waText}`;
+            }
+        });
+    }
+    
+    // Fill Form button
+    const fillFormBtn = document.getElementById('wizardFillForm');
+    if (fillFormBtn) {
+        fillFormBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const form = document.getElementById('contactForm');
+            if (form) form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+    }
+    
+    // Restart
+    const restartBtn = document.getElementById('wizardRestart');
+    if (restartBtn) {
+        restartBtn.addEventListener('click', () => {
+            selections.sector = '';
+            selections.quantity = '';
+            selections.customizations = [];
+            wizard.querySelectorAll('.wizard-option').forEach(o => o.classList.remove('selected'));
+            if (resultPanel) resultPanel.style.display = 'none';
+            showStep(1);
+        });
+    }
+    
+    function getFabricRecommendation(sector) {
+        const recs = {
+            'School / Education': 'Poly-Cotton Twill (180–200 GSM) — Durable, wash-friendly, comfortable for daily wear',
+            'Corporate / Office': 'Premium Pique Cotton (220 GSM) or Poly-Viscose Blend — Professional finish, wrinkle-resistant',
+            'Industrial / Factory': 'Flame Retardant Twill (280 GSM) — Safety-compliant, high-durability, reinforced stitching',
+            'Healthcare / Hospital': 'Anti-Microbial Poly-Cotton (200 GSM) — Infection-control certified, fluid-resistant',
+            'Hospitality / Events': 'Poly-Viscose Suiting (220 GSM) — Elegant drape, stain-resistant, professional appearance',
+            'Other': 'Custom consultation recommended — our team will suggest the best fabric for your needs'
+        };
+        return recs[sector] || recs['Other'];
+    }
+    
+    function getTurnaroundEstimate(qty) {
+        if (qty.includes('50')) return '7–10 working days';
+        if (qty.includes('200')) return '12–18 working days';
+        if (qty.includes('500')) return '18–25 working days';
+        return '25–35 working days (dedicated production line)';
+    }
+});
+
+// ==================== WHATSAPP LINK GENERATOR ====================
+function generateWhatsAppLink(product, quantity) {
+    const text = encodeURIComponent(
+        `Hi VE Team, I am interested in:\n• Product: ${product}\n• Estimated Quantity: ${quantity || 'To be discussed'}\nPlease share pricing and details.`
+    );
+    return `https://wa.me/917013107335?text=${text}`;
+}
